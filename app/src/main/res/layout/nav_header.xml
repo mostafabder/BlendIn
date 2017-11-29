@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/user"
+        android:layout_margin="10dp"
+        app:civ_border_width="0dp"
+        app:civ_border_color="#FF000000"/>
+   <TextView
+       android:id="@+id/tvHeaderName"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:text="Mostafa Waleed"
+       android:gravity="center_vertical"
+       android:textSize="20sp"
+       android:textColor="#34309e"
+       android:textStyle="bold"
+       />
+
+</LinearLayout>
