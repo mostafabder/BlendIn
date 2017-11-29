@@ -21,6 +21,10 @@
             android:label="@string/title_activity_sign_up"
             android:theme="@style/AppTheme" />
         <activity android:name=".SignInActivity"></activity>
+        <activity
+            android:name=".Navigation_activity"
+            android:label="Navigation">
+        </activity>
     </application>
 
 </manifest>

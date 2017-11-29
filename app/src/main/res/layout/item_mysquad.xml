@@ -20,14 +20,14 @@
             android:background="#FFF">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/prof_img"
+                android:id="@+id/squadImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/user" />
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/squadName"
                 android:padding="7dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                 android:textColor="#4e266e"
                 android:textSize="20sp" />
             <TextView
-                android:id="@+id/members"
+                android:id="@+id/squadMembersCount"
                 android:padding="7dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

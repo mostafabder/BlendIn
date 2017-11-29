@@ -5,16 +5,25 @@ package com.example.android.blendin.Models;
  */
 
 public class RequestModel {
-    private String avatar;
+    private int avatar;
     private String name;
     private String timeAgo;
     private String Location;
     private String description;
-    public String getAvatar() {
+
+    public RequestModel(int avatar, String name, String timeAgo, String location, String description) {
+        this.avatar = avatar;
+        this.name = name;
+        this.timeAgo = timeAgo;
+        Location = location;
+        this.description = description;
+    }
+
+    public int getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(int avatar) {
         this.avatar = avatar;
     }
 

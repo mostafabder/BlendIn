@@ -73,10 +73,11 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
         <ImageView
+            android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/kappa"/>
+            android:src="@drawable/kappa2"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

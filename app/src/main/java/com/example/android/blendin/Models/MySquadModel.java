@@ -5,14 +5,21 @@ package com.example.android.blendin.Models;
  */
 
 public class MySquadModel {
-   private String avatar;
+   private int avatar;
    private String name;
    private String count;
-    public String getAvatar() {
+
+    public MySquadModel(int avatar, String name, String count) {
+        this.avatar = avatar;
+        this.name = name;
+        this.count = count;
+    }
+
+    public int getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(int avatar) {
         this.avatar = avatar;
     }
 

@@ -59,6 +59,7 @@
 
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_detail"
+                android:onClick="openNav"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingBottom="10dp"
