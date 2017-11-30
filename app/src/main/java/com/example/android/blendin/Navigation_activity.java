@@ -34,7 +34,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         setContentView(R.layout.navigation_activity);
 
         // Opens Default Fragment -> Newsfeed
-        fragment = new RequestFragment();
+        fragment = new NewsfeedFragment();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_main, fragment, "newsfeed");
         fragmentTransaction.commit();
@@ -45,12 +45,71 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.profile_nav_item) {
+                    //TODO Profile Fragment
+            /*fragment = new ProfileFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, fragment, "Profile");
+            fragmentTransaction.commit();
+            //getSupportActionBar().setTitle(getString(R.string.Profile));*/
+
+                } else if (id == R.id.hangouts_nav_item) {
+                    fragment = new HangoutFragment();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_main, fragment, "hangout");
+                    fragmentTransaction.commit();
+                    //getSupportActionBar().setTitle(getString(R.string.Hangout));
+
+                } else if (id == R.id.Newsfeed_nav_item) {
+                    fragment = new NewsfeedFragment();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_main, fragment, "news");
+                    fragmentTransaction.commit();
+                    //getSupportActionBar().setTitle(getString(R.string.Hangout));
+
+                } else if (id == R.id.request_nav_item) {
+                    fragment = new RequestFragment();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_main, fragment, "req");
+                    fragmentTransaction.commit();
+                    //getSupportActionBar().setTitle(getString(R.string.Hangout));
+
+                } else if (id == R.id.Mysquad_nav_item) {
+                    fragment = new MysquadFragment();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_main, fragment, "squad");
+                    fragmentTransaction.commit();
+                    //getSupportActionBar().setTitle(getString(R.string.Hangout));
+
+                } else if (id == R.id.settings_nav_item) {
+                    //TODO :: Settings Fragment
+           /* fragment = new SettingsFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, fragment, "set");
+            fragmentTransaction.commit();
+            //getSupportActionBar().setTitle(getString(R.string.Hangout));
+            */
+                } else if (id == R.id.signout_nav_item) {
+                    //TODO :: Sign out
+                }
+
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+
+            }
+        });
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        // ma 2na 3mlt breakpoint 2ho 2odamk , w never got excuted , nope
         // Handling navigation view item clicks.
         int id = item.getItemId();
         if (id == R.id.profile_nav_item) {
