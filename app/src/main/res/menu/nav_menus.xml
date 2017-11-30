@@ -3,6 +3,7 @@
     <item android:title="Profile" android:id="@+id/profile_nav_item"/>
     <item android:title="Hangouts" android:id="@+id/hangouts_nav_item"/>
     <item android:title="Newsfeed" android:id="@+id/Newsfeed_nav_item"/>
+    <item android:title="Requests" android:id="@+id/request_nav_item"/>
     <item android:title="My squad" android:id="@+id/Mysquad_nav_item"/>
     <item android:title="Settings " android:id="@+id/settings_nav_item"/>
     <item android:title="Signout" android:id="@+id/signout_nav_item"/>

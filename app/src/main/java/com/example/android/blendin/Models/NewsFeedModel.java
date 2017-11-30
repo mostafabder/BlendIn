@@ -6,21 +6,33 @@ package com.example.android.blendin.Models;
 
 public class NewsFeedModel {
 
-    String avatar;
+    int avatar;
     String name;
     String city;
     String timeAgo;
-    String image;
+    int image;
     String activity;
     String disc;
     String likes;
     String comments;
 
-    public String getAvatar() {
+    public NewsFeedModel(int avatar, String name, String city, String timeAgo, int image, String activity, String disc, String likes, String comments) {
+        this.avatar = avatar;
+        this.name = name;
+        this.city = city;
+        this.timeAgo = timeAgo;
+        this.image = image;
+        this.activity = activity;
+        this.disc = disc;
+        this.likes = likes;
+        this.comments = comments;
+    }
+
+    public int getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(int avatar) {
         this.avatar = avatar;
     }
 
@@ -48,11 +60,11 @@ public class NewsFeedModel {
         this.timeAgo = timeAgo;
     }
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 
