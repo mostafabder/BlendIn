@@ -1,17 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFC8ADCE"
     android:orientation="vertical"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.android.blendin.Fragments.HangoutFragment"
-    android:background="#FFC8ADCE">
+    tools:context="com.example.android.blendin.Fragments.HangoutFragment">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:src="@drawable/kappa"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/kappa2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,43 +31,54 @@
                 android:textColor="#4e266e" />
 
             <ImageView
+                android:id="@+id/hangout_addInterest"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/tvInt"
-                android:src="@drawable/plus"
-                android:padding="2dp"/>
+                android:onClick="addInterest"
+                android:padding="2dp"
+                android:src="@drawable/plus" />
 
         </RelativeLayout>
+
         <org.apmem.tools.layouts.FlowLayout
+            android:id="@+id/hangout_flowlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-            <include layout="@layout/item_flow_interest"/>
-            <include layout="@layout/item_flow_interest"/>
-            <include layout="@layout/item_flow_interest"/>
-            <include layout="@layout/item_flow_interest"/>
+            <include layout="@layout/item_flow_interest" />
+
+            <include layout="@layout/item_flow_interest" />
+
+            <include layout="@layout/item_flow_interest" />
+
+            <include layout="@layout/item_flow_interest" />
+
+
         </org.apmem.tools.layouts.FlowLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
             android:text="Description"
-            android:textColor="#4e266e"
-            android:layout_marginBottom="3dp"/>
+            android:textColor="#4e266e" />
+
         <EditText
             android:id="@+id/etDiscHangout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:inputType="textMultiLine"
             android:background="@drawable/edittext_signup_shape"
-            android:textSize="14sp"
-            android:text="Hello World"
             android:gravity="top|left"
-            android:textColor="#784e8b"
+            android:inputType="textMultiLine"
             android:padding="4dp"
-            />
+            android:text="Hello World"
+            android:textColor="#784e8b"
+            android:textSize="14sp" />
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,45 +96,49 @@
                 android:layout_height="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/tvAct"
-                android:src="@drawable/plus"
-                android:padding="2dp"/>
+                android:padding="2dp"
+                android:src="@drawable/plus" />
         </RelativeLayout>
+
         <org.apmem.tools.layouts.FlowLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <include layout="@layout/item_flow_interest"/>
-        </org.apmem.tools.layouts.FlowLayout>
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal">
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Location"
-               android:textColor="#4e266e"
-               />
 
-           <EditText
-               android:id="@+id/editText"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="15dp"
-               android:text="City"
-               android:textSize="15sp" />
-       </LinearLayout>
+            <include layout="@layout/item_flow_interest" />
+        </org.apmem.tools.layouts.FlowLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textColor="#4e266e" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="City"
+                android:textSize="15sp" />
+        </LinearLayout>
+
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/btn_detail"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="10dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="3dp"
             fancy:fb_defaultColor="#6f6ae8"
             fancy:fb_focusColor="#4c49a1"
             fancy:fb_iconPosition="left"
