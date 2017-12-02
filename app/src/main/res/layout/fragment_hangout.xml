@@ -7,13 +7,27 @@
     tools:context="com.example.android.blendin.Fragments.HangoutFragment"
     android:background="#FFC8ADCE">
 
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/hiddenView"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:src="@drawable/kappa"
-        android:scaleType="centerCrop"/>
+       >
+
+        <fragment
+
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.example.styledmap.MapsActivityRaw"
+            map:cameraZoom="10" />
+        </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -44,7 +58,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="10dp">
-
             <include layout="@layout/item_flow_interest"/>
             <include layout="@layout/item_flow_interest"/>
             <include layout="@layout/item_flow_interest"/>
@@ -114,7 +127,7 @@
                android:textSize="15sp" />
        </LinearLayout>
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_detail"
+            android:id="@+id/btn_LetsGo"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"

@@ -1,9 +1,11 @@
 package com.example.android.blendin;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +19,7 @@ import android.view.MenuItem;
 import com.example.android.blendin.Fragments.HangoutFragment;
 import com.example.android.blendin.Fragments.MysquadFragment;
 import com.example.android.blendin.Fragments.NewsfeedFragment;
+import com.example.android.blendin.Fragments.ProfileFragment;
 import com.example.android.blendin.Fragments.RequestFragment;
 
 /**
@@ -26,13 +29,19 @@ import com.example.android.blendin.Fragments.RequestFragment;
 public class Navigation_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Fragment fragment;
+    Toolbar toolbar;
     FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,R.string.open_navigation,R.string.close_navigation);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
         // Opens Default Fragment -> Newsfeed
         fragment = new NewsfeedFragment();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -40,22 +49,19 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         fragmentTransaction.commit();
         //getSupportActionBar().setTitle("Newsfeed");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,R.string.open_navigation,R.string.close_navigation);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.profile_nav_item) {
                     //TODO Profile Fragment
-            /*fragment = new ProfileFragment();
+            fragment = new ProfileFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_main, fragment, "Profile");
             fragmentTransaction.commit();
-            //getSupportActionBar().setTitle(getString(R.string.Profile));*/
+            //getSupportActionBar().setTitle(getString(R.string.Profile));
 
                 } else if (id == R.id.hangouts_nav_item) {
                     fragment = new HangoutFragment();
@@ -106,6 +112,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -166,6 +173,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
