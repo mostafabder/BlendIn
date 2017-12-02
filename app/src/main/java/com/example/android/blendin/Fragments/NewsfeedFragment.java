@@ -21,6 +21,11 @@ import java.util.List;
 public class NewsfeedFragment extends Fragment {
 
 
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    List<NewsFeedModel> newsFeedsList;
+    RecyclerView.LayoutManager layoutManager;
+
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -39,7 +44,6 @@ public class NewsfeedFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         newsFeedsList = new ArrayList<>();
-
         //Test Data
         for(int i=0; i<5; i++){
             NewsFeedModel newsFeedModel = new NewsFeedModel(

@@ -49,7 +49,6 @@ public class MySquadAdapter extends RecyclerView.Adapter<MySquadAdapter.ViewHold
     public int getItemCount() {
         return mySquadItemsList.size();
     }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView squadImage;
         TextView squadName;
@@ -63,3 +62,4 @@ public class MySquadAdapter extends RecyclerView.Adapter<MySquadAdapter.ViewHold
         }
     }
 }
+
