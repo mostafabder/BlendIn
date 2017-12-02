@@ -2,6 +2,8 @@ package com.example.android.blendin.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,13 +21,17 @@ import java.util.List;
 public class NewsfeedFragment extends Fragment {
 
 
-
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<NewsFeedModel> newsFeedsList;
     RecyclerView.LayoutManager layoutManager;
 
 
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    List<NewsFeedModel> newsFeedsList;
+    RecyclerView.LayoutManager layoutManager;
+    com.github.clans.fab.FloatingActionButton floatingActionButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +44,7 @@ public class NewsfeedFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         newsFeedsList = new ArrayList<>();
+        //Test Data
         for(int i=0; i<5; i++){
             NewsFeedModel newsFeedModel = new NewsFeedModel(
                     R.drawable.user,
@@ -51,11 +58,21 @@ public class NewsfeedFragment extends Fragment {
                     "6969" );
             newsFeedsList.add(newsFeedModel);
         }
-        // specify an adapter (see also next example)
+
         adapter = new NewsfeedAdapter(newsFeedsList,getActivity());
         recyclerView.setAdapter(adapter);
+        floatingActionButton = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new CreatePostFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_main, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
         return rootView;
     }
-
-
 }
