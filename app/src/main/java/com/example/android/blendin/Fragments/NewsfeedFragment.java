@@ -21,7 +21,6 @@ import java.util.List;
 public class NewsfeedFragment extends Fragment {
 
 
-    
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<NewsFeedModel> newsFeedsList;

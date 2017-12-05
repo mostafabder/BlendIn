@@ -46,6 +46,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,R.string.open_navigation,R.string.close_navigation);
         drawer.setDrawerListener(toggle);
