@@ -30,19 +30,6 @@ public class MySquadAdapter extends RecyclerView.Adapter<MySquadAdapter.ViewHold
         this.context = context;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView squadImage;
-        TextView squadName;
-        TextView squadMembersCount;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            squadImage = (CircleImageView) itemView.findViewById(R.id.squadImage);
-            squadName = (TextView) itemView.findViewById(R.id.squadName);
-            squadMembersCount = (TextView) itemView.findViewById(R.id.squadMembersCount);
-        }
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -62,4 +49,17 @@ public class MySquadAdapter extends RecyclerView.Adapter<MySquadAdapter.ViewHold
     public int getItemCount() {
         return mySquadItemsList.size();
     }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView squadImage;
+        TextView squadName;
+        TextView squadMembersCount;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            squadImage = (CircleImageView) itemView.findViewById(R.id.squadImage);
+            squadName = (TextView) itemView.findViewById(R.id.squadName);
+            squadMembersCount = (TextView) itemView.findViewById(R.id.squadMembersCount);
+        }
+    }
 }
+
