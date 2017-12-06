@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
+
 public class HangoutFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     ValueAnimator va;
