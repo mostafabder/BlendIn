@@ -10,12 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.blendin.Adapters.MySquadAdapter;
+import com.example.android.blendin.Adapters.NewsfeedAdapter;
+import com.example.android.blendin.Models.MySquadModel;
+import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MysquadFragment extends Fragment {
     RecyclerView recyclerView;
-
+    RecyclerView.Adapter adapter;
+    List<MySquadModel> mySquadModelList;
+    RecyclerView.LayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,7 +34,16 @@ public class MysquadFragment extends Fragment {
         recyclerView=(RecyclerView)view.findViewById(R.id.mysquad_recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-
+        mySquadModelList=new ArrayList<>();
+        for(int i=0; i<5; i++){
+            MySquadModel mySquadModel = new MySquadModel(
+                    R.drawable.user,
+                    "FIFA 17",
+                    "30 Member");
+            mySquadModelList.add(mySquadModel);
+        }
+        adapter = new MySquadAdapter(mySquadModelList,getActivity());
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
