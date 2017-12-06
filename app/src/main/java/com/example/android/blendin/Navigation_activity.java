@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
+import android.support.v7.app.ActionBar;
 import android.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -46,17 +47,20 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,R.string.open_navigation,R.string.close_navigation);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open_navigation, R.string.close_navigation);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
         // Opens Default Fragment -> Newsfeed
         // transmission(new NewsfeedFragment(),"news");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_main, new NewsfeedFragment(), "news");
         fragmentTransaction.commit();
-        //getSupportActionBar().setTitle("Newsfeed");
+        getSupportActionBar().setTitle("Newsfeed");
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -67,22 +71,24 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         // Handling navigation view item clicks.
         int id = item.getItemId();
         if (id == R.id.profile_nav_item) {
-            transmission(new ProfileFragment(),"profile");
+            transmission(new ProfileFragment(), "Profile");
+
         } else if (id == R.id.hangouts_nav_item) {
-            transmission(new HangoutFragment(), "hangouts");
+            transmission(new HangoutFragment(), "Hangouts");
  
         } else if (id == R.id.Newsfeed_nav_item) {
-            transmission(new NewsfeedFragment(), "news");
+            transmission(new NewsfeedFragment(), "Newsfeed");
  
         } else if (id == R.id.request_nav_item) {
-            transmission(new RequestFragment(), "req");
+            transmission(new RequestFragment(), "Requests");
  
         } else if (id == R.id.Mysquad_nav_item) {
-            transmission(new MysquadFragment(), "squad");
+            transmission(new MysquadFragment(), "My Squads");
  
         } else if (id == R.id.settings_nav_item) {
             //TODO :: Settings Fragment
             //transmission(new SettingsFragment(),"set");
+            getSupportActionBar().setTitle("Settings");
         } else if (id == R.id.signout_nav_item) {
             //TODO :: Sign out
         }
@@ -107,6 +113,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
         fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
         fragmentTransaction.commit();
+        getSupportActionBar().setTitle(key);
     }
  
     public void addInterest(View view) {
