@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.android.blendin.Fragments.NewsfeedFragment"
-    android:background="#c8adce">
+    android:background="@color/offWhite">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/newsfeed_recyclerView"
@@ -22,7 +22,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
         android:src="@drawable/plus"
-        fab:fab_colorNormal="#643689"
+        fab:fab_colorNormal="@color/dark_blue"
         fab:fab_colorPressed="#FF935EBE"
         fab:fab_colorRipple="#FF935EBE"
         app:fab_shadowRadius="3dp"

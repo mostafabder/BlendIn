@@ -42,7 +42,8 @@
                     android:text="Mostafa Waleed"
                     android:textSize="17sp"
                     android:layout_marginTop="15dp"
-                    android:textColor="#34309e"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
                     />
                 <ImageView
                     android:id="@+id/ivLocationPin"
@@ -55,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textColor="#34309e"
+                    android:textColor="@color/dark_blue"
                     android:text="Mansoura"
                     android:layout_toRightOf="@+id/ivLocationPin"
                     android:layout_below="@+id/tvItemNameNews"
@@ -68,7 +69,7 @@
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:text="1 hour ago"
-                android:textColor="#34309e"
+                android:textColor="@color/dark_blue"
                 android:textSize="15sp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -87,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:textColor="#34309e"
+                android:textColor="@color/dark_blue"
                 android:textSize="19sp"
                 android:text="Eating at Bremer with omar, hamada and 3 others"/>
 
@@ -96,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:textColor="#34309e"
+                android:textColor="@color/blue"
                 android:layout_marginTop="5dp"
                 android:text="Great times the boys, Best food"
                 android:layout_below="@+id/tvItemActivityNews"/>
@@ -124,7 +125,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="100"
-                    android:textColor="#34309e"
+                    android:textColor="@color/blue"
                     android:textSize="12sp"
                     android:layout_marginTop="5dp"
                     />
@@ -142,7 +143,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="90"
-                    android:textColor="#34309e"
+                    android:textColor="@color/blue"
                     android:textSize="12sp"
                     android:layout_marginTop="5dp"
                     />

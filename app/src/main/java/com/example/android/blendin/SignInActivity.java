@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -13,7 +14,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        FancyButton fancyButton=(FancyButton)findViewById(R.id.btn_detail);
+        Button fancyButton=(Button)findViewById(R.id.btn_signin);
         fancyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -21,6 +22,9 @@ public class SignInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void backbtn(View view) {this.finish();
     }
 //    public void openNav(View view){
 //        Intent intent = new Intent(this, Navigation_activity.class);

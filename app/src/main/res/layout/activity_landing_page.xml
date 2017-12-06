@@ -14,8 +14,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#6f6ae8"
-        android:alpha=".3"/>
+        android:background="#90000000"
+        />
 
     <ImageView
         android:id="@+id/logo"
@@ -42,14 +42,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="It's time for a "
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/offWhite"
+            />
         <TextView
             android:id="@+id/header2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Change !"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="#FFF"
+           />
 
     </LinearLayout>
     <LinearLayout
@@ -65,7 +69,9 @@
             android:textAlignment="center"
             android:text="meet new people that shares your interests\nand discover new places."
             android:layout_margin="10dp"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#FFF"
+            android:textStyle="bold"/>
     </LinearLayout>
 </LinearLayout>
 
@@ -75,6 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign up"
+        android:textColor="@color/offWhite"
         android:background="@drawable/signup_btn_shape"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="120dp"
@@ -86,7 +93,7 @@
         android:text="Sign in"
         android:background="@drawable/signin_btn_shape"
         android:layout_marginBottom="15dp"
-        android:textColor="#6f6ae8"
+        android:textColor="@color/blue"
         android:layout_above="@id/sign_up_btn"
         android:onClick="openSignIn"
         />
@@ -101,6 +108,7 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="25dp"
         android:textStyle="bold"
-        android:fontFamily="sans-serif-condensed"/>
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@color/offWhite"/>
 
 </RelativeLayout>

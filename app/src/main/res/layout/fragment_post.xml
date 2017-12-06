@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/offWhite"
     android:orientation="vertical"
     android:weightSum="20"
     tools:context="com.example.android.blendin.Fragments.CreatePostFragment">
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:src="@mipmap/ic_cancel" />
+            android:src="@drawable/cancel" />
     </LinearLayout>
 
     <EditText
@@ -25,7 +25,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="16.5"
-        android:hint="How was your last hangout ?" />
+        android:padding="10dp"
+        android:hint="How was your last hangout ?"
+        android:gravity="top"
+        android:textColor="@color/blue"
+        android:textColorHint="@color/darkgrey"/>
 
     <View
         android:layout_width="match_parent"
@@ -44,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_margin="15dp"
-            android:src="@mipmap/ic_gallery" />
+            android:src="@drawable/gallery" />
 
         <ImageView
             android:id="@+id/createPost_AddPicCamera"
@@ -53,7 +57,7 @@
             android:layout_centerVertical="true"
             android:layout_margin="15dp"
             android:layout_toRightOf="@+id/createPost_AddPicGallery"
-            android:src="@mipmap/ic_camera" />
+            android:src="@drawable/camera" />
 
         <ImageView
             android:id="@+id/createPost_AddPreviousHangout"
@@ -62,14 +66,15 @@
             android:layout_centerVertical="true"
             android:layout_margin="15dp"
             android:layout_toRightOf="@+id/createPost_AddPicCamera"
-            android:src="@mipmap/ic_hangout_temp" />
+            android:src="@drawable/letter_h" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="POST" />
+            android:text="POST"
+            android:textColor="@color/dark_blue"/>
     </RelativeLayout>
 
 </LinearLayout>
