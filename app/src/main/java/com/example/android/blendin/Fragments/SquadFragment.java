@@ -59,6 +59,5 @@ public class SquadFragment extends Fragment {
         super.onStop();
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
-
+ 
 }
-
