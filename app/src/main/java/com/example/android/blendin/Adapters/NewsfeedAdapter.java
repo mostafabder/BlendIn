@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.RecyclerViewClickListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -24,36 +25,13 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
     List<NewsFeedModel> newsfeedItemsList;
     NewsFeedModel newsFeedModel;
     private Context context;
+    private RecyclerViewClickListener recyclerViewClickListener;
 
 
-    public NewsfeedAdapter(List<NewsFeedModel> newsfeedItemsList, Context context) {
+    public NewsfeedAdapter(List<NewsFeedModel> newsfeedItemsList, Context context, RecyclerViewClickListener recyclerViewClickListener) {
+        this.recyclerViewClickListener = recyclerViewClickListener;
         this.newsfeedItemsList = newsfeedItemsList;
         this.context = context;
-    }
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public CircleImageView userProfileImage;
-        public TextView userNameTxt;
-        public TextView userLocationTxt;
-        public TextView postTimeTxt;
-        public ImageView postImage;
-        public TextView postMainTxt;
-        public TextView postDescTxt;
-        public TextView postLikesCount;
-        public TextView postCommentsCount;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-              userProfileImage = (CircleImageView) itemView.findViewById(R.id.profile_image);
-              userNameTxt = (TextView) itemView.findViewById(R.id.tvItemNameNews);
-              userLocationTxt = (TextView) itemView.findViewById(R.id.tvItemLocNews);
-              postTimeTxt = (TextView) itemView.findViewById(R.id.tvItemTimeNews);
-              postImage = (ImageView) itemView.findViewById(R.id.post_image);
-              postMainTxt = (TextView) itemView.findViewById(R.id.tvItemActivityNews);
-              postDescTxt = (TextView) itemView.findViewById(R.id.tvItemDiscNews);
-              postLikesCount = (TextView) itemView.findViewById(R.id.tvItemLikesNumNews);
-              postCommentsCount = (TextView) itemView.findViewById(R.id.tvItemCommentsNumNews);
-        }
     }
 
     @Override
@@ -65,7 +43,7 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_newsfeed,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, recyclerViewClickListener);
     }
 
     @Override
@@ -81,5 +59,41 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         holder.postLikesCount.setText(newsFeedModel.getLikes());
         holder.postCommentsCount.setText(newsFeedModel.getComments());
 
+
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        // each data item is just a string in this case
+        public CircleImageView userProfileImage;
+        public TextView userNameTxt;
+        public TextView userLocationTxt;
+        public TextView postTimeTxt;
+        public ImageView postImage;
+        public TextView postMainTxt;
+        public TextView postDescTxt;
+        public TextView postLikesCount;
+        public TextView postCommentsCount;
+        private RecyclerViewClickListener mListener;
+
+        public ViewHolder(View itemView, RecyclerViewClickListener listener) {
+            super(itemView);
+            userProfileImage = (CircleImageView) itemView.findViewById(R.id.profile_image);
+            userNameTxt = (TextView) itemView.findViewById(R.id.tvItemNameNews);
+            userLocationTxt = (TextView) itemView.findViewById(R.id.tvItemLocNews);
+            postTimeTxt = (TextView) itemView.findViewById(R.id.tvItemTimeNews);
+            postImage = (ImageView) itemView.findViewById(R.id.post_image);
+            postMainTxt = (TextView) itemView.findViewById(R.id.tvItemActivityNews);
+            postDescTxt = (TextView) itemView.findViewById(R.id.tvItemDiscNews);
+            postLikesCount = (TextView) itemView.findViewById(R.id.tvItemLikesNumNews);
+            postCommentsCount = (TextView) itemView.findViewById(R.id.tvItemCommentsNumNews);
+            mListener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view, getAdapterPosition());
+        }
     }
 }

@@ -4,49 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.blendin.SignUpActivity"
+    android:background="@color/offWhite"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    tools:context="com.example.android.blendin.SignUpActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/signup_header_shape"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         >
         <ImageView
-            android:src="@mipmap/back_arrow"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:onClick="backbtn"
+            android:src="@mipmap/back_arrow"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign Up"
-            android:textAllCaps="true"
-            android:layout_marginLeft="70dp"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
-            />
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:src="@drawable/logo" />
 
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text="Sign up with Social Network or Email"
         android:textColor="@android:color/darker_gray"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="30dp"
-        android:textSize="16sp"
-        android:gravity="center"/>
+        android:textSize="16sp" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
         >
         <LinearLayout
             android:layout_width="wrap_content"
@@ -76,7 +73,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         android:paddingLeft="25dp"
         android:paddingRight="25dp">
@@ -84,33 +81,33 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="3"
-            android:background="@android:color/darker_gray"
-            android:alpha=".5"/>
+            android:alpha=".5"
+            android:background="@android:color/darker_gray" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="OR"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="OR"
             android:textColor="@android:color/darker_gray"
             />
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="3"
-            android:background="@android:color/darker_gray"
-            android:alpha=".5"/>
+            android:alpha=".5"
+            android:background="@android:color/darker_gray" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_marginTop="30dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -119,33 +116,35 @@
             <EditText
                 android:id="@+id/firstname_input"
                 android:layout_width="0dp"
-                android:textColor="@android:color/black"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
                 android:background="@drawable/edittext_signup_shape"
-                android:padding="10dp"
                 android:hint="First Name"
                 android:inputType="textPersonName"
-                android:textColorHint="#cccccc"
                 android:nextFocusDown="@+id/lastname_input"
                 android:nextFocusLeft="@+id/lastname_input"
                 android:nextFocusRight="@+id/lastname_input"
                 android:nextFocusUp="@+id/lastname_input"
+                android:padding="10dp"
+                android:textColor="@color/blue"
+                android:textColorHint="#cccccc"
                 android:textColorLink="@color/colorPrimaryDark"
                 android:textCursorDrawable="@null"
                 />
             <EditText
                 android:id="@+id/lastname_input"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
+                android:layout_weight="1"
                 android:background="@drawable/edittext_signup_shape"
-                android:padding="10dp"
-                android:inputType="textPersonName"
                 android:hint="Last Name"
-                android:textCursorDrawable="@null"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/blue"
                 android:textColorHint="#cccccc"
+                android:textCursorDrawable="@null"
                 />
         </LinearLayout>
 
@@ -153,37 +152,40 @@
                 android:id="@+id/email_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/edittext_signup_shape"
-                android:padding="10dp"
                 android:hint="Email"
-                android:textColorHint="#cccccc"
-                android:textColor="@android:color/black"
-                android:textCursorDrawable="@null"
                 android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textColor="@color/blue"
+                android:textColorHint="#cccccc"
+                android:textCursorDrawable="@null"
                 />
             <EditText
                 android:id="@+id/password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/edittext_signup_shape"
-                android:padding="10dp"
-                android:textCursorDrawable="@null"
                 android:hint="Password"
-                android:textColor="@android:color/black"
-                android:textColorHint="#cccccc"
                 android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/blue"
+                android:textColorHint="#cccccc"
+                android:textCursorDrawable="@null"
                 />
         <EditText
             android:id="@+id/confirmPassword_input"
-            android:textCursorDrawable="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/edittext_signup_shape"
-            android:padding="10dp"
-            android:textColor="@android:color/black"
             android:hint="Confirm Password"
-            android:textColorHint="#cccccc"
             android:inputType="textPassword"
+            android:padding="10dp"
+            android:textColor="@color/blue"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@null"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -193,30 +195,31 @@
             android:paddingTop="5dp">
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="2"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="Gender :"
-                android:textColor="#cccccc"
+                android:textColor="@color/darkgrey"
                 android:textSize="19sp"/>
             <RadioGroup
                 android:layout_width="0dp"
-                android:layout_weight="5"
                 android:layout_height="wrap_content"
+                android:layout_weight="5"
                 android:orientation="horizontal">
                 <RadioButton
                     android:id="@+id/male_radio_input"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Male"
                     android:layout_weight="1"
-                    android:textColor="#cccccc"/>
+                    android:text="Male"
+
+                    android:textColor="@color/darkgrey" />
                 <RadioButton
                     android:id="@+id/female_radio_input"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Female"
                     android:layout_weight="1"
-                    android:textColor="#cccccc"/>
+                    android:text="Female"
+                    android:textColor="@color/darkgrey" />
             </RadioGroup>
 
         </LinearLayout>
@@ -225,11 +228,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/signup_submit_btn_shape"
         android:layout_gravity="center"
-        android:text="submit"
-        android:textSize="18sp"
         android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/signup_submit_btn_shape"
+        android:text="Sign UP"
+        android:textColor="#FFF"
+        android:textSize="18sp"
         />
 
 

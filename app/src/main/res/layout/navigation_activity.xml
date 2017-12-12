@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/offWhite"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
     <include
         android:id="@+id/action_bar"
@@ -14,7 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/action_bar"
+        android:background="@color/offWhite"
         android:fitsSystemWindows="true"
+        app:itemIconTint="#000"
+        app:itemTextColor="@color/blue"
         tools:openDrawer="start">
 
         <FrameLayout

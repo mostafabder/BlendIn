@@ -1,148 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/sign_in_gradient"
-    android:theme="@style/AppTheme"
-    >
-    <RelativeLayout
+    tools:context="com.example.android.blendin.SignUpActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/signup_header_shape"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="backbtn"
+            android:src="@mipmap/back_arrow" />
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:src="@drawable/logo" />
+
+    </LinearLayout>
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Sign in with Social Network or Email"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
+            android:background="@drawable/facebook_btn_shape"
+            android:gravity="center"
             >
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="300dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/fb_logo" />
 
-                android:src="@drawable/logo" />
-            <!-- Email Label -->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="18dp"
-                app:hintTextAppearance="@style/TextAppearence.TextInputLayout.Form"
-                >
-                <EditText android:id="@+id/input_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:hint="Email" />
-            </android.support.design.widget.TextInputLayout>
-
-            <!-- Password Label -->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="30dp"
-                app:hintTextAppearance="@style/TextAppearence.TextInputLayout.Form">
-                <EditText android:id="@+id/input_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:hint="Password"/>
-            </android.support.design.widget.TextInputLayout>
-
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_detail"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="20dp"
-                android:layout_margin="5dp"
-                android:paddingTop="10dp"
-                android:layout_gravity="center"
-                fancy:fb_borderColor="#555555"
-                fancy:fb_borderWidth="1dp"
-                fancy:fb_defaultColor="#ffffff"
-                fancy:fb_focusColor="#f08ffc"
-                fancy:fb_radius="10dp"
-                fancy:fb_text="Login"
-                fancy:fb_textColor="#432767"
-                fancy:fb_textSize="20sp"
-                fancy:fb_iconPosition="left"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="forgot password ?"
-                android:layout_gravity="right"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp">
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
-                    android:alpha=".5"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="OR"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="@android:color/darker_gray"
-                    />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
-                    android:alpha=".5"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_gravity="center"
-                >
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/facebook_btn_shape"
-                    android:gravity="center"
-                    >
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@mipmap/fb_logo"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/twitter_btn_shape"
-                    android:gravity="center">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@mipmap/twitter_logo"/>
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/twitter_btn_shape"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/twitter_logo" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:alpha=".5"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="OR"
+            android:textColor="@android:color/darker_gray" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:alpha=".5"
+            android:background="@android:color/darker_gray" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittext_signup_shape"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textColor="@color/blue"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@null" />
+
+        <EditText
+            android:id="@+id/confirmPassword_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittext_signup_shape"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textColor="@color/blue"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@null" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/signup_submit_btn_shape"
+        android:text="Sign in"
+        android:textColor="#FFF"
+        android:textSize="18sp" />
+
+
 </LinearLayout>

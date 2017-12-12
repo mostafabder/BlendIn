@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.android.blendin.Adapters.NewsfeedAdapter;
 import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.RecyclerViewClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +54,20 @@ public class NewsfeedFragment extends Fragment {
                     "6969" );
             newsFeedsList.add(newsFeedModel);
         }
-
-        adapter = new NewsfeedAdapter(newsFeedsList,getActivity());
+        RecyclerViewClickListener listener = new RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                //TODO different fragment data depends on the post , waiting for the logic .-.
+                Fragment fragment = new CommentsFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+                fragmentTransaction.add(R.id.content_main, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        };
+        adapter = new NewsfeedAdapter(newsFeedsList, getActivity(), listener);
         recyclerView.setAdapter(adapter);
         floatingActionButton = (com.github.clans.fab.FloatingActionButton) rootView.findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -62,11 +76,19 @@ public class NewsfeedFragment extends Fragment {
                 Fragment fragment = new CreatePostFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content_main, fragment);
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+                fragmentTransaction.add(R.id.content_main, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
+
+
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

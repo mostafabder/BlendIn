@@ -1,5 +1,7 @@
 package com.example.android.blendin.Fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.net.Uri;
@@ -28,14 +30,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
+
 public class HangoutFragment extends Fragment implements OnMapReadyCallback {
-    private GoogleMap mMap;
     ValueAnimator va;
-    RelativeLayout hidden;
+    LinearLayout hidden;
     LinearLayout linear;
     boolean isBottom;
     View v;
-
+    private GoogleMap mMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,12 +45,11 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback {
         // Inflate the layout for this fragment
         v=inflater.inflate(R.layout.fragment_hangout, container, false);
         FancyButton fancyButton=(FancyButton)v.findViewById(R.id.btn_LetsGo);
-        hidden=(RelativeLayout) v.findViewById(R.id.hiddenView);
         linear=(LinearLayout)v.findViewById(R.id.linear);
         fancyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               expandView();
+                SlideToDown();
                 mMap.getUiSettings().setScrollGesturesEnabled(true);
             }
         });
@@ -75,79 +76,21 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.getUiSettings().setScrollGesturesEnabled(false);
     }
-    private void expandView() {
 
-        hidden.clearAnimation();
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        int maxWidth = display.getWidth();
-        int maxHeight = display.getHeight();
-        ExpandCollapseViewAnimation animation = new ExpandCollapseViewAnimation(hidden, maxWidth,maxHeight, true);
-        animation.setDuration(400);
-        animation.setAnimationListener(new Animation.AnimationListener() {
+    public void SlideToDown() {
+        linear.setVisibility(View.VISIBLE);
+        linear.setAlpha(0.0f);
 
-            @Override
-            public void onAnimationStart(Animation animation) {
-                linear.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-            }
-        });
-        hidden.startAnimation(animation);
-        hidden.invalidate();
-    }
-    public class ExpandCollapseViewAnimation extends Animation {
-        int targetWidth;
-        int targetHeight;
-        int initialWidth;
-        int initialHeight;
-        boolean expand;
-        View view;
-
-        public ExpandCollapseViewAnimation(View view, int targetWidth, int targetHeight ,boolean expand) {
-            this.view = view;
-            this.targetWidth = targetWidth;
-            this.targetHeight = targetHeight;
-            this.initialWidth = view.getWidth();
-            this.initialHeight = view.getHeight();
-            this.expand = expand;
-        }
-
-        @Override
-        protected void applyTransformation(float interpolatedTime, Transformation t) {
-            int newWidth, newHeight;
-            if (expand) {
-                newWidth = this.initialWidth
-                        + (int) ((this.targetWidth - this.initialWidth) * interpolatedTime);
-                newHeight = this.initialHeight
-                        + (int) ((this.targetHeight - this.initialHeight) * interpolatedTime);
-            } else {
-                newWidth = this.initialWidth
-                        - (int) ((this.initialWidth - this.targetWidth) * interpolatedTime);
-                newHeight = this.initialHeight
-                        - (int) ((this.initialHeight - this.targetHeight) * interpolatedTime);
-            }
-
-            view.getLayoutParams().width = newWidth;
-            view.getLayoutParams().height = newHeight;
-            view.requestLayout();
-        }
-
-        @Override
-        public void initialize(int width, int height, int parentWidth,
-                               int parentHeight) {
-            super.initialize(width, height, parentWidth, parentHeight);
-        }
-
-        @Override
-        public boolean willChangeBounds() {
-            return true;
-        }
-
+// Start the animation
+        linear.animate()
+                .translationY(linear.getHeight())
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        linear.setVisibility(View.GONE);
+                    }
+                });
     }
 }

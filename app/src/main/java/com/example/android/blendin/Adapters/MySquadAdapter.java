@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.android.blendin.Models.MySquadModel;
 import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.RecyclerViewClickListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.List;
@@ -23,18 +24,20 @@ public class MySquadAdapter extends RecyclerView.Adapter<MySquadAdapter.ViewHold
     List<MySquadModel> mySquadItemsList;
     MySquadModel mySquadModel;
     private Context context;
+    private RecyclerViewClickListener recyclerViewClickListener;
 
 
-    public MySquadAdapter(List<MySquadModel> mySquadItemsList, Context context) {
+    public MySquadAdapter(List<MySquadModel> mySquadItemsList, Context context, RecyclerViewClickListener listener) {
         this.mySquadItemsList = mySquadItemsList;
         this.context = context;
+        recyclerViewClickListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_mysquad,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, recyclerViewClickListener);
     }
 
     @Override
@@ -49,16 +52,25 @@ public class MySquadAdapter extends RecyclerView.Adapter<MySquadAdapter.ViewHold
     public int getItemCount() {
         return mySquadItemsList.size();
     }
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView squadImage;
         TextView squadName;
         TextView squadMembersCount;
+        private RecyclerViewClickListener mListener;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, RecyclerViewClickListener listener) {
             super(itemView);
             squadImage = (CircleImageView) itemView.findViewById(R.id.squadImage);
             squadName = (TextView) itemView.findViewById(R.id.squadName);
             squadMembersCount = (TextView) itemView.findViewById(R.id.squadMembersCount);
+            mListener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view, getAdapterPosition());
         }
     }
 }
