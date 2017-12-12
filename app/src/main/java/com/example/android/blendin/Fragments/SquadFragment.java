@@ -61,3 +61,4 @@ public class SquadFragment extends Fragment {
     }
 
 }
+
