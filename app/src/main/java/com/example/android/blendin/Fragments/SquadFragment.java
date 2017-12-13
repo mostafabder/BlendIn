@@ -40,7 +40,7 @@ public class SquadFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         squadChatMessageModelList = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 15; i++) {
             SquadChatMessageModel squadChatMessageModel = new SquadChatMessageModel(
                     R.drawable.user,
                     "Omar ELRayes",
@@ -55,9 +55,8 @@ public class SquadFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        super.onDestroy();
     }
- 
 }

@@ -45,6 +45,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/gang_nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -175,40 +176,7 @@
                 android:id="@+id/groupPage_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/user" />
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Add a comment..."
-                    android:inputType="text|textMultiLine|textCapSentences|textNoSuggestions"
-                    android:maxLength="100"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="clip_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/dark_blue" />
-            </LinearLayout>
         </LinearLayout>
-
 
     </android.support.v4.widget.NestedScrollView>
 
@@ -220,5 +188,40 @@
         android:src="@drawable/checked"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        app:layout_anchor="@id/gang_nestedScrollView"
+        app:layout_anchorGravity="bottom">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/user" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="Add a comment..."
+            android:inputType="text|textMultiLine|textCapSentences|textNoSuggestions"
+            android:maxLength="100"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="clip_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@color/dark_blue" />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
