@@ -9,18 +9,30 @@ public class ProfileModel {
     String likesCount;
     String commentsCount;
     int img;
+    boolean like;
 
+    public ProfileModel(String topText, String likesCount, String commentsCount, int img, boolean like) {
+        this.topText = topText;
+        this.likesCount = likesCount;
+        this.commentsCount = commentsCount;
+        this.img = img;
+        this.like = like;
+    }
 
+    public boolean isLike() {
+        return like;
+    }
+
+    public void setLike(boolean like) {
+        this.like = like;
+    }
 
     public String getTopText() {
         return topText;
     }
 
-    public ProfileModel(String topText, String likesCount, String commentsCount, int img) {
+    public void setTopText(String topText) {
         this.topText = topText;
-        this.likesCount = likesCount;
-        this.commentsCount = commentsCount;
-        this.img = img;
     }
 
     public String getLikesCount() {
@@ -38,11 +50,6 @@ public class ProfileModel {
     public void setCommentsCount(String commentsCount) {
         this.commentsCount = commentsCount;
     }
-
-    public void setTopText(String topText) {
-        this.topText = topText;
-    }
-
 
     public int getImg() {
         return img;

@@ -1,13 +1,19 @@
 package com.example.android.blendin.Adapters;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.android.blendin.Fragments.CommentsFragment;
 import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
 import com.example.android.blendin.RecyclerViewClickListener;
@@ -47,7 +53,7 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         newsFeedModel = newsfeedItemsList.get(position);
         holder.userProfileImage.setImageResource(newsFeedModel.getAvatar());
         holder.userNameTxt.setText(newsFeedModel.getName());
@@ -58,7 +64,31 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         holder.postDescTxt.setText(newsFeedModel.getDisc());
         holder.postLikesCount.setText(newsFeedModel.getLikes());
         holder.postCommentsCount.setText(newsFeedModel.getComments());
+        holder.likeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (newsfeedItemsList.get(position).isLike()) {
+                    holder.likeImage.setImageResource(R.drawable.dislike);
+                    newsfeedItemsList.get(position).setLike(false);
+                } else {
+                    holder.likeImage.setImageResource(R.drawable.like);
+                    newsfeedItemsList.get(position).setLike(true);
+                }
 
+            }
+        });
+        holder.commentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new CommentsFragment();
+                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+                fragmentTransaction.add(R.id.content_main, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
 
     }
 
@@ -74,6 +104,8 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         public TextView postDescTxt;
         public TextView postLikesCount;
         public TextView postCommentsCount;
+        public ImageView likeImage;
+        public LinearLayout commentLayout;
         private RecyclerViewClickListener mListener;
 
         public ViewHolder(View itemView, RecyclerViewClickListener listener) {
@@ -87,6 +119,8 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
             postDescTxt = (TextView) itemView.findViewById(R.id.tvItemDiscNews);
             postLikesCount = (TextView) itemView.findViewById(R.id.tvItemLikesNumNews);
             postCommentsCount = (TextView) itemView.findViewById(R.id.tvItemCommentsNumNews);
+            likeImage = (ImageView) itemView.findViewById(R.id.iv_newsfeed_like);
+            commentLayout = (LinearLayout) itemView.findViewById(R.id.ll_newsfeed_comment);
             mListener = listener;
             itemView.setOnClickListener(this);
         }

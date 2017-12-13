@@ -3,11 +3,13 @@ package com.example.android.blendin.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.android.blendin.Adapters.CommentAdapter;
 import com.example.android.blendin.Adapters.RequestAdapter;
@@ -26,7 +28,7 @@ public class CommentsFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<CommentModel> commentModelList;
-    RecyclerView.LayoutManager layoutManager;
+    LinearLayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +39,8 @@ public class CommentsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
         commentModelList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             CommentModel commentModel = new CommentModel(

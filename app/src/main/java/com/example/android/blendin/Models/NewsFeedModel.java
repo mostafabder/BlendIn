@@ -15,8 +15,9 @@ public class NewsFeedModel {
     String disc;
     String likes;
     String comments;
+    boolean like;
 
-    public NewsFeedModel(int avatar, String name, String city, String timeAgo, int image, String activity, String disc, String likes, String comments) {
+    public NewsFeedModel(int avatar, String name, String city, String timeAgo, int image, String activity, String disc, String likes, String comments, boolean like) {
         this.avatar = avatar;
         this.name = name;
         this.city = city;
@@ -26,6 +27,15 @@ public class NewsFeedModel {
         this.disc = disc;
         this.likes = likes;
         this.comments = comments;
+        this.like = like;
+    }
+
+    public boolean isLike() {
+        return like;
+    }
+
+    public void setLike(boolean like) {
+        this.like = like;
     }
 
     public int getAvatar() {

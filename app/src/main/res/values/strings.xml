@@ -6,4 +6,27 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activity_prompt">Choose an activity</string>
+    <string-array name="activities">
+        <item>Watching</item>
+        <item>Reading</item>
+        <item>Working</item>
+        <item>Studying</item>
+        <item>Listening to</item>
+        <item>Drinking</item>
+        <item>Eating</item>
+        <item>Playing</item>
+        <item>Traveling to</item>
+        <item>Looking for</item>
+        <item>Attending</item>
+        <item>Supporting</item>
+        <item>Celebrating</item>
+        <item>Meeting</item>
+        <item>Getting</item>
+        <item>Making</item>
+        <item>Thinking about</item>
+        <item>Remembering</item>
+        <item>Disagree</item>
+        <item>Chilling</item>
+    </string-array>
 </resources>

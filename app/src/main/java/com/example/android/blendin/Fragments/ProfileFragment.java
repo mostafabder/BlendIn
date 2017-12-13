@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
         profileModelList=new ArrayList<>();
         for(int i=0; i<5; i++){
             ProfileModel profileModel=new ProfileModel(
-                    "Hamda Helal is at Loca Loca Cafe","900","1000",R.drawable.kappa2);
+                    "Hamda Helal is at Loca Loca Cafe", "900", "1000", R.drawable.kappa2, true);
             profileModelList.add(profileModel);
         }
         adapter = new ProfileAdapter(profileModelList,getActivity());

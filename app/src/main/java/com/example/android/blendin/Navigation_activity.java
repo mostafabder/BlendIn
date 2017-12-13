@@ -115,10 +115,6 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         fragmentTransaction.commit();
         getSupportActionBar().setTitle(key);
     }
- 
-    public void addInterest(View view) {
-        FlowLayout flowLayout = (FlowLayout) findViewById(R.id.hangout_flowlayout);
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.item_flow_interest, flowLayout);
-    }
+
+
 }

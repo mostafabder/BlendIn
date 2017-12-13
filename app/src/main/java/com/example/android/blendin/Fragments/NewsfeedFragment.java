@@ -51,20 +51,20 @@ public class NewsfeedFragment extends Fragment {
                     "Eating at Bremer",
                     "is this is the best hangout or what ? ",
                     "5555",
-                    "6969" );
+                    "6969", true);
             newsFeedsList.add(newsFeedModel);
         }
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
                 //TODO different fragment data depends on the post , waiting for the logic .-.
-                Fragment fragment = new CommentsFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
-                fragmentTransaction.add(R.id.content_main, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                Fragment fragment = new CommentsFragment();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+//                fragmentTransaction.add(R.id.content_main, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
             }
         };
         adapter = new NewsfeedAdapter(newsFeedsList, getActivity(), listener);
