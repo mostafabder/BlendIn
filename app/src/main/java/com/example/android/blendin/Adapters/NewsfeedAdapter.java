@@ -40,6 +40,7 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         this.context = context;
     }
 
+
     @Override
     public int getItemCount() {
         return newsfeedItemsList.size();

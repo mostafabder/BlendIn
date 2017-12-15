@@ -22,15 +22,13 @@
         app:itemIconTint="#000"
         app:itemTextColor="@color/blue"
         tools:openDrawer="start">
-
         <FrameLayout
             android:id="@+id/content_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp"></FrameLayout>
-
+            tools:layout_editor_absoluteY="8dp" />
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
@@ -43,4 +41,6 @@
             app:itemTextColor="#34309e"
             app:menu="@menu/nav_menus" />
     </android.support.v4.widget.DrawerLayout>
+
+
 </RelativeLayout>

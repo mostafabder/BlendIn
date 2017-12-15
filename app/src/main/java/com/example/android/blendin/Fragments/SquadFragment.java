@@ -34,7 +34,6 @@ public class SquadFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_squad, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.groupPage_recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -53,11 +52,4 @@ public class SquadFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         return rootView;
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-    }
- 
 }
