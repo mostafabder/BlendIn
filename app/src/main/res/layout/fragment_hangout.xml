@@ -17,88 +17,67 @@
         android:layout_height="match_parent"
         map:cameraZoom="10"
         tools:context="com.example.styledmap.MapsActivityRaw" />
+
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="3">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
-        <View
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:fancy="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            fancy:cardCornerRadius="15dp"
+            fancy:cardUseCompatPadding="true">
 
-        <LinearLayout
-            android:id="@+id/linear"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2">
+            <LinearLayout
 
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:fancy="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-                fancy:cardCornerRadius="15dp"
-                fancy:cardUseCompatPadding="true">
-
-                <LinearLayout
-
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvInt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Interests"
-                            android:textColor="@color/dark_blue" />
-
-                        <ImageView
-                            android:id="@+id/hangout_addInterest"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_toEndOf="@+id/tvInt"
-                            android:onClick="addInterest"
-                            android:padding="2dp"
-                            android:src="@drawable/plus" />
-
-                    </RelativeLayout>
-
-                    <org.apmem.tools.layouts.FlowLayout
-                        android:id="@+id/hangout_flowlayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal">
-
-                        <include layout="@layout/item_flow_interest" />
-
-                        <include layout="@layout/item_flow_interest" />
-
-                        <include layout="@layout/item_flow_interest" />
-
-                        <include layout="@layout/item_flow_interest" />
-                    </org.apmem.tools.layouts.FlowLayout>
+                    android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tvAct"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="3dp"
-                        android:text="Description"
+                        android:layout_centerVertical="true"
+                        android:text="Activity"
                         android:textColor="@color/dark_blue" />
 
+                    <Spinner
+                        android:id="@+id/act_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/tvAct"
+                        android:entries="@array/activities"
+                        android:prompt="@string/activity_prompt" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+                    <TextView
+                        android:id="@+id/tvDisc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Description"
+                        android:textColor="@color/dark_blue" />
                     <EditText
                         android:id="@+id/etDiscHangout"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/tvDisc"
                         android:background="@drawable/edittext_signup_shape"
                         android:gravity="top|left"
                         android:inputType="textMultiLine"
@@ -106,66 +85,49 @@
                         android:text="Hello World"
                         android:textColor="#136a8e"
                         android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/tvAct"
+                        android:id="@+id/tvLoc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Activity"
+                        android:layout_centerVertical="true"
+                        android:text="Location"
                         android:textColor="@color/dark_blue" />
 
-
-                    <org.apmem.tools.layouts.FlowLayout
+                    <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/tvLoc"
+                        android:inputType="text"
+                        android:text="City"
+                        android:textSize="13sp" />
+                </RelativeLayout>
 
-                        <include layout="@layout/item_flow_interest" />
-                    </org.apmem.tools.layouts.FlowLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Location"
-                            android:textColor="@color/dark_blue" />
-
-                        <EditText
-                            android:id="@+id/editText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:text="City"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/btn_LetsGo"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="3dp"
-                        android:gravity="center"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="10dp"
-                        fancy:fb_defaultColor="@color/blue"
-                        fancy:fb_focusColor="#4c49a1"
-                        fancy:fb_iconPosition="left"
-                        fancy:fb_radius="5dp"
-                        fancy:fb_text="Let's Go"
-                        fancy:fb_textColor="#FFFFFF" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_LetsGo"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    fancy:fb_defaultColor="@color/blue"
+                    fancy:fb_focusColor="#4c49a1"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="5dp"
+                    fancy:fb_text="Let's Go"
+                    fancy:fb_textColor="#FFFFFF" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
 

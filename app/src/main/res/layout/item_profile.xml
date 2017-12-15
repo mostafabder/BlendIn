@@ -10,11 +10,11 @@
         android:id="@+id/time_marker"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:line="@color/dark_blue"
+        app:line="@color/dark_offwhite"
         app:lineSize="3dp"
         app:marker="@drawable/oval_card"
         app:markerInCenter="false"
-        app:markerSize="7dp" />
+        app:markerSize="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,6 @@
             android:layout_height="150dp"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
             android:scaleType="centerCrop"
             android:src="@drawable/kappa2" />
         <LinearLayout
@@ -45,6 +44,7 @@
             android:orientation="horizontal"
             android:weightSum="10">
             <ImageView
+                android:id="@+id/iv_profile_like"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_weight="1"
@@ -61,30 +61,39 @@
                 android:textColor="@color/blue"
                 android:textSize="12sp"
                 />
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:padding="2dp"
-                android:src="@drawable/comments"
-                />
-            <TextView
-                android:id="@+id/tvItemCommentsNumProfile"
+
+            <LinearLayout
+                android:id="@+id/ll_profile_comments"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:text="90"
-                android:textColor="@color/blue"
-                android:textSize="12sp"
-                />
+                android:layout_marginStart="5dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="2dp"
+                    android:src="@drawable/comments" />
+
+                <TextView
+                    android:id="@+id/tvItemCommentsNumProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="90"
+                    android:textColor="@color/blue"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="0.01dp"
                 android:layout_weight="6" />
         </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>
 

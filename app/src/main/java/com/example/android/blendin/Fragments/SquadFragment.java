@@ -3,16 +3,13 @@ package com.example.android.blendin.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.blendin.Adapters.CommentAdapter;
 import com.example.android.blendin.Adapters.SquadChatMessageAdapter;
-import com.example.android.blendin.Models.CommentModel;
 import com.example.android.blendin.Models.SquadChatMessageModel;
 import com.example.android.blendin.R;
 
@@ -34,7 +31,6 @@ public class SquadFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_squad, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.groupPage_recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -54,9 +50,4 @@ public class SquadFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onDestroy() {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-        super.onDestroy();
-    }
 }
