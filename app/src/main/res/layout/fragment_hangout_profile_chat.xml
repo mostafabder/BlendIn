@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/offWhite"
+    android:orientation="vertical">
+
+
+    <!--<android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/offWhite"
+        android:fillViewport="true"
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:layout_weight="9"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/hangoutChat_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <!-- </android.support.v4.widget.NestedScrollView> -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/user" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="Add a comment..."
+            android:inputType="text|textMultiLine|textCapSentences|textNoSuggestions"
+            android:maxLength="100"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="clip_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@color/dark_blue" />
+    </LinearLayout>
+</LinearLayout>

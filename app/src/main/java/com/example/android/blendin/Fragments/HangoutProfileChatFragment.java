@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.blendin.Adapters.SquadChatMessageAdapter;
+import com.example.android.blendin.Adapters.HangoutProfileChatAdapter;
 import com.example.android.blendin.Models.SquadChatMessageModel;
 import com.example.android.blendin.R;
 
@@ -19,34 +19,44 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SquadFragment extends Fragment {
+public class HangoutProfileChatFragment extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    List<SquadChatMessageModel> squadChatMessageModelList;
+    List<SquadChatMessageModel> chatMessageModelList;
     RecyclerView.LayoutManager layoutManager;
+
+    public HangoutProfileChatFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.fragment_squad, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.groupPage_recyclerView);
+        View rootView = inflater.inflate(R.layout.fragment_hangout_profile_chat, container, false);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.hangoutChat_recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
+        //recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(layoutManager);
-        squadChatMessageModelList = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            SquadChatMessageModel squadChatMessageModel = new SquadChatMessageModel(
+
+        chatMessageModelList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            SquadChatMessageModel model = new SquadChatMessageModel(
                     R.drawable.user,
                     "Omar ELRayes",
                     "Yesterday was AWESOME !",
                     "30m"
             );
-            squadChatMessageModelList.add(squadChatMessageModel);
+            chatMessageModelList.add(model);
         }
-        adapter = new SquadChatMessageAdapter(squadChatMessageModelList, getActivity());
+        adapter = new HangoutProfileChatAdapter(chatMessageModelList, getActivity());
         recyclerView.setAdapter(adapter);
+
+
         return rootView;
     }
+
 }

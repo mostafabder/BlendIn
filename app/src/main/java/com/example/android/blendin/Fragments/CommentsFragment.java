@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.android.blendin.Adapters.CommentAdapter;
-import com.example.android.blendin.Adapters.RequestAdapter;
 import com.example.android.blendin.Models.CommentModel;
-import com.example.android.blendin.Models.RequestModel;
 import com.example.android.blendin.R;
 
 import java.util.ArrayList;

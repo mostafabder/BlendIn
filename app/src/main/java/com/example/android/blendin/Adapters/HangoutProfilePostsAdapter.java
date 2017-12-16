@@ -16,29 +16,25 @@ import android.widget.TextView;
 import com.example.android.blendin.Fragments.CommentsFragment;
 import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
-import com.example.android.blendin.RecyclerViewClickListener;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by LeGenÐ on 11/29/2017.
+ * Created by LeGenÐ on 12/13/2017.
  */
 
-public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHolder> {
+public class HangoutProfilePostsAdapter extends RecyclerView.Adapter<HangoutProfilePostsAdapter.ViewHolder> {
+
     List<NewsFeedModel> newsfeedItemsList;
     NewsFeedModel newsFeedModel;
     private Context context;
-    private RecyclerViewClickListener recyclerViewClickListener;
 
-
-    public NewsfeedAdapter(List<NewsFeedModel> newsfeedItemsList, Context context, RecyclerViewClickListener recyclerViewClickListener) {
-        this.recyclerViewClickListener = recyclerViewClickListener;
+    public HangoutProfilePostsAdapter(List<NewsFeedModel> newsfeedItemsList, Context context) {
         this.newsfeedItemsList = newsfeedItemsList;
         this.context = context;
     }
-
 
     @Override
     public int getItemCount() {
@@ -48,8 +44,8 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_newsfeed,parent,false);
-        return new ViewHolder(view, recyclerViewClickListener);
+                .inflate(R.layout.item_hangout_profile_post, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -92,7 +88,7 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
 
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         // each data item is just a string in this case
         public CircleImageView userProfileImage;
@@ -106,28 +102,26 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         public TextView postCommentsCount;
         public ImageView likeImage;
         public LinearLayout commentLayout;
-        private RecyclerViewClickListener mListener;
 
-        public ViewHolder(View itemView, RecyclerViewClickListener listener) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            userProfileImage = (CircleImageView) itemView.findViewById(R.id.profile_image);
-            userNameTxt = (TextView) itemView.findViewById(R.id.tvItemNameNews);
-            userLocationTxt = (TextView) itemView.findViewById(R.id.tvItemLocNews);
-            postTimeTxt = (TextView) itemView.findViewById(R.id.tvItemTimeNews);
-            postImage = (ImageView) itemView.findViewById(R.id.post_image);
-            postMainTxt = (TextView) itemView.findViewById(R.id.tvItemActivityNews);
-            postDescTxt = (TextView) itemView.findViewById(R.id.tvItemDiscNews);
-            postLikesCount = (TextView) itemView.findViewById(R.id.tvItemLikesNumNews);
-            postCommentsCount = (TextView) itemView.findViewById(R.id.tvItemCommentsNumNews);
-            likeImage = (ImageView) itemView.findViewById(R.id.iv_newsfeed_like);
-            commentLayout = (LinearLayout) itemView.findViewById(R.id.ll_newsfeed_comment);
-            mListener = listener;
-            itemView.setOnClickListener(this);
+            userProfileImage = (CircleImageView) itemView.findViewById(R.id.hangoutPost_user_image);
+            userNameTxt = (TextView) itemView.findViewById(R.id.hangoutPost_username);
+            userLocationTxt = (TextView) itemView.findViewById(R.id.hangoutPost_location);
+            postTimeTxt = (TextView) itemView.findViewById(R.id.hangoutPost_date);
+            postImage = (ImageView) itemView.findViewById(R.id.hangoutPost_image);
+            postMainTxt = (TextView) itemView.findViewById(R.id.hangoutPost_Title);
+            postDescTxt = (TextView) itemView.findViewById(R.id.hangoutPost_Desc);
+            postLikesCount = (TextView) itemView.findViewById(R.id.hangoutPost_likes_count);
+            postCommentsCount = (TextView) itemView.findViewById(R.id.hangoutPost_comments_count);
+            likeImage = (ImageView) itemView.findViewById(R.id.hangoutPost_like);
+            commentLayout = (LinearLayout) itemView.findViewById(R.id.hangoutPost_ll_comment);
+
         }
 
-        @Override
+       /* @Override
         public void onClick(View view) {
             mListener.onClick(view, getAdapterPosition());
-        }
+        }*/
     }
 }

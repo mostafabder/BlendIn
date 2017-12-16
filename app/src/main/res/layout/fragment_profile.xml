@@ -1,10 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.android.blendin.Fragments.ProfileFragment"
-    >
+    tools:context="com.example.android.blendin.Fragments.ProfileFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,10 +46,26 @@
         </RelativeLayout>
         <ImageView
             android:id="@+id/image_rl"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_centerInParent="true"
             android:src="@drawable/user" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/profile_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="45dp"
+            android:src="@drawable/plus"
+            app:fabSize="mini"
+            app:fab_shadowRadius="1dp"
+            fab:fab_colorNormal="@color/dark_blue"
+            fab:fab_colorPressed="@color/blue"
+            fab:fab_colorRipple="@color/blue"
+            fab:fab_hideAnimation="@anim/hide_to_bottom"
+            fab:fab_showAnimation="@anim/show_from_bottom" />
 
 
     </RelativeLayout>

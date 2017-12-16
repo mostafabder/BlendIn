@@ -2,16 +2,11 @@ package com.example.android.blendin;
 
 
 import android.os.Build;
- 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
-import android.support.v7.app.ActionBar;
-import android.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -22,9 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
- 
+
 import com.example.android.blendin.Fragments.HangoutFragment;
+import com.example.android.blendin.Fragments.HangoutProfileFragment;
 import com.example.android.blendin.Fragments.MysquadFragment;
 import com.example.android.blendin.Fragments.NewsfeedFragment;
 import com.example.android.blendin.Fragments.NotificationFragment;
@@ -87,7 +82,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
             transmission(new RequestFragment(), "Requests");
  
         } else if (id == R.id.Mysquad_nav_item) {
-            transmission(new MysquadFragment(), "My Squads");
+            transmission(new MysquadFragment(), "My Squads", true);
  
         } else if (id == R.id.settings_nav_item) {
             //TODO :: Settings Fragment
@@ -95,6 +90,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
             getSupportActionBar().setTitle("Settings");
         } else if (id == R.id.signout_nav_item) {
             //TODO :: Sign out
+            transmission(new HangoutProfileFragment(), "Hangout Profile", true);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -121,6 +117,15 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         getSupportActionBar().setTitle(key);
     }
 
+    public void transmission(Fragment nxtfragment, String key, boolean flag) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("auth", flag);
+        nxtfragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
+        fragmentTransaction.commit();
+        getSupportActionBar().setTitle(key);
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bar_menu, menu);
@@ -145,4 +150,6 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         }
         return true;
     }
+
+
 }

@@ -14,6 +14,7 @@
         android:background="#FFF"
         android:orientation="vertical"
         android:padding="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,21 +22,21 @@
             android:weightSum="10"
 
             >
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/ivItemImageRequest"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:layout_weight="2"
                 android:src="@drawable/user"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="0dp" />
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
-                >
+                android:layout_weight="4.5">
 
                 <TextView
                     android:id="@+id/tvItemNameRequest"
@@ -45,14 +46,16 @@
                     android:text="Sally"
                     android:textColor="@color/blue"
                     android:textSize="17sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
+
                 <ImageView
                     android:id="@+id/ivLocationPin"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_below="@+id/tvItemNameRequest"
+                    android:layout_marginTop="4dp"
                     android:src="@drawable/placeholder" />
+
                 <TextView
                     android:id="@+id/tvItemLocRequest"
                     android:layout_width="wrap_content"
@@ -61,35 +64,71 @@
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/ivLocationPin"
                     android:text="Mansoura"
-                    android:textColor="@color/dark_blue"
-                    />
+                    android:textColor="@color/dark_blue" />
 
             </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvItemTimeRequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:text="2 hours ago" />
+
+                <LinearLayout
+                    android:id="@+id/tvItemDetailsRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="end"
+                        android:src="@mipmap/ic_info" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="center"
+                        android:text="Tab for Details"
+                        android:textColor="@color/blue"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
             <TextView
-                android:id="@+id/tvItemTimeRequest"
+                android:id="@+id/tvItemDiscRequest"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="3"
-                android:text="1 hour ago"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp" />
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="say3ny y 3atef"
+                android:textColor="@color/blue"
+                android:textSize="13sp" />
+
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Description"
-            android:textColor="@color/dark_blue"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tvItemDiscRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="say3ny y 3atef"
-            android:textColor="@color/blue"
-            android:textSize="13sp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,6 +140,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="8" />
             <ImageButton
+                android:id="@+id/request_Accept"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="5dp"
@@ -108,6 +148,7 @@
                 android:background="@drawable/checked_btn_shape"
                 android:src="@drawable/checked" />
             <ImageButton
+                android:id="@+id/request_Decline"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_weight="1"

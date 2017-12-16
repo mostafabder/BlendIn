@@ -376,5 +376,3 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         }
     }
 }
-
-

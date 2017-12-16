@@ -18,8 +18,6 @@ import com.example.android.blendin.Fragments.CommentsFragment;
 import com.example.android.blendin.Models.ProfileModel;
 import com.example.android.blendin.R;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 /**
