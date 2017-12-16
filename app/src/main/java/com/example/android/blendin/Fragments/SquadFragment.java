@@ -49,5 +49,4 @@ public class SquadFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         return rootView;
     }
-
 }

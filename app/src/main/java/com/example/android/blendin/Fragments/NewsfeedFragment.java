@@ -56,14 +56,6 @@ public class NewsfeedFragment extends Fragment {
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //TODO different fragment data depends on the post , waiting for the logic .-.
-//                Fragment fragment = new CommentsFragment();
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
-//                fragmentTransaction.add(R.id.content_main, fragment);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
             }
         };
         adapter = new NewsfeedAdapter(newsFeedsList, getActivity(), listener);

@@ -19,6 +19,7 @@ import com.example.android.blendin.Models.MySquadModel;
 import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
 import com.example.android.blendin.RecyclerViewClickListener;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,14 @@ public class MysquadFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<MySquadModel> mySquadModelList;
+    com.github.clans.fab.FloatingActionButton floatingActionButton;
     RecyclerView.LayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-   View view=inflater.inflate(R.layout.fragment_mysquad, container, false);
+        View view = inflater.inflate(R.layout.fragment_mysquad, container, false);
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab_squad);
         GridLayoutManager layoutManager=new GridLayoutManager(getActivity().getApplicationContext(),2);
         recyclerView=(RecyclerView)view.findViewById(R.id.mysquad_recyclerView);
         recyclerView.setLayoutManager(layoutManager);
@@ -61,6 +64,19 @@ public class MysquadFragment extends Fragment {
         };
         adapter = new MySquadAdapter(mySquadModelList, getActivity(), listener);
         recyclerView.setAdapter(adapter);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new AddSquadFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+                fragmentTransaction.add(R.id.content_main, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
         return view;
     }
 }
