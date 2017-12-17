@@ -20,6 +20,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SignInActivity.this, Navigation_activity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

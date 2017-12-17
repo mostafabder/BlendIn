@@ -46,6 +46,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'gun0912.ted:tedpermission:1.0.3'
+    compile 'id.zelory:compressor:2.1.0'
     testCompile 'junit:junit:4.12'
 }
 configurations.all {
