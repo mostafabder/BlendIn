@@ -36,7 +36,7 @@ import org.apmem.tools.layouts.FlowLayout;
  */
  
 public class Navigation_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
- 
+    String curFragmentKey;
     Fragment fragment;
     Toolbar toolbar;
     FragmentTransaction fragmentTransaction;
@@ -59,6 +59,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
 
         // Opens Default Fragment -> Newsfeed
         // transmission(new NewsfeedFragment(),"news");
+        curFragmentKey = "Newsfeed";
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_main, new NewsfeedFragment(), "news");
         fragmentTransaction.commit();
@@ -112,28 +113,36 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
     }
  
     public void transmission(Fragment nxtfragment, String key) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
-        fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
-        getSupportFragmentManager().popBackStack();
-        fragmentTransaction.commit();
-        getSupportActionBar().setTitle(key);
-        Constants.inFragment = key;
-        notificationClicked = false;
+        if (!key.equals(curFragmentKey)) {
+            curFragmentKey = key;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
+            fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
+            getSupportFragmentManager().popBackStack();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("auth", flag);
+            nxtfragment.setArguments(bundle);
+            fragmentTransaction.commit();
+            getSupportActionBar().setTitle(key);
+            Constants.inFragment = key;
+            notificationClicked = false;
+        }
     }
 
     public void transmission(Fragment nxtfragment, String key, boolean flag) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("auth", flag);
-        nxtfragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
-        getSupportFragmentManager().popBackStack();
-        fragmentTransaction.commit();
-        getSupportActionBar().setTitle(key);
-        Constants.inFragment = key;
+        if (!key.equals(curFragmentKey)) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("auth", flag);
+            nxtfragment.setArguments(bundle);
+            fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
+           getSupportFragmentManager().popBackStack();
+            fragmentTransaction.commit();
+            getSupportActionBar().setTitle(key);
+          Constants.inFragment = key;
         notificationClicked = false;
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -85,7 +85,7 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:src="@drawable/user" />
+                        android:src="@mipmap/ic_squadColored" />
 
                     <TextView
                         android:id="@+id/groupPage_membersCount"
@@ -102,11 +102,11 @@
                     android:orientation="vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:src="@drawable/user" />
+                        android:src="@mipmap/ic_hangoutColored" />
 
                     <TextView
                         android:id="@+id/groupPage_hangoutsCount"
@@ -128,7 +128,7 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:src="@drawable/user" />
+                        android:src="@mipmap/ic_add_squad_member" />
 
                     <TextView
                         android:layout_width="wrap_content"

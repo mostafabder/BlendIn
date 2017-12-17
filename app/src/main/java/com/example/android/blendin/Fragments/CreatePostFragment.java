@@ -2,11 +2,16 @@ package com.example.android.blendin.Fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +19,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.blendin.R;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.example.android.blendin.Utility.*;
 
 import static android.app.Activity.RESULT_OK;
+import static android.graphics.Bitmap.createBitmap;
 
 
 public class CreatePostFragment extends Fragment {
@@ -27,7 +39,7 @@ public class CreatePostFragment extends Fragment {
     static final int REQUEST_IMAGE_SELECT = 0;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_HANGOUT_NAME = 2;
-
+    static String mCurrentPhotoPath;
     ImageView cancelImageView;
     ImageView camera;
     ImageView gallary;
@@ -36,6 +48,46 @@ public class CreatePostFragment extends Fragment {
     LinearLayout linearLayout;
     TextView hangoutTV;
     Button postButton;
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        Bitmap b = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+        return b;
+    }
+
+    public static Bitmap orientationFix(Bitmap wrongBitmap) {
+        ExifInterface ei = null;
+        try {
+            ei = new ExifInterface(mCurrentPhotoPath);
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_UNDEFINED);
+
+        Bitmap rotatedBitmap = null;
+        switch (orientation) {
+
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotatedBitmap = rotateImage(wrongBitmap, 90);
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotatedBitmap = rotateImage(wrongBitmap, 180);
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotatedBitmap = rotateImage(wrongBitmap, 270);
+                break;
+
+            case ExifInterface.ORIENTATION_NORMAL:
+            default:
+                rotatedBitmap = wrongBitmap;
+        }
+        return rotatedBitmap;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,8 +140,24 @@ public class CreatePostFragment extends Fragment {
 
     public void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getActivity().getApplicationContext(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
         }
     }
 
@@ -103,30 +171,76 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap = null;
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            bitmap = (Bitmap) extras.get("data");
-            showImage.setImageBitmap(bitmap);
+
             linearLayout.setVisibility(View.VISIBLE);
-            //img.setImageBitmap(imageBitmap);
+            setPic();
+
         } else if (requestCode == REQUEST_IMAGE_SELECT && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
+            Bitmap bitmap = null;
             Uri uri = data.getData();
-
+            File actualImage = null;
+            //try {
+            //bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-                // Log.d(TAG, String.valueOf(bitmap));
-                showImage.setImageBitmap(bitmap);
-                linearLayout.setVisibility(View.VISIBLE);
-
-                //img.setImageBitmap(bitmap);
+                actualImage = FileUtil.from(getActivity(), data.getData());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            mCurrentPhotoPath = actualImage.getAbsolutePath();
+            linearLayout.setVisibility(View.VISIBLE);
+            setPic();
+            //showImage.setImageBitmap(bitmap);
+            //} catch (IOException e) {
+            //  e.printStackTrace();
+            //}
         } else if (requestCode == REQUEST_HANGOUT_NAME && resultCode == RESULT_OK && data != null) {
             hangoutTV.setText(data.getStringExtra("hangout"));
             postButton.setEnabled(true);
         }
     }
+
+    private File createImageFile() throws IOException {
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = 700;
+        int targetH = 700;
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        showImage.setImageBitmap(orientationFix(bitmap));
+    }
+
+
 }

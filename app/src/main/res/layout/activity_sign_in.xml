@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@drawable/edittext_signup_shape"
-            android:hint="Confirm Password"
+            android:hint="Password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/blue"

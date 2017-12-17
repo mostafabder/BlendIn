@@ -35,8 +35,8 @@
             android:background="#FFF"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header"
-            app:itemIconTint="#000"
-            app:itemTextColor="#34309e"
+            app:itemIconTint="@color/color_change"
+            app:itemTextColor="@color/color_change"
             app:menu="@menu/nav_menus" />
     </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
