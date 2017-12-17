@@ -166,6 +166,9 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 .position(HAMBURG));
         Marker kiel = mMap.addMarker(new MarkerOptions()
                 .position(KIEL));
+
+        markerIds.put(hamburg, "1");
+        markerIds.put(kiel, "2");
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
         mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.setOnMarkerClickListener(this);
@@ -218,7 +221,6 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
-        Toast.makeText(getActivity(), markerIds.get(marker), Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onConnected(@Nullable Bundle bundle) {

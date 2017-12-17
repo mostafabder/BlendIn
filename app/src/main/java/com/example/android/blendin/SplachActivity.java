@@ -30,5 +30,4 @@ public class SplachActivity extends AppCompatActivity {
 
         setContentView(easySplashScreenView);
     }
-
 }

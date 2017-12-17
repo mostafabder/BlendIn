@@ -134,11 +134,11 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
             bundle.putBoolean("auth", flag);
             nxtfragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
-            getSupportFragmentManager().popBackStack();
+           getSupportFragmentManager().popBackStack();
             fragmentTransaction.commit();
             getSupportActionBar().setTitle(key);
-            Constants.inFragment = key;
-            notificationClicked = false;
+          Constants.inFragment = key;
+        notificationClicked = false;
         }
     }
     @Override

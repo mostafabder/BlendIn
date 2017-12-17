@@ -69,8 +69,6 @@ public class HangoutAdapter extends RecyclerView.Adapter<HangoutAdapter.ViewHold
             }
         });
     }
-
-
     @Override
     public int getItemCount() {
         return hangoutModels.size();

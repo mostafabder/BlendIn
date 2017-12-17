@@ -16,8 +16,7 @@ public class AuthUser extends LoginResponse {
 
     public static AuthUser getAuthUser() {
         if (authUser == null)
-            authUser = (AuthUser) new AuthUser();
+            authUser = new AuthUser();
         return authUser;
     }
-
 }

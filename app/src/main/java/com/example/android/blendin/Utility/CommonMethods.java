@@ -2,6 +2,10 @@ package com.example.android.blendin.Utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
 
 import static com.example.android.blendin.Utility.Constants.PREF_KEY;
 
@@ -24,4 +28,12 @@ public class CommonMethods {
         return json;
     }
 
+    public static String encodeTobase64(Bitmap image) {
+        Bitmap immagex = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.NO_WRAP);
+        return imageEncoded;
+    }
 }
