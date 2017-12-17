@@ -8,4 +8,6 @@ public class Constants {
     public static String PREF_KEY = "Blendin";
     public static Boolean isBottom = true;
     public static String inFragment = "";
+
+
 }

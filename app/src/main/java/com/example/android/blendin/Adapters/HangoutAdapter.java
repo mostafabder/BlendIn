@@ -1,5 +1,7 @@
 package com.example.android.blendin.Adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,19 +60,15 @@ public class HangoutAdapter extends RecyclerView.Adapter<HangoutAdapter.ViewHold
                 hangoutModels.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, hangoutModels.size());
-                //check if in hangout fragment
                 if (linearLayout != null) {
                     if (hangoutModels.size() == 0) {
                         linearLayout.setVisibility(View.GONE);
                         Constants.isBottom = true;
                     }
                 }
-
             }
         });
     }
-
-
     @Override
     public int getItemCount() {
         return hangoutModels.size();

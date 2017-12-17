@@ -237,7 +237,6 @@ public class CreatePostFragment extends Fragment {
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
-
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         showImage.setImageBitmap(orientationFix(bitmap));
     }

@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/landing_img_slide"
             android:layout_width="match_parent"
-            android:layout_height="470dp"
+            android:layout_height="400dp"
             android:layout_centerHorizontal="true" />
 
     </LinearLayout>
