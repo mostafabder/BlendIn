@@ -206,7 +206,6 @@
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/edittext_signup_shape"
                     android:padding="10dp">
-
                     <TextView
                         android:id="@+id/tv_starttime_hangoutdetails"
                         android:layout_width="wrap_content"
@@ -218,7 +217,6 @@
                         android:textStyle="bold" />
                 </RelativeLayout>
             </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -258,6 +256,21 @@
 
             </RelativeLayout>
         </LinearLayout>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btn_submit_hangout"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            fancy:fb_defaultColor="@color/blue"
+            fancy:fb_focusColor="#4c49a1"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="3dp"
+            fancy:fb_text="Submit"
+            fancy:fb_textColor="#FFFFFF"
+            fancy:fb_textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>

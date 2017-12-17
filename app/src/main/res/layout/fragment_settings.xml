@@ -191,7 +191,6 @@
         android:layout_marginTop="10dp"
         android:background="#FFF"
         android:padding="10dp">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -199,15 +198,12 @@
             android:text="Change Password"
             android:textColor="#3d3d3d"
             android:textSize="17sp" />
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/right_arrow" />
-
-
     </RelativeLayout>
 
     <RelativeLayout

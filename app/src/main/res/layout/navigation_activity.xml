@@ -7,11 +7,9 @@
     android:background="@color/offWhite"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
-
     <include
         android:id="@+id/action_bar"
         layout="@layout/app_bar_main" />
-
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -41,6 +39,4 @@
             app:itemTextColor="@color/color_change"
             app:menu="@menu/nav_menus" />
     </android.support.v4.widget.DrawerLayout>
-
-
 </RelativeLayout>
