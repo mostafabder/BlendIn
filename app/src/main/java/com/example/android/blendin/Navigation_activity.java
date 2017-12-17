@@ -119,9 +119,6 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
             fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
             fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
             getSupportFragmentManager().popBackStack();
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("auth", flag);
-            nxtfragment.setArguments(bundle);
             fragmentTransaction.commit();
             getSupportActionBar().setTitle(key);
             Constants.inFragment = key;

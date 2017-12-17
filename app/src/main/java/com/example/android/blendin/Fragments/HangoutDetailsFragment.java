@@ -77,13 +77,12 @@ public class HangoutDetailsFragment extends Fragment implements DatePickerDialog
             public void onClick(View v) {
                 Fragment fragment = new HangoutProfileFragment();
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("auth", false);
+                bundle.putBoolean("auth", true);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
                 fragmentTransaction.add(R.id.content_main, fragment);
-
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

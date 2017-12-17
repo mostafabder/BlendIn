@@ -384,16 +384,17 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         mFusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if (location != null)
+                if (location != null) {
                     org = new LatLng(location.getLatitude(), location.getLongitude());
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(new LatLng(org.latitude, org.longitude)).zoom(12).build();
-                mMap.animateCamera(CameraUpdateFactory
-                        .newCameraPosition(cameraPosition));
-                if (!orgCreated && org != null) {
-                    mMap.addMarker(new MarkerOptions()
-                            .position(org));
-                    orgCreated = true;
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(org.latitude, org.longitude)).zoom(12).build();
+                    mMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+                    if (!orgCreated && org != null) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(org));
+                        orgCreated = true;
+                    }
                 }
             }
         });
