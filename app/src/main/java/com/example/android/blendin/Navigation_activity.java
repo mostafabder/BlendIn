@@ -30,11 +30,11 @@ import com.example.android.blendin.Fragments.SettingsFragment;
 import com.example.android.blendin.Utility.Constants;
 
 import org.apmem.tools.layouts.FlowLayout;
- 
+
 /**
  * Created by Luffy on 11/28/2017.
  */
- 
+
 public class Navigation_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     String curFragmentKey;
     Fragment fragment;
@@ -111,7 +111,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
             getSupportActionBar().setTitle(Constants.inFragment);
         }
     }
- 
+
     public void transmission(Fragment nxtfragment, String key) {
         if (!key.equals(curFragmentKey)) {
             curFragmentKey = key;

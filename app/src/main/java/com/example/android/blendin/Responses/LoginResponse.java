@@ -5,7 +5,7 @@ package com.example.android.blendin.Responses;
  */
 
 public class LoginResponse {
-    private String flag;
+    private String status;
     private String token;
     private String secret;
     private String uid;
@@ -40,12 +40,36 @@ public class LoginResponse {
         this.type = type;
     }
 
-    public String getFlag() {
-        return flag;
+    public String getUid() {
+        return uid;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getToken() {

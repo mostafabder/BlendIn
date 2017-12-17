@@ -36,6 +36,4 @@ public class CommonMethods {
         String imageEncoded = Base64.encodeToString(b, Base64.NO_WRAP);
         return imageEncoded;
     }
-
-
 }
