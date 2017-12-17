@@ -38,7 +38,7 @@ public class AddSquadFragment extends Fragment {
             HangoutModel hangoutModel = new HangoutModel(R.drawable.user, "Bondo2");
             hangoutModelList.add(hangoutModel);
         }
-        adapter = new HangoutAdapter(getActivity(), hangoutModelList, true);
+        adapter = new HangoutAdapter(getActivity(), hangoutModelList, true, null);
         recyclerView.setAdapter(adapter);
         return v;
     }

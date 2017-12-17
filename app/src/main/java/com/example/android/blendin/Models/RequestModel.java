@@ -7,14 +7,14 @@ package com.example.android.blendin.Models;
 public class RequestModel {
     private int avatar;
     private String name;
-    private String timeAgo;
+    private String created_at;
     private String Location;
     private String description;
 
     public RequestModel(int avatar, String name, String timeAgo, String location, String description) {
         this.avatar = avatar;
         this.name = name;
-        this.timeAgo = timeAgo;
+        this.created_at = timeAgo;
         Location = location;
         this.description = description;
     }
@@ -35,12 +35,12 @@ public class RequestModel {
         this.name = name;
     }
 
-    public String getTimeAgo() {
-        return timeAgo;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setTimeAgo(String timeAgol) {
-        this.timeAgo = timeAgol;
+    public void setCreated_at(String timeAgol) {
+        this.created_at = timeAgol;
     }
 
     public String getLocation() {

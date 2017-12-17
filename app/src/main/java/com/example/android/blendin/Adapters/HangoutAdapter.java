@@ -1,7 +1,5 @@
 package com.example.android.blendin.Adapters;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.blendin.Constants;
 import com.example.android.blendin.Models.HangoutModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.Utility.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,11 +27,14 @@ public class HangoutAdapter extends RecyclerView.Adapter<HangoutAdapter.ViewHold
     Context context;
     List<HangoutModel> hangoutModels;
     Boolean flag;
+    LinearLayout linearLayout;
 
-    public HangoutAdapter(Context context, List<HangoutModel> hangoutModels, Boolean flag) {
+
+    public HangoutAdapter(Context context, List<HangoutModel> hangoutModels, Boolean flag, LinearLayout linearLayout) {
         this.context = context;
         this.hangoutModels = hangoutModels;
         this.flag = flag;
+        this.linearLayout = linearLayout;
     }
 
 
@@ -58,9 +58,14 @@ public class HangoutAdapter extends RecyclerView.Adapter<HangoutAdapter.ViewHold
                 hangoutModels.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, hangoutModels.size());
-                if (hangoutModels.size() == 0) {
-                    Toast.makeText(context, "Empty", Toast.LENGTH_SHORT).show();
+                //check if in hangout fragment
+                if (linearLayout != null) {
+                    if (hangoutModels.size() == 0) {
+                        linearLayout.setVisibility(View.GONE);
+                        Constants.isBottom = true;
+                    }
                 }
+
             }
         });
     }
