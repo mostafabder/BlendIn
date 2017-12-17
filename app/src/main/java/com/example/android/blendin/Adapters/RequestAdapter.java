@@ -54,7 +54,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         holder.requestUserImage.setImageResource(requestModel.getAvatar());
         holder.requestUserName.setText(requestModel.getName());
         holder.requestUserLocation.setText(requestModel.getLocation());
-        holder.requestTimeAgo.setText(requestModel.getTimeAgo());
+        holder.requestTimeAgo.setText(requestModel.getCreated_at());
         holder.requestDesc.setText(requestModel.getDescription());
 
         holder.requestUserImage.setOnClickListener(new View.OnClickListener() {

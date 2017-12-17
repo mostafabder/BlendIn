@@ -85,7 +85,7 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:src="@mipmap/ic_squadColored" />
+                        android:src="@mipmap/ic_squad_colored" />
 
                     <TextView
                         android:id="@+id/groupPage_membersCount"
@@ -106,7 +106,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:src="@mipmap/ic_hangoutColored" />
+                        android:src="@mipmap/ic_hangout_colored" />
 
                     <TextView
                         android:id="@+id/groupPage_hangoutsCount"

@@ -4,6 +4,8 @@ package com.example.android.blendin.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 import java.util.Calendar;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
@@ -37,6 +41,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class HangoutDetailsFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    FancyButton submitBtn;
     TextView startDate, endDate, startTime, endTime, location;
     RelativeLayout startDateR, endDateR, startTimeR, endTimeR, locationR;
     Calendar calendar;
@@ -53,6 +58,7 @@ public class HangoutDetailsFragment extends Fragment implements DatePickerDialog
     }
 
     public void intiScreen(View v) {
+        submitBtn = (FancyButton) v.findViewById(R.id.btn_submit_hangout);
         startDate = (TextView) v.findViewById(R.id.tv_startdate_hangoutdetails);
         endDate = (TextView) v.findViewById(R.id.tv_enddate_hangoutdetails);
         startTime = (TextView) v.findViewById(R.id.tv_starttime_hangoutdetails);
@@ -66,6 +72,22 @@ public class HangoutDetailsFragment extends Fragment implements DatePickerDialog
 
         calendar = Calendar.getInstance();
 
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new HangoutProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("auth", false);
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+                fragmentTransaction.add(R.id.content_main, fragment);
+
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
         startDateR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +135,8 @@ public class HangoutDetailsFragment extends Fragment implements DatePickerDialog
                 }
             }
         });
+
+
         startDate.setText(calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR));
         endDate.setText(calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR));
         startTime.setText(calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE));

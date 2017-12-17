@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="landing_bg">
+        <item>@color/dark_blue</item>
+        <item>@color/blue</item>
+        <item>#618cc9</item>
+        <item>#466dd1</item>
+
+    </array>
+
+    <array name="icons">
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+        <item>@drawable/logo</item>
+    </array>
+
+    <string-array name="titles">
+
+        <item>BlendIn</item>
+        <item>Hangout</item>
+        <item>Newsfeed</item>
+        <item>Your Squad</item>
+
+    </string-array>
+
+    <string-array name="hints">
+        <item>BlendIn Desciption here bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla </item>
+        <item>About hangout bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla </item>
+        <item>About newsfeed bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla </item>
+        <item>About squad bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla </item>
+    </string-array>
+</resources>

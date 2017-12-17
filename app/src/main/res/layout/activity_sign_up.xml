@@ -46,6 +46,7 @@
         android:orientation="horizontal"
         >
         <LinearLayout
+            android:id="@+id/signup_fb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/facebook_btn_shape"
@@ -58,6 +59,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/signup_tw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/twitter_btn_shape"
@@ -72,49 +74,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp">
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="3"
-            android:alpha=".5"
-            android:background="@android:color/darker_gray" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="OR"
-            android:textColor="@android:color/darker_gray"
-            />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="3"
-            android:alpha=".5"
-            android:background="@android:color/darker_gray" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        >
+        android:paddingRight="20dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
-                android:id="@+id/firstname_input"
+                android:id="@+id/signup_firstname_input"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -131,10 +104,10 @@
                 android:textColor="@color/blue"
                 android:textColorHint="#cccccc"
                 android:textColorLink="@color/colorPrimaryDark"
-                android:textCursorDrawable="@null"
-                />
+                android:textCursorDrawable="@null" />
+
             <EditText
-                android:id="@+id/lastname_input"
+                android:id="@+id/signup_lastname_input"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -144,38 +117,37 @@
                 android:padding="10dp"
                 android:textColor="@color/blue"
                 android:textColorHint="#cccccc"
-                android:textCursorDrawable="@null"
-                />
+                android:textCursorDrawable="@null" />
         </LinearLayout>
 
-            <EditText
-                android:id="@+id/email_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_signup_shape"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:textColor="@color/blue"
-                android:textColorHint="#cccccc"
-                android:textCursorDrawable="@null"
-                />
-            <EditText
-                android:id="@+id/password_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_signup_shape"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="@color/blue"
-                android:textColorHint="#cccccc"
-                android:textCursorDrawable="@null"
-                />
         <EditText
-            android:id="@+id/confirmPassword_input"
+            android:id="@+id/signup_email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittext_signup_shape"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textColor="@color/blue"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@null" />
+
+        <EditText
+            android:id="@+id/signup_password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittext_signup_shape"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textColor="@color/blue"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@null" />
+
+        <EditText
+            android:id="@+id/signup_confirmpassword_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -185,36 +157,39 @@
             android:padding="10dp"
             android:textColor="@color/blue"
             android:textColorHint="#cccccc"
-            android:textCursorDrawable="@null"
-            />
+            android:textCursorDrawable="@null" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingTop="5dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Gender :"
                 android:textColor="@color/darkgrey"
-                android:textSize="19sp"/>
+                android:textSize="19sp" />
+
             <RadioGroup
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:orientation="horizontal">
+
                 <RadioButton
-                    android:id="@+id/male_radio_input"
+                    android:id="@+id/signup_male_radio_input"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Male"
-
                     android:textColor="@color/darkgrey" />
+
                 <RadioButton
-                    android:id="@+id/female_radio_input"
+                    android:id="@+id/signup_female_radio_input"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -225,7 +200,41 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:alpha=".5"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="OR"
+            android:textColor="@android:color/darker_gray" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:alpha=".5"
+            android:background="@android:color/darker_gray" />
+
+    </LinearLayout>
+
     <Button
+        android:id="@+id/signup_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -234,8 +243,7 @@
         android:background="@drawable/signup_submit_btn_shape"
         android:text="Sign UP"
         android:textColor="#FFF"
-        android:textSize="18sp"
-        />
+        android:textSize="18sp" />
 
 
     <!--<LinearLayout

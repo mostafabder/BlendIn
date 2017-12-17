@@ -8,7 +8,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -21,34 +25,34 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.blendin.Adapters.HangoutAdapter;
-import com.example.android.blendin.Constants;
-import com.example.android.blendin.Models.CommentModel;
+import com.example.android.blendin.Utility.Constants;
 import com.example.android.blendin.Models.HangoutModel;
 import com.example.android.blendin.R;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -63,8 +67,11 @@ import mehdi.sakout.fancybuttons.FancyButton;
 public class HangoutFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener
         , GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    static boolean mLocationPermissionGranted, orgCreated;
     private final LatLng HAMBURG = new LatLng(53.558, 9.927);
     private final LatLng KIEL = new LatLng(53.551, 9.993);
+    private final int LOCATION_REQUESTED_CODE = 2;
+    LatLng org;
     Boolean isPermissionGranted;
     Location mLastLocation;
     Boolean isBottom = false;
@@ -76,16 +83,17 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
     RecyclerView.Adapter adapter;
     List<HangoutModel> HangoutModelList;
     LinearLayoutManager layoutManager;
+    Boolean y = true;
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
     private Map<Marker, String> markerIds = new HashMap<>();
     private int LOCATION_SETTINGS_REQUEST_CODE = 1;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     public static boolean checkForLocationEnabled(Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         return isGPSEnabled;
-
     }
 
     @Override
@@ -103,7 +111,7 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         HangoutModelList = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new HangoutAdapter(getActivity(), HangoutModelList, false);
+        adapter = new HangoutAdapter(getActivity(), HangoutModelList, false, linear2);
         recyclerView.setAdapter(adapter);
         fancyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +134,8 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         });
         initPermissionCheck();
         initMap();
-
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        Constants.isBottom = true;
         return v;
     }
 
@@ -151,10 +160,13 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 //                                          int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
-                return;
             }
         }
-
+        Marker hamburg = mMap.addMarker(new MarkerOptions()
+                .position(HAMBURG));
+        Marker kiel = mMap.addMarker(new MarkerOptions()
+                .position(KIEL));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
         mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.setOnMarkerClickListener(this);
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -162,7 +174,6 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             public View getInfoWindow(Marker marker) {
                 return null;
             }
-
             @Override
             public View getInfoContents(Marker marker) {
                 View infowindow;
@@ -174,46 +185,6 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             }
         });
         mMap.setOnInfoWindowClickListener(this);
-    }
-
-    public void SlideToDown() {
-        linear.setVisibility(View.VISIBLE);
-        linear.setAlpha(0.0f);
-// Start the animation
-        linear.animate()
-                .translationY(linear.getHeight())
-                .alpha(1.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        linear.setVisibility(View.GONE);
-                    }
-                });
-        isBottom = true;
-    }
-
-    public void SlideToTop() {
-//        linear2.setVisibility(View.VISIBLE);
-//        linear2.invalidate();
-//        TranslateAnimation slide = new TranslateAnimation(0,0,100,0);
-//        slide.setDuration(1000);
-//        slide.setFillAfter(true);
-//        linear2.startAnimation(slide);
-
-        linear2.setVisibility(View.GONE);
-        linear2.setAlpha(0.0f);
-// Start the animation
-        linear2.animate()
-                .translationY(linear2.getHeight())
-                .alpha(1.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        linear2.setVisibility(View.VISIBLE);
-                    }
-                });
     }
 
     @Override
@@ -235,9 +206,8 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             @Override
             public void onClick(View v) {
                 if (Constants.isBottom) {
-                    SlideToTop();
+                    linear2.setVisibility(View.VISIBLE);
                     Constants.isBottom = false;
-
                 }
                 HangoutModel hangoutModel;
                 hangoutModel = new HangoutModel(R.drawable.user, "KAPPA");
@@ -250,7 +220,6 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         dialog.show();
         Toast.makeText(getActivity(), markerIds.get(marker), Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
@@ -268,15 +237,20 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-
         if (isPermissionGranted) {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             mMap.setMyLocationEnabled(true);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 15));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+            if (mLastLocation != null) {
+                mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())));
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 15));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+            }
         }
     }
+
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -374,5 +348,88 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         } else {
             showWaringDialog();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+
+            case LOCATION_REQUESTED_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                    Toast.makeText(this.getActivity(), "Location permission granted", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(this.getActivity(), "Location permission Denied", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        int response = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getActivity());
+        if (response != ConnectionResult.SUCCESS)
+            GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), response, 1).show();
+        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET},
+                    LOCATION_REQUESTED_CODE);
+        }
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    org = new LatLng(location.getLatitude(), location.getLongitude());
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(org.latitude, org.longitude)).zoom(12).build();
+                    mMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+                    if (!orgCreated && org != null) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(org));
+                        orgCreated = true;
+                    }
+                }
+            }
+        });
+    }
+
+    public void SlideToDown() {
+        linear.setVisibility(View.VISIBLE);
+        linear.setAlpha(0.0f);
+// Start the animation
+        linear.animate()
+                .translationY(linear.getHeight())
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        linear.setVisibility(View.GONE);
+                    }
+                });
+        isBottom = true;
+    }
+
+    public void SlideToTop() {
+        linear2.setVisibility(View.GONE);
+        linear2.setAlpha(0.0f);
+// Start the animation
+        linear2.animate()
+                .translationY(linear2.getHeight())
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        linear2.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 }

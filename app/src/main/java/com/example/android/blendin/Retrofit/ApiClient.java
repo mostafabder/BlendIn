@@ -13,12 +13,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiClient {
-    public static final String BASE_URL = "";
+
+    public static final String BASE_URL = "http://156.216.94.254/";
     private static Retrofit retrofit = null;
-
-
     public static Retrofit getClient() {
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(180, TimeUnit.SECONDS)
                 .connectTimeout(180, TimeUnit.SECONDS)
@@ -30,7 +28,7 @@ public class ApiClient {
                     .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().serializeNulls().create()))
                     .build();
         }
-
         return retrofit;
     }
 }
+

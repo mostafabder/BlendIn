@@ -1,6 +1,7 @@
 package com.example.android.blendin;
 
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,13 +27,14 @@ import com.example.android.blendin.Fragments.NotificationFragment;
 import com.example.android.blendin.Fragments.ProfileFragment;
 import com.example.android.blendin.Fragments.RequestFragment;
 import com.example.android.blendin.Fragments.SettingsFragment;
+import com.example.android.blendin.Utility.Constants;
 
 import org.apmem.tools.layouts.FlowLayout;
- 
+
 /**
  * Created by Luffy on 11/28/2017.
  */
- 
+
 public class Navigation_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     String curFragmentKey;
     Fragment fragment;
@@ -40,6 +42,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
     FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
     Boolean notificationClicked = false;
+
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         fragmentTransaction.replace(R.id.content_main, new NewsfeedFragment(), "news");
         fragmentTransaction.commit();
         getSupportActionBar().setTitle("Newsfeed");
+        Constants.inFragment = "Newsfeed";
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -72,26 +76,23 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         int id = item.getItemId();
         if (id == R.id.profile_nav_item) {
             transmission(new ProfileFragment(), "Profile");
-
         } else if (id == R.id.hangouts_nav_item) {
             transmission(new HangoutFragment(), "Hangouts");
- 
         } else if (id == R.id.Newsfeed_nav_item) {
             transmission(new NewsfeedFragment(), "Newsfeed");
- 
         } else if (id == R.id.request_nav_item) {
             transmission(new RequestFragment(), "Requests");
- 
         } else if (id == R.id.Mysquad_nav_item) {
             transmission(new MysquadFragment(), "My Squads", true);
- 
         } else if (id == R.id.settings_nav_item) {
             //TODO :: Settings Fragment
             transmission(new SettingsFragment(), "set");
             getSupportActionBar().setTitle("Settings");
         } else if (id == R.id.signout_nav_item) {
             //TODO :: Sign out
-            transmission(new HangoutProfileFragment(), "Hangout Profile", true);
+            Intent intent = new Intent(Navigation_activity.this, LandingPageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -107,17 +108,21 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         } else {
             notificationClicked = false;
             super.onBackPressed();
+            getSupportActionBar().setTitle(Constants.inFragment);
         }
     }
- 
+
     public void transmission(Fragment nxtfragment, String key) {
         if (!key.equals(curFragmentKey)) {
             curFragmentKey = key;
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
             fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
+            getSupportFragmentManager().popBackStack();
             fragmentTransaction.commit();
             getSupportActionBar().setTitle(key);
+            Constants.inFragment = key;
+            notificationClicked = false;
         }
     }
 
@@ -129,8 +134,11 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
             bundle.putBoolean("auth", flag);
             nxtfragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.content_main, nxtfragment, key);
+            getSupportFragmentManager().popBackStack();
             fragmentTransaction.commit();
             getSupportActionBar().setTitle(key);
+            Constants.inFragment = key;
+            notificationClicked = false;
         }
     }
     @Override
@@ -142,16 +150,22 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+
         switch (itemId) {
             case R.id.notification_item_bar:
                 if (!notificationClicked) {
+                    fragment = new NotificationFragment();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.setCustomAnimations(R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
-                    fragmentTransaction.replace(R.id.content_main, new NotificationFragment(), "Notifications");
+                    fragmentTransaction.replace(R.id.content_main, fragment, "Notifications");
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     getSupportActionBar().setTitle("Notifications");
                     notificationClicked = true;
+                } else {
+                    super.onBackPressed();
+                    getSupportActionBar().setTitle(Constants.inFragment);
+                    notificationClicked = false;
                 }
                 break;
         }
