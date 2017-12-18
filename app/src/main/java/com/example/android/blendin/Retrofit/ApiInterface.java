@@ -1,6 +1,7 @@
 package com.example.android.blendin.Retrofit;
 
 import com.example.android.blendin.Responses.LoginResponse;
+import com.example.android.blendin.Responses.ProfileResponse;
 import com.example.android.blendin.Responses.LoveResponse;
 import com.example.android.blendin.Responses.NewsfeedResponse;
 import com.example.android.blendin.Responses.SignUpResponse;
@@ -44,6 +45,13 @@ public interface ApiInterface {
             @Field("gender") String gender);
 
 
+    @FormUrlEncoded
+    @POST("secure/auth/profile/mine")
+    Call<ProfileResponse> getProfile(
+            @Field("token") String token,
+            @Field("secret") String secret
+    );
+  
     @FormUrlEncoded
     @POST("/news-feed")
     Call<NewsfeedResponse> newsfeed(@Field("token") String token, @Field("secret") String secret);

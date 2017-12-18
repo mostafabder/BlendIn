@@ -86,8 +86,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     @BindView(R.id.signup_email_input)
     TextView email;
+
     @BindView(R.id.signup_password_input)
     TextView password;
+
     @BindView(R.id.signup_confirmpassword_input)
     TextView cpassword;
     @BindView(R.id.signup_firstname_input)
@@ -144,6 +146,8 @@ public class SignUpActivity extends AppCompatActivity {
                         gender = "0";
                     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                     Call<SignUpResponse> call = null;
+                    try {
+                        Log.e("kappa2", password.getText().toString());
                         call = apiInterface.signupRegular(
                                 email.getText().toString(),
                                 password.getText().toString(),
@@ -187,6 +191,23 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public boolean valid() {
+        /*String e = email.getText().toString();
+        String p = password.getText().toString();
+        String cp = cpassword.getText().toString();
+        String f = firstname.getText().toString();
+        String l = lastname.getText().toString();
+        boolean fe = female.isChecked();
+        boolean ma = male.isChecked();
+
+        if(!(e.contains("@") && e.contains(".")))
+            return false;
+        if(!(p.length() > 9 && p.equals(cp)))
+            return false;
+        if ((fe || ma))
+            return false;
+        if (!(f.length()>1 && l.length()>1))
+            return false;
+        */
         return true;
     }
 

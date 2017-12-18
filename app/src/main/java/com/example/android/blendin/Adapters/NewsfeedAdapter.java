@@ -103,7 +103,6 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
     }
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
         newsFeedModel = newsfeedItemsList.get(position);
 
         getPicasso(newsfeedItemsList.get(position).getAvatar(), holder.userProfileImage);
@@ -146,7 +145,6 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
                 fragmentTransaction.commit();
             }
         });
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

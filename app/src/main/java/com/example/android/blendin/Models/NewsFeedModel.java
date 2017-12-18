@@ -38,7 +38,6 @@ public class NewsFeedModel {
     public void setId(String id) {
         this.id = id;
     }
-
     public String getUuid() {
         return uuid;
     }

@@ -2,6 +2,7 @@ package com.example.android.blendin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ThemedSpinnerAdapter;
@@ -41,8 +42,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.android.blendin.Utility.Constants.FLAG_SUCCESS;
-import static com.example.android.blendin.Utility.Constants.KEY_USER_DATA;
+import static com.example.android.blendin.Utility.CommonMethods.*;
+import static com.example.android.blendin.Utility.Constants.*;
+
+import com.example.android.blendin.Utility.AuthUser;
+import com.google.gson.Gson;
+
 
 public class SignInActivity extends AppCompatActivity {
     @BindView(R.id.signin_email_input)
@@ -54,6 +59,8 @@ public class SignInActivity extends AppCompatActivity {
     @BindView(R.id.signin_fb)
     LinearLayout fb;
 
+    @BindView(R.id.signin_submit)
+    Button submit;
     CallbackManager FBCallbackManager;
     LoginResponse loginResponse;
     private ProgressDialog progressDialog;
@@ -65,16 +72,43 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
-        Button fancyButton = (Button) findViewById(R.id.btn_signin);
-        fancyButton.setOnClickListener(new View.OnClickListener() {
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignInActivity.this, Navigation_activity.class);
-                startActivity(intent);
-                finish();
+                if (valid()) {
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    Call<LoginResponse> call = apiInterface.loginRegular(
+                            email.getText().toString(),
+                            password.getText().toString(),
+                            "0"
+                    );
+                    Log.e("kappa3", password.getText().toString());
+                    call.enqueue(new Callback<LoginResponse>() {
+                        @Override
+                        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                            if (response != null && response.body().getStatus().equals(FLAG_SUCCESS)) {
+                                String json = new Gson().toJson(response);
+                                storeDataToSharedPref(SignInActivity.this, json, KEY_USER_DATA);
+                                AuthUser authUser = AuthUser.getAuthUser(response.body());
+                                Intent intent = new Intent(SignInActivity.this, Navigation_activity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Log.e("kappa", response.body().getStatus());
+                                Toast.makeText(SignInActivity.this, "flag error", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<LoginResponse> call, Throwable t) {
+                            Toast.makeText(SignInActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+
             }
         });
-
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +170,8 @@ public class SignInActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "خطا فى تسجيل الدخول! " + exception.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        
     }
 
     private Bundle getFacebookData(JSONObject object) {
@@ -232,4 +268,17 @@ public class SignInActivity extends AppCompatActivity {
                 new Gson().toJson(loginResponse),
                 KEY_USER_DATA);
     }
+
+
+    public boolean valid() {
+        /*String e = email.getText().toString();
+        String p = password.getText().toString();
+        if(e.contains("@") && e.contains(".") && p.length() > 9)
+            return true;*/
+        return true;
+    }
+//    public void openNav(View view){
+//        Intent intent = new Intent(this, Navigation_activity.class);
+//        startActivity(intent);
+//    }
 }

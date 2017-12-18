@@ -23,8 +23,4 @@ public class AuthUser extends LoginResponse {
         }
         return authUser;
     }
-
-    public static AuthUser getAuthData() {
-        return authUser;
-    }
 }
