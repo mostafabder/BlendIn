@@ -38,11 +38,11 @@ public class HangoutProfileChatAdapter extends RecyclerView.Adapter<HangoutProfi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        chatMessageModel = chatMessageModelList.get(position);
-        holder.userImage.setImageResource(chatMessageModel.getImage());
-        holder.userName.setText(chatMessageModel.getUserName());
-        holder.text.setText(chatMessageModel.getText());
-        holder.dateAgo.setText(chatMessageModel.getDate());
+//        chatMessageModel = chatMessageModelList.get(position);
+//        holder.userImage.setImageResource(chatMessageModel.getPic());
+//        holder.userName.setText(chatMessageModel.getUserName());
+//        holder.text.setText(chatMessageModel.getText());
+//        holder.dateAgo.setText(chatMessageModel.getDate());
     }
 
     @Override

@@ -5,38 +5,42 @@ package com.example.android.blendin.Models;
  */
 
 public class MySquadModel {
-   private int avatar;
-   private String name;
-   private String count;
 
-    public MySquadModel(int avatar, String name, String count) {
-        this.avatar = avatar;
-        this.name = name;
-        this.count = count;
+    private String id;
+    private String title;
+    private String pic;
+    private String members;
+
+    public String getMembers() {
+        return members;
     }
 
-    public int getAvatar() {
-        return avatar;
+    public void setMembers(String members) {
+        this.members = members;
     }
 
-    public void setAvatar(int avatar) {
-        this.avatar = avatar;
+    public String getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
     }
 
-    public String getCount() {
-        return count;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setCount(String count) {
-        this.count = count;
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
 }

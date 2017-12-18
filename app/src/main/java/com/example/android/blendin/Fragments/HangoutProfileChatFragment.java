@@ -43,15 +43,6 @@ public class HangoutProfileChatFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         chatMessageModelList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            SquadChatMessageModel model = new SquadChatMessageModel(
-                    R.drawable.user,
-                    "Omar ELRayes",
-                    "Yesterday was AWESOME !",
-                    "30m"
-            );
-            chatMessageModelList.add(model);
-        }
         adapter = new HangoutProfileChatAdapter(chatMessageModelList, getActivity());
         recyclerView.setAdapter(adapter);
 

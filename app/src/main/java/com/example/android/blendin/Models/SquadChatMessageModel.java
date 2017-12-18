@@ -8,47 +8,58 @@ public class SquadChatMessageModel {
 
     //TODO :: userName object memeber :: waiting for logic .-.
 
-    int image;
-    String userName;
-    String text;
-    String date;
+    String pic;
+    String first_name;
+    String last_name;
+    String message;
+    String created_at;
+    String uuid;
 
-    public SquadChatMessageModel(int image, String userName, String text, String date) {
-        this.image = image;
-        this.userName = userName;
-        this.text = text;
-        this.date = date;
+    public String getPic() {
+        return pic;
     }
 
-    public int getImage() {
-        return image;
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public String getText() {
-        return text;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public String getMessage() {
+        return message;
     }
 
-    public String getDate() {
-        return date;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

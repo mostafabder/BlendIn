@@ -9,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.blendin.Models.MySquadModel;
-import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
 import com.example.android.blendin.RecyclerViewClickListener;
+import com.example.android.blendin.Utility.Constants;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.List;
@@ -43,14 +44,29 @@ public class MySquadAdapter extends RecyclerView.Adapter<MySquadAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         mySquadModel = mySquadItemsList.get(position);
-        holder.squadImage.setImageResource(mySquadModel.getAvatar());
-        holder.squadName.setText(mySquadModel.getName());
-        holder.squadMembersCount.setText(mySquadModel.getCount());
+        // holder.squadImage.setImageResource(mySquadModel.getAvatar());
+        getPicasso(mySquadModel.getPic(), holder.squadImage);
+        holder.squadName.setText(mySquadModel.getTitle());
+        holder.squadMembersCount.setText(mySquadModel.getMembers());
     }
 
     @Override
     public int getItemCount() {
         return mySquadItemsList.size();
+    }
+
+    void getPicasso(String temp, ImageView img) {
+        Picasso.with(context)
+                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
+    }
+
+    void getPicasso(String temp, CircleImageView img) {
+        Picasso.with(context)
+                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
