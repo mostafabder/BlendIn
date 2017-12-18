@@ -6,76 +6,109 @@ package com.example.android.blendin.Models;
 
 public class NewsFeedModel {
 
-    int avatar;
+
+    String avatar;
     String name;
-    String city;
-    String timeAgo;
-    int image;
+    String location;
+    String created_at;
+    String hangout_pic;
     String activity;
-    String disc;
-    String likes;
+    String content;
+    String loves;
     String comments;
-    boolean like;
+    boolean isLovedByThisUser;
+    String uuid;
+    String first_name;
+    String last_name;
+    String id;
+    String title;
 
-    public NewsFeedModel(int avatar, String name, String city, String timeAgo, int image, String activity, String disc, String likes, String comments, boolean like) {
-        this.avatar = avatar;
-        this.name = name;
-        this.city = city;
-        this.timeAgo = timeAgo;
-        this.image = image;
-        this.activity = activity;
-        this.disc = disc;
-        this.likes = likes;
-        this.comments = comments;
-        this.like = like;
+    public String getTitle() {
+        return title;
     }
 
-    public boolean isLike() {
-        return like;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setLike(boolean like) {
-        this.like = like;
+    public String getId() {
+        return id;
     }
 
-    public int getAvatar() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public boolean isLovedByThisUser() {
+        return isLovedByThisUser;
+    }
+
+    public void setLovedByThisUser(boolean lovedByThisUser) {
+        this.isLovedByThisUser = lovedByThisUser;
+    }
+
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(int avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
     public String getName() {
-        return name;
+        return first_name + " " + last_name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getTimeAgo() {
-        return timeAgo;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setTimeAgo(String timeAgo) {
-        this.timeAgo = timeAgo;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public int getImage() {
-        return image;
+    public String getHangout_pic() {
+        return hangout_pic;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setHangout_pic(String hangout_pic) {
+        this.hangout_pic = hangout_pic;
     }
 
     public String getActivity() {
@@ -86,20 +119,20 @@ public class NewsFeedModel {
         this.activity = activity;
     }
 
-    public String getDisc() {
-        return disc;
+    public String getContent() {
+        return content;
     }
 
-    public void setDisc(String disc) {
-        this.disc = disc;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getLikes() {
-        return likes;
+    public String getLoves() {
+        return loves;
     }
 
-    public void setLikes(String likes) {
-        this.likes = likes;
+    public void setLoves(String loves) {
+        this.loves = loves;
     }
 
     public String getComments() {

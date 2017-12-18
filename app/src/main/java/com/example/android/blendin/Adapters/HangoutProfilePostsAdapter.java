@@ -51,24 +51,24 @@ public class HangoutProfilePostsAdapter extends RecyclerView.Adapter<HangoutProf
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         newsFeedModel = newsfeedItemsList.get(position);
-        holder.userProfileImage.setImageResource(newsFeedModel.getAvatar());
+        //
         holder.userNameTxt.setText(newsFeedModel.getName());
-        holder.userLocationTxt.setText(newsFeedModel.getCity());
-        holder.postTimeTxt.setText(newsFeedModel.getTimeAgo());
-        holder.postImage.setImageResource(newsFeedModel.getImage());
+        holder.userLocationTxt.setText(newsFeedModel.getLocation());
+        holder.postTimeTxt.setText(newsFeedModel.getCreated_at());
+        //
         holder.postMainTxt.setText(newsFeedModel.getActivity());
-        holder.postDescTxt.setText(newsFeedModel.getDisc());
-        holder.postLikesCount.setText(newsFeedModel.getLikes());
+        holder.postDescTxt.setText(newsFeedModel.getContent());
+        holder.postLikesCount.setText(newsFeedModel.getLoves());
         holder.postCommentsCount.setText(newsFeedModel.getComments());
         holder.likeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (newsfeedItemsList.get(position).isLike()) {
+                if (newsfeedItemsList.get(position).isLovedByThisUser()) {
                     holder.likeImage.setImageResource(R.drawable.dislike);
-                    newsfeedItemsList.get(position).setLike(false);
+                    newsfeedItemsList.get(position).setLovedByThisUser(false);
                 } else {
                     holder.likeImage.setImageResource(R.drawable.like);
-                    newsfeedItemsList.get(position).setLike(true);
+                    newsfeedItemsList.get(position).setLovedByThisUser(true);
                 }
 
             }

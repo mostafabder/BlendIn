@@ -1,6 +1,8 @@
 package com.example.android.blendin.Responses;
 
 import com.example.android.blendin.Models.NewsFeedModel;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -9,8 +11,15 @@ import java.util.List;
  */
 
 public class NewsfeedResponse {
+
+    @SerializedName("status")
+    @Expose
     private String flag;
-    private List<NewsFeedModel> newsFeedModelList;
+
+    @SerializedName("post")
+    @Expose
+    private List<NewsFeedModel> posts;
+
 
     public String getFlag() {
         return flag;
@@ -20,11 +29,11 @@ public class NewsfeedResponse {
         this.flag = flag;
     }
 
-    public List<NewsFeedModel> getNewsFeedModelList() {
-        return newsFeedModelList;
+    public List<NewsFeedModel> getPosts() {
+        return posts;
     }
 
-    public void setNewsFeedModelList(List<NewsFeedModel> newsFeedModelList) {
-        this.newsFeedModelList = newsFeedModelList;
+    public void setPosts(List<NewsFeedModel> newsFeedModelList) {
+        this.posts = newsFeedModelList;
     }
 }

@@ -14,9 +14,17 @@ public class AuthUser extends LoginResponse {
 
     }
 
-    public static AuthUser getAuthUser() {
-        if (authUser == null)
+    public static AuthUser getAuthUser(LoginResponse loginResponse) {
+        if (authUser == null) {
             authUser = new AuthUser();
+            authUser.setSecret(loginResponse.getSecret());
+            authUser.setToken(loginResponse.getToken());
+            authUser.setStatus(loginResponse.getStatus());
+        }
+        return authUser;
+    }
+
+    public static AuthUser getAuthData() {
         return authUser;
     }
 }
