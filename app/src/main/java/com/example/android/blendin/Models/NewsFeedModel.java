@@ -9,7 +9,7 @@ public class NewsFeedModel {
 
     String avatar;
     String name;
-    String city;
+    String location;
     String created_at;
     String hangout_pic;
     String activity;
@@ -20,7 +20,24 @@ public class NewsFeedModel {
     String uuid;
     String first_name;
     String last_name;
+    String id;
+    String title;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getUuid() {
         return uuid;
     }
@@ -69,12 +86,12 @@ public class NewsFeedModel {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getCreated_at() {

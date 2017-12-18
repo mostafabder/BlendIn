@@ -8,6 +8,38 @@ public class LoginResponse {
     private String status;
     private String token;
     private String secret;
+    private String uid;
+    private String name;
+    private String email;
+    private String phone;
+    private String address;
+    private String avatar;
+    private String type;
+
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getStatus() {
         return status;

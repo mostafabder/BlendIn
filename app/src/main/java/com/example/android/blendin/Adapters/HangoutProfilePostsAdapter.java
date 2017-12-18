@@ -50,6 +50,7 @@ public class HangoutProfilePostsAdapter extends RecyclerView.Adapter<HangoutProf
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
 //        newsFeedModel = newsfeedItemsList.get(position);
 //        holder.userProfileImage.setImageResource(newsFeedModel.getAvatar());
 //        holder.userNameTxt.setText(newsFeedModel.getName());
@@ -86,6 +87,41 @@ public class HangoutProfilePostsAdapter extends RecyclerView.Adapter<HangoutProf
 //            }
 //        });
 
+        newsFeedModel = newsfeedItemsList.get(position);
+        //
+        holder.userNameTxt.setText(newsFeedModel.getName());
+        holder.userLocationTxt.setText(newsFeedModel.getLocation());
+        holder.postTimeTxt.setText(newsFeedModel.getCreated_at());
+        //
+        holder.postMainTxt.setText(newsFeedModel.getActivity());
+        holder.postDescTxt.setText(newsFeedModel.getContent());
+        holder.postLikesCount.setText(newsFeedModel.getLoves());
+        holder.postCommentsCount.setText(newsFeedModel.getComments());
+        holder.likeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (newsfeedItemsList.get(position).isLovedByThisUser()) {
+                    holder.likeImage.setImageResource(R.drawable.dislike);
+                    newsfeedItemsList.get(position).setLovedByThisUser(false);
+                } else {
+                    holder.likeImage.setImageResource(R.drawable.like);
+                    newsfeedItemsList.get(position).setLovedByThisUser(true);
+                }
+
+            }
+        });
+        holder.commentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new CommentsFragment();
+                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+                fragmentTransaction.add(R.id.content_main, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

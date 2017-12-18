@@ -2,6 +2,8 @@ package com.example.android.blendin.Retrofit;
 
 import com.example.android.blendin.Responses.LoginResponse;
 import com.example.android.blendin.Responses.ProfileResponse;
+import com.example.android.blendin.Responses.LoveResponse;
+import com.example.android.blendin.Responses.NewsfeedResponse;
 import com.example.android.blendin.Responses.SignUpResponse;
 
 import retrofit2.Call;
@@ -21,7 +23,12 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("secure/auth/login")
-    Call<LoginResponse> loginFb(@Field("fbid") String fbid, @Field("type") String type);
+    Call<LoginResponse> loginFb(@Field("fbid") String fbid, @Field("type") String type
+            , @Field("first_name") String first_name,
+                                @Field("last_name") String last_name,
+                                @Field("email") String email,
+                                @Field("gender") String gender);
+
 
     @FormUrlEncoded
     @POST("secure/auth/login")
@@ -35,10 +42,8 @@ public interface ApiInterface {
             @Field("type") String type,
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
-            @Field("address") String address,
-            @Field("gender") String gender,
-            @Field("lat") String lat,
-            @Field("lng") String lng);
+            @Field("gender") String gender);
+
 
     @FormUrlEncoded
     @POST("secure/auth/profile/mine")
@@ -46,6 +51,12 @@ public interface ApiInterface {
             @Field("token") String token,
             @Field("secret") String secret
     );
+  
+    @FormUrlEncoded
+    @POST("/news-feed")
+    Call<NewsfeedResponse> newsfeed(@Field("token") String token, @Field("secret") String secret);
 
-
+    @FormUrlEncoded
+    @POST("/news-feed/posts/love")
+    Call<LoveResponse> love(@Field("token") String token, @Field("secret") String secret, @Field("post_id") String post_id);
 }

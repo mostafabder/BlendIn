@@ -25,7 +25,7 @@
             android:id="@+id/tv_details_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hamada Helal has liked your photo"
+            android:text="Hamada Helal has lovedByThisUser your photo"
             android:textColor="@color/dark_blue" />
 
         <TextView

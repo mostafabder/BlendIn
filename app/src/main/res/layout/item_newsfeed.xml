@@ -29,11 +29,11 @@
                 android:src="@drawable/user"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="0dp" />
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
-                >
+                android:layout_weight="5">
 
                 <TextView
                     android:id="@+id/tvItemNameNews"
@@ -43,14 +43,16 @@
                     android:text="Mostafa Waleed"
                     android:textColor="@color/blue"
                     android:textSize="17sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
                 <ImageView
                     android:id="@+id/ivLocationPin"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_below="@+id/tvItemNameNews"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/placeholder" />
+
                 <TextView
                     android:id="@+id/tvItemLocNews"
                     android:layout_width="wrap_content"
@@ -59,16 +61,30 @@
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/ivLocationPin"
                     android:text="Mansoura"
-                    android:textColor="@color/dark_blue"
-                    />
+                    android:textColor="@color/dark_blue" />
+
+                <TextView
+                    android:id="@+id/tvItemActivityNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvItemNameNews"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/tvItemLocNews"
+                    android:text="Playing"
+                    android:textColor="@color/dark_blue" />
+
 
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/tvItemTimeNews"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="15dp"
                 android:layout_weight="3"
+                android:gravity="end"
                 android:text="1 hour ago"
                 android:textColor="@color/dark_blue"
                 android:textSize="15sp" />
@@ -84,7 +100,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
             <TextView
-                android:id="@+id/tvItemActivityNews"
+                android:id="@+id/tvItemTitleNews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -96,7 +112,7 @@
                 android:id="@+id/tvItemDiscNews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvItemActivityNews"
+                android:layout_below="@+id/tvItemTitleNews"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="5dp"
                 android:text="Great times the boys, Best food"
