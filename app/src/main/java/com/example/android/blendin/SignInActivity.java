@@ -90,6 +90,9 @@ public class SignInActivity extends AppCompatActivity {
                                 String json = new Gson().toJson(response);
                                 storeDataToSharedPref(SignInActivity.this, json, KEY_USER_DATA);
                                 AuthUser authUser = AuthUser.getAuthUser(response.body());
+                                Log.e("kappa", response.body().getToken());
+                                Log.e("kappa1", response.body().getSecret());
+
                                 Intent intent = new Intent(SignInActivity.this, Navigation_activity.class);
                                 startActivity(intent);
                                 finish();

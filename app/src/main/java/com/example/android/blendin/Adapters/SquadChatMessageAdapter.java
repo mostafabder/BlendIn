@@ -5,10 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.blendin.Models.SquadChatMessageModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.Utility.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,15 +41,30 @@ public class SquadChatMessageAdapter extends RecyclerView.Adapter<SquadChatMessa
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         squadChatMessageModel = squadChatMessageModelList.get(position);
-        holder.userImage.setImageResource(squadChatMessageModel.getImage());
-        holder.userName.setText(squadChatMessageModel.getUserName());
-        holder.text.setText(squadChatMessageModel.getText());
-        holder.dateAgo.setText(squadChatMessageModel.getDate());
+        //holder.userImage.setImageResource(squadChatMessageModel.getPic());
+        getPicasso(squadChatMessageModel.getPic(), holder.userImage);
+        holder.userName.setText(squadChatMessageModel.getFirst_name() + " " + squadChatMessageModel.getLast_name());
+        holder.text.setText(squadChatMessageModel.getMessage());
+        holder.dateAgo.setText(squadChatMessageModel.getCreated_at());
     }
 
     @Override
     public int getItemCount() {
         return squadChatMessageModelList.size();
+    }
+
+    void getPicasso(String temp, ImageView img) {
+        Picasso.with(context)
+                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
+    }
+
+    void getPicasso(String temp, CircleImageView img) {
+        Picasso.with(context)
+                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

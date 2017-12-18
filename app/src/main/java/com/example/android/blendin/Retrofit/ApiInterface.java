@@ -1,10 +1,13 @@
 package com.example.android.blendin.Retrofit;
 
+import com.example.android.blendin.Models.MySquadModel;
 import com.example.android.blendin.Responses.LoginResponse;
+import com.example.android.blendin.Responses.MySquadResponse;
 import com.example.android.blendin.Responses.ProfileResponse;
 import com.example.android.blendin.Responses.LoveResponse;
 import com.example.android.blendin.Responses.NewsfeedResponse;
 import com.example.android.blendin.Responses.SignUpResponse;
+import com.example.android.blendin.Responses.SquadProfileResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -61,5 +64,13 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("/news-feed/posts/love")
     Call<LoveResponse> love(@Field("token") String token, @Field("secret") String secret, @Field("post_id") String post_id);
-    
+
+    @FormUrlEncoded
+    @POST("/squads/mine")
+    Call<MySquadResponse> mysquads(@Field("token") String token, @Field("secret") String secret);
+
+    @FormUrlEncoded
+    @POST("/squads")
+    Call<SquadProfileResponse> squadProfile(@Field("token") String token, @Field("secret") String secret, @Field("squad_id") String squad_id);
+
 }

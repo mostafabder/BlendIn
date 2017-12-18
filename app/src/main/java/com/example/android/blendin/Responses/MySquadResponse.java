@@ -9,6 +9,22 @@ import java.util.List;
  */
 
 public class MySquadResponse {
-    String flag;
-    List<MySquadModel> mySquadModelList;
+    private String status;
+    private List<MySquadModel> squads;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<MySquadModel> getSquads() {
+        return squads;
+    }
+
+    public void setSquads(List<MySquadModel> squads) {
+        this.squads = squads;
+    }
 }
