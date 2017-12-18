@@ -1,7 +1,6 @@
 package com.example.android.blendin.Adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -15,48 +14,71 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.android.blendin.Fragments.CommentsFragment;
-import com.example.android.blendin.Models.ProfileModel;
+import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.Utility.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Luffy on 12/1/2017.
  */
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
-        List<ProfileModel> profileItemsList;
+    List<NewsFeedModel> newsfeedItemsList;
+    NewsFeedModel newsFeedModel;
       Context context;
 
-    public ProfileAdapter(List<ProfileModel> profileItemsList, Context context) {
-        this.profileItemsList = profileItemsList;
+    public ProfileAdapter(List<NewsFeedModel> newsfeedItemsList, Context context) {
+        this.newsfeedItemsList = newsfeedItemsList;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_profile,parent,false);
+                .inflate(R.layout.item_newsfeed, parent, false);
         return new ProfileAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvTop.setText(profileItemsList.get(position).getTopText());
-        holder.iv.setImageResource(profileItemsList.get(position).getImg());
-        holder.likes.setText(profileItemsList.get(position).getLikesCount());
-        holder.comments.setText(profileItemsList.get(position).getCommentsCount());
+        newsFeedModel = newsfeedItemsList.get(position);
+        getPicasso(newsFeedModel.getAvatar(), holder.userProfileImage);
+        holder.userNameTxt.setText(newsFeedModel.getName());
+        holder.userLocationTxt.setText(newsFeedModel.getCity());
+        holder.postTimeTxt.setText(newsFeedModel.getCreated_at());
+        getPicasso(newsFeedModel.getHangout_pic(), holder.postImage);
+        holder.postMainTxt.setText(newsFeedModel.getActivity());
+        holder.postDescTxt.setText(newsFeedModel.getContent());
+        holder.postLikesCount.setText(newsFeedModel.getLoves());
+        holder.postCommentsCount.setText(newsFeedModel.getComments());
         holder.likeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (profileItemsList.get(position).isLike()) {
+                if (newsfeedItemsList.get(position).isLovedByThisUser()) {
                     holder.likeImage.setImageResource(R.drawable.dislike);
-                    profileItemsList.get(position).setLike(false);
+                    //newsfeedItemsList.get(position).setLike(false);
                 } else {
                     holder.likeImage.setImageResource(R.drawable.like);
-                    profileItemsList.get(position).setLike(true);
+                    //newsfeedItemsList.get(position).setLike(true);
                 }
 
+            }
+        });
+        holder.commentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new CommentsFragment();
+                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+                fragmentTransaction.add(R.id.content_main, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         holder.commentLayout.setOnClickListener(new View.OnClickListener() {
@@ -75,24 +97,48 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return profileItemsList.size();
+        return newsfeedItemsList.size();
+    }
+
+    void getPicasso(String temp, CircleImageView img) {
+        Picasso.with(context)
+                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
+    }
+
+    void getPicasso(String temp, ImageView img) {
+        Picasso.with(context)
+                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv;
-        TextView tvTop;
-        TextView likes;
-        TextView comments;
-        ImageView likeImage;
-        LinearLayout commentLayout;
+        public CircleImageView userProfileImage;
+        public TextView userNameTxt;
+        public TextView userLocationTxt;
+        public TextView postTimeTxt;
+        public ImageView postImage;
+        public TextView postMainTxt;
+        public TextView postDescTxt;
+        public TextView postLikesCount;
+        public TextView postCommentsCount;
+        public ImageView likeImage;
+        public LinearLayout commentLayout;
         public ViewHolder(View itemView) {
             super(itemView);
-            iv=(ImageView) itemView.findViewById(R.id.iv_profileImage);
-            tvTop=(TextView)itemView.findViewById(R.id.tv_top);
-            likes=(TextView) itemView.findViewById(R.id.tvItemLikesNumProfile);
-            comments=(TextView) itemView.findViewById(R.id.tvItemCommentsNumProfile);
-            likeImage = (ImageView) itemView.findViewById(R.id.iv_profile_like);
-            commentLayout = (LinearLayout) itemView.findViewById(R.id.ll_profile_comments);
+            userProfileImage = (CircleImageView) itemView.findViewById(R.id.profile_image);
+            userNameTxt = (TextView) itemView.findViewById(R.id.tvItemNameNews);
+            userLocationTxt = (TextView) itemView.findViewById(R.id.tvItemLocNews);
+            postTimeTxt = (TextView) itemView.findViewById(R.id.tvItemTimeNews);
+            postImage = (ImageView) itemView.findViewById(R.id.post_image);
+            postMainTxt = (TextView) itemView.findViewById(R.id.tvItemActivityNews);
+            postDescTxt = (TextView) itemView.findViewById(R.id.tvItemDiscNews);
+            postLikesCount = (TextView) itemView.findViewById(R.id.tvItemLikesNumNews);
+            postCommentsCount = (TextView) itemView.findViewById(R.id.tvItemCommentsNumNews);
+            likeImage = (ImageView) itemView.findViewById(R.id.iv_newsfeed_like);
+            commentLayout = (LinearLayout) itemView.findViewById(R.id.ll_newsfeed_comment);
         }
     }
 }

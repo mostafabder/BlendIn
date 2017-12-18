@@ -54,41 +54,41 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        newsFeedModel = newsfeedItemsList.get(position);
-        holder.userProfileImage.setImageResource(newsFeedModel.getAvatar());
-        holder.userNameTxt.setText(newsFeedModel.getName());
-        holder.userLocationTxt.setText(newsFeedModel.getCity());
-        holder.postTimeTxt.setText(newsFeedModel.getTimeAgo());
-        holder.postImage.setImageResource(newsFeedModel.getImage());
-        holder.postMainTxt.setText(newsFeedModel.getActivity());
-        holder.postDescTxt.setText(newsFeedModel.getDisc());
-        holder.postLikesCount.setText(newsFeedModel.getLikes());
-        holder.postCommentsCount.setText(newsFeedModel.getComments());
-        holder.likeImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (newsfeedItemsList.get(position).isLike()) {
-                    holder.likeImage.setImageResource(R.drawable.dislike);
-                    newsfeedItemsList.get(position).setLike(false);
-                } else {
-                    holder.likeImage.setImageResource(R.drawable.like);
-                    newsfeedItemsList.get(position).setLike(true);
-                }
-
-            }
-        });
-        holder.commentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new CommentsFragment();
-                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
-                fragmentTransaction.add(R.id.content_main, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
+//        newsFeedModel = newsfeedItemsList.get(position);
+//        holder.userProfileImage.setImageResource(newsFeedModel.getAvatar());
+//        holder.userNameTxt.setText(newsFeedModel.getName());
+//        holder.userLocationTxt.setText(newsFeedModel.getCity());
+//        holder.postTimeTxt.setText(newsFeedModel.getTimeAgo());
+//        holder.postImage.setImageResource(newsFeedModel.getHangout_pic());
+//        holder.postMainTxt.setText(newsFeedModel.getActivity());
+//        holder.postDescTxt.setText(newsFeedModel.getDisc());
+//        holder.postLikesCount.setText(newsFeedModel.getLikes());
+//        holder.postCommentsCount.setText(newsFeedModel.getComments());
+//        holder.likeImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (newsfeedItemsList.get(position).isLike()) {
+//                    holder.likeImage.setImageResource(R.drawable.dislike);
+//                    newsfeedItemsList.get(position).setLike(false);
+//                } else {
+//                    holder.likeImage.setImageResource(R.drawable.like);
+//                    newsfeedItemsList.get(position).setLike(true);
+//                }
+//
+//            }
+//        });
+//        holder.commentLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Fragment fragment = new CommentsFragment();
+//                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+//                fragmentTransaction.add(R.id.content_main, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+//            }
+//        });
 
     }
 

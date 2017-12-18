@@ -40,19 +40,7 @@ public class NewsfeedFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         newsFeedsList = new ArrayList<>();
         //Test Data
-        for(int i=0; i<5; i++){
-            NewsFeedModel newsFeedModel = new NewsFeedModel(
-                    R.drawable.user,
-                    "Mostafa Waleed",
-                    "Mansoura",
-                    "1 hour ago",
-                    R.drawable.kappa2,
-                    "Eating at Bremer",
-                    "is this is the best hangout or what ? ",
-                    "5555",
-                    "6969", true);
-            newsFeedsList.add(newsFeedModel);
-        }
+
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {

@@ -1,6 +1,8 @@
 package com.example.android.blendin;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -9,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -21,6 +24,10 @@ import android.widget.TextView;
 
 import com.example.android.blendin.Utility.ColorShades;
 import com.example.android.blendin.Views.CirclePageIndicator;
+import com.example.android.blendin.Utility.Constants.*;
+
+import static com.example.android.blendin.Utility.CommonMethods.retrieveDataFromSharedPref;
+import static com.example.android.blendin.Utility.Constants.PREF_KEY;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -68,8 +75,10 @@ public class IntroActivity extends AppCompatActivity {
         btnSkipIntro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(IntroActivity.this, LandingPageActivity.class);
                 startActivity(intent);
+
                 finish();
             }
         });

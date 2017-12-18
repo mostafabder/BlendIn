@@ -1,6 +1,7 @@
 package com.example.android.blendin.Retrofit;
 
 import com.example.android.blendin.Responses.LoginResponse;
+import com.example.android.blendin.Responses.ProfileResponse;
 import com.example.android.blendin.Responses.SignUpResponse;
 
 import retrofit2.Call;
@@ -38,6 +39,13 @@ public interface ApiInterface {
             @Field("gender") String gender,
             @Field("lat") String lat,
             @Field("lng") String lng);
+
+    @FormUrlEncoded
+    @POST("secure/auth/profile/mine")
+    Call<ProfileResponse> getProfile(
+            @Field("token") String token,
+            @Field("secret") String secret
+    );
 
 
 }

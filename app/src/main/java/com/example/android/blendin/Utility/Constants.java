@@ -9,5 +9,7 @@ public class Constants {
     public static Boolean isBottom = true;
     public static String inFragment = "";
     public static String FLAG_SUCCESS = "200";
+    public static String KEY_USER_DATA = "user";
+    public static String BASE_URL_FOR_IMAGE = "";
 
 }
