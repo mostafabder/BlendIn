@@ -39,6 +39,7 @@
                 android:src="@drawable/user" />
 
             <EditText
+                android:id="@+id/et_comment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -48,6 +49,7 @@
                 android:textSize="14sp" />
 
             <ImageView
+                android:id="@+id/btn_send_comment"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"

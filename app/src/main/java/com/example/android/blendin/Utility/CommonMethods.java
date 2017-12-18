@@ -36,4 +36,11 @@ public class CommonMethods {
         String imageEncoded = Base64.encodeToString(b, Base64.NO_WRAP);
         return imageEncoded;
     }
+
+    public static void clearAllSavedSharedData(Context context) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = sharedpreferences.edit();
+        prefsEditor.clear();
+        prefsEditor.apply();
+    }
 }

@@ -5,11 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.blendin.Models.CommentModel;
-import com.example.android.blendin.Models.RequestModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.Utility.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,13 +38,20 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    void getPicasso(String temp, ImageView img) {
+        Picasso.with(context)
+                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
+    }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         commentModel = commentModelList.get(position);
-        holder.userImage.setImageResource(commentModel.getUserImage());
+        getPicasso(commentModel.getPic(), holder.userImage);
         holder.userName.setText(commentModel.getName());
-        holder.text.setText(commentModel.getText());
-        holder.dateAgo.setText(commentModel.getDate());
+        holder.text.setText(commentModel.getContent());
+        holder.dateAgo.setText(commentModel.getCreated_at());
+
     }
 
     @Override

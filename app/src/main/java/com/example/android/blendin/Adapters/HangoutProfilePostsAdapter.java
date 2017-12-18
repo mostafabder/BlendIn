@@ -53,14 +53,14 @@ public class HangoutProfilePostsAdapter extends RecyclerView.Adapter<HangoutProf
 
 //        newsFeedModel = newsfeedItemsList.get(position);
 //        holder.userProfileImage.setImageResource(newsFeedModel.getAvatar());
-//        holder.userNameTxt.setText(newsFeedModel.getName());
-//        holder.userLocationTxt.setText(newsFeedModel.getCity());
-//        holder.postTimeTxt.setText(newsFeedModel.getTimeAgo());
+//        holder.userNameTxt.setContent(newsFeedModel.getName());
+//        holder.userLocationTxt.setContent(newsFeedModel.getCity());
+//        holder.postTimeTxt.setContent(newsFeedModel.getTimeAgo());
 //        holder.postImage.setImageResource(newsFeedModel.getHangout_pic());
-//        holder.postMainTxt.setText(newsFeedModel.getActivity());
-//        holder.postDescTxt.setText(newsFeedModel.getDisc());
-//        holder.postLikesCount.setText(newsFeedModel.getLikes());
-//        holder.postCommentsCount.setText(newsFeedModel.getComments());
+//        holder.postMainTxt.setContent(newsFeedModel.getActivity());
+//        holder.postDescTxt.setContent(newsFeedModel.getDisc());
+//        holder.postLikesCount.setContent(newsFeedModel.getLikes());
+//        holder.postCommentsCount.setContent(newsFeedModel.getComments());
 //        holder.likeImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

@@ -11,7 +11,7 @@
         android:id="@+id/newsfeed_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:content="@string/hello_blank_fragment" />
     <!-- TODO: Update blank fragment layout -->
 
     <com.github.clans.fab.FloatingActionButton

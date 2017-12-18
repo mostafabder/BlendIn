@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.blendin.Models.HangoutModel;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
@@ -28,9 +29,16 @@ import com.example.android.blendin.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -48,11 +56,21 @@ public class HangoutDetailsFragment extends Fragment implements DatePickerDialog
     Boolean checkDate;
     Boolean checkTime;
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    List<HangoutModel> hangoutModels;
+    String ppl, activity;
 
+    @BindView(R.id.et_title_hangoutDetails)
+    EditText et_title;
+    @BindView(R.id.et_disc_hangoutDetails)
+    EditText et_disc;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_hangout_details, container, false);
+        ButterKnife.bind(this, v);
+        Bundle bundle = getArguments();
+        ppl = bundle.getString("people");
+        activity = bundle.getString("activity");
         intiScreen(v);
         return v;
     }
@@ -78,6 +96,15 @@ public class HangoutDetailsFragment extends Fragment implements DatePickerDialog
                 Fragment fragment = new HangoutProfileFragment();
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("auth", true);
+                bundle.putString("people", ppl);
+                bundle.putString("activity", activity);
+                bundle.putString("disc", et_disc.getText().toString());
+                bundle.putString("title", et_title.getText().toString());
+                bundle.putString("location", location.getText().toString());
+                bundle.putString("startDate", startDate.getText().toString());
+                bundle.putString("endDate", endDate.getText().toString());
+                bundle.putString("startTime", startTime.getText().toString());
+                bundle.putString("endTime", endTime.getText().toString());
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

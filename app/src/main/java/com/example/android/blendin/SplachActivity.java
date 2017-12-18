@@ -29,7 +29,7 @@ public class SplachActivity extends AppCompatActivity {
         if (loginResponse != null && loginResponse.getToken() != null && loginResponse.getSecret() != null) {
             nxt = Navigation_activity.class;
             AuthUser.getAuthUser(loginResponse);
-        } else nxt = LandingPageActivity.class;
+        } else nxt = IntroActivity.class;
         EasySplashScreen config = new EasySplashScreen(SplachActivity.this)
                 .withFullScreen()
                 .withTargetActivity(nxt)

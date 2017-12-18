@@ -9,11 +9,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.android.blendin.Models.HangoutModel;
 import com.example.android.blendin.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,19 +33,29 @@ import com.example.android.blendin.R;
 public class HangoutProfileFragment extends Fragment {
 
 
-    public HangoutProfileFragment() {
-        // Required empty public constructor
-    }
-
-
+    String title, disc, location, startDate, endDate, startTime, endTime, activity, ppl;
+    @BindView(R.id.hangoutProfile_collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_hangout_profile, container, false);
+        ButterKnife.bind(this, rootView);
         boolean authenticated;
         Bundle bundle = getArguments();
         authenticated = bundle.getBoolean("auth");
+        ppl = bundle.getString("people");
+        title = bundle.getString("title");
+        disc = bundle.getString("disc");
+        location = bundle.getString("location");
+        startDate = bundle.getString("startDate");
+        endDate = bundle.getString("endDate");
+        startTime = bundle.getString("startTime");
+        endTime = bundle.getString("endTime");
+        activity = bundle.getString("activity");
+        collapsingToolbarLayout.setTitle(title);
+
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.hangoutProfile_viewpager);
         PagerAdapter pagerAdapter = new HangoutTabsAdapter(getChildFragmentManager(), authenticated);
         viewPager.setAdapter(pagerAdapter);
@@ -41,10 +63,6 @@ public class HangoutProfileFragment extends Fragment {
         TabLayout tableLayout = (TabLayout) rootView.findViewById(R.id.hangoutProfile_tabs);
         tableLayout.setupWithViewPager(viewPager);
 
-
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) rootView.findViewById(R.id.hangoutProfile_collapsing_toolbar);
-        collapsingToolbar.setTitle("FIFA 18 Tournment");
         return rootView;
     }
 
@@ -55,7 +73,6 @@ public class HangoutProfileFragment extends Fragment {
             super(fm);
             this.auth = auth;
         }
-
         @Override
         public int getCount() {
             if (auth)
@@ -69,7 +86,19 @@ public class HangoutProfileFragment extends Fragment {
             if (auth) {
                 switch (position) {
                     case 0:
-                        return new HangoutProfileDetailsFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("people", ppl);
+                        bundle.putString("activity", activity);
+                        bundle.putString("disc", disc);
+                        bundle.putString("title", title);
+                        bundle.putString("location", location);
+                        bundle.putString("startDate", startDate);
+                        bundle.putString("endDate", endDate);
+                        bundle.putString("startTime", startTime);
+                        bundle.putString("endTime", endTime);
+                        Fragment fragment = new HangoutProfileDetailsFragment();
+                        fragment.setArguments(bundle);
+                        return fragment;
                     case 1:
                         return new HangoutProfileChatFragment();
                     case 2:

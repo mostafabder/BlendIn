@@ -7,49 +7,58 @@ package com.example.android.blendin.Models;
 public class CommentModel {
     // TODO :: it should have a userName object as a member to get his pic and link to his profile
     String name;
-    String text;
-    String date;
-    int userImage;
+    String content;
+    String created_at;
+    String pic;
     String first_name;
     String last_name;
 
 
-    public CommentModel(String name, String text, String date, int userImage) {
-        this.name = name;
-        this.text = text;
-        this.date = date;
-        this.userImage = userImage;
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getName() {
-        return name;
+        return first_name + " " + last_name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public int getUserImage() {
-        return userImage;
+    public String getPic() {
+        return pic;
     }
 
-    public void setUserImage(int userImage) {
-        this.userImage = userImage;
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 }
