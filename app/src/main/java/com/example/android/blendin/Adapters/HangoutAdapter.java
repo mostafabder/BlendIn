@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.android.blendin.Models.HangoutModel;
 import com.example.android.blendin.R;
 import com.example.android.blendin.Utility.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -47,9 +48,15 @@ public class HangoutAdapter extends RecyclerView.Adapter<HangoutAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(HangoutAdapter.ViewHolder holder, final int position) {
-        holder.avatar.setImageResource(hangoutModels.get(position).getAvatar());
+
+        Picasso.with(context)
+                .load(Constants.BASE_URL_FOR_IMAGE + hangoutModels.get(position).getAvatar())
+                .error(R.drawable.kappa2)
+                .into(holder.avatar);
         holder.userName.setText(hangoutModels.get(position).getName());
-        if (flag) {
+        if (flag == null) {
+            holder.close.setVisibility(View.INVISIBLE);
+        } else if (flag) {
             holder.close.setImageResource(R.drawable.add);
         }
         holder.close.setOnClickListener(new View.OnClickListener() {

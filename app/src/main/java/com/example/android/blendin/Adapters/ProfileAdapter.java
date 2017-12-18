@@ -1,27 +1,37 @@
 package com.example.android.blendin.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.blendin.Fragments.CommentsFragment;
 import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.Responses.LoveResponse;
+import com.example.android.blendin.Retrofit.ApiClient;
+import com.example.android.blendin.Retrofit.ApiInterface;
+import com.example.android.blendin.Utility.AuthUser;
 import com.example.android.blendin.Utility.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Luffy on 12/1/2017.
@@ -44,6 +54,28 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         return new ProfileAdapter.ViewHolder(view);
     }
 
+    public void setLike(String id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Log.e("Token", AuthUser.getAuthData().getToken());
+        Log.e("Token", AuthUser.getAuthData().getSecret());
+        Call<LoveResponse> call = apiService.love(AuthUser.getAuthData().getToken(), AuthUser.getAuthData().getSecret(), id);
+        call.enqueue(new Callback<LoveResponse>() {
+            @Override
+            public void onResponse(Call<LoveResponse> call, Response<LoveResponse> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatues().equals(Constants.FLAG_SUCCESS)) {
+
+                    } else
+                        Toast.makeText(context, response.body().getStatues(), Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(context, "null", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<LoveResponse> call, Throwable t) {
+                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         newsFeedModel = newsfeedItemsList.get(position);
@@ -62,10 +94,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             public void onClick(View v) {
                 if (newsfeedItemsList.get(position).isLovedByThisUser()) {
                     holder.likeImage.setImageResource(R.drawable.dislike);
-                    //newsfeedItemsList.get(position).setLike(false);
+                    newsfeedItemsList.get(position).setLovedByThisUser(false);
+                    setLike(newsfeedItemsList.get(position).getId());
                 } else {
                     holder.likeImage.setImageResource(R.drawable.like);
-                    //newsfeedItemsList.get(position).setLike(true);
+                    newsfeedItemsList.get(position).setLovedByThisUser(true);
+                    setLike(newsfeedItemsList.get(position).getId());
                 }
 
             }
@@ -75,18 +109,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             public void onClick(View v) {
                 Fragment fragment = new CommentsFragment();
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
-                fragmentTransaction.add(R.id.content_main, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-        holder.commentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new CommentsFragment();
-                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", newsFeedModel.getId());
+                fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
                 fragmentTransaction.add(R.id.content_main, fragment);

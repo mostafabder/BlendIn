@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:padding="5dp">
 
-        <ImageView
-            android:id="@+id/iv_avatar"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar_popMarker"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/user" />
@@ -22,11 +22,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/iv_avatar"
+            android:layout_toEndOf="@id/iv_avatar_popMarker"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvName"
+                android:id="@+id/tvName_popMarker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -35,7 +35,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvGenre"
+                android:id="@+id/tvGenre_popMarker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

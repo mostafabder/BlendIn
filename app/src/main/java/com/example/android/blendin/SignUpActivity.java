@@ -189,11 +189,11 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public boolean valid() {
-        /*String e = email.getText().toString();
-        String p = password.getText().toString();
-        String cp = cpassword.getText().toString();
-        String f = firstname.getText().toString();
-        String l = lastname.getText().toString();
+        /*String e = email.getContent().toString();
+        String p = password.getContent().toString();
+        String cp = cpassword.getContent().toString();
+        String f = firstname.getContent().toString();
+        String l = lastname.getContent().toString();
         boolean fe = female.isChecked();
         boolean ma = male.isChecked();
 

@@ -5,19 +5,19 @@ package com.example.android.blendin.Models;
  */
 
 public class HangoutModel {
-    int avatar;
+    String avatar;
     String name;
 
-    public HangoutModel(int avatar, String name) {
+    public HangoutModel(String avatar, String name) {
         this.avatar = avatar;
         this.name = name;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(int avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

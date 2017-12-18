@@ -94,8 +94,8 @@ public class SignInActivity extends AppCompatActivity {
                                 Log.e("kappa1", response.body().getSecret());
 
                                 Intent intent = new Intent(SignInActivity.this, Navigation_activity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                                finish();
                             } else {
                                 Log.e("kappa", response.body().getStatus());
                                 Toast.makeText(SignInActivity.this, "flag error", Toast.LENGTH_SHORT).show();
@@ -274,8 +274,8 @@ public class SignInActivity extends AppCompatActivity {
 
 
     public boolean valid() {
-        /*String e = email.getText().toString();
-        String p = password.getText().toString();
+        /*String e = email.getContent().toString();
+        String p = password.getContent().toString();
         if(e.contains("@") && e.contains(".") && p.length() > 9)
             return true;*/
         return true;

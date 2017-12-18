@@ -2,6 +2,7 @@ package com.example.android.blendin.Adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -76,8 +77,6 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
     }
 
     public void setLike(String id) {
-        final ProgressDialog progressDialog = ProgressDialog.show(context, null, "Loading");
-        progressDialog.setCancelable(false);
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Log.e("Token", AuthUser.getAuthData().getToken());
         Log.e("Token", AuthUser.getAuthData().getSecret());
@@ -85,7 +84,6 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         call.enqueue(new Callback<LoveResponse>() {
             @Override
             public void onResponse(Call<LoveResponse> call, Response<LoveResponse> response) {
-                progressDialog.cancel();
                 if (response.body() != null) {
                     if (response.body().getStatues().equals(Constants.FLAG_SUCCESS)) {
 
@@ -96,11 +94,11 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
 
             @Override
             public void onFailure(Call<LoveResponse> call, Throwable t) {
-                progressDialog.cancel();
                 Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         newsFeedModel = newsfeedItemsList.get(position);
@@ -118,6 +116,7 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         holder.postDescTxt.setText(newsFeedModel.getContent());
         holder.postLikesCount.setText(newsFeedModel.getLoves());
         holder.postCommentsCount.setText(newsFeedModel.getComments());
+
         holder.likeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +136,9 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Fragment fragment = new CommentsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", newsFeedModel.getId());
+                fragment.setArguments(bundle);
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
@@ -146,7 +148,6 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
             }
         });
     }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         // each data item is just a string in this case

@@ -1,20 +1,22 @@
 package com.example.android.blendin.Retrofit;
 
 import com.example.android.blendin.Models.MySquadModel;
+import com.example.android.blendin.Responses.ActivitiesResponse;
+import com.example.android.blendin.Responses.CommentResponse;
+import com.example.android.blendin.Responses.CommentsResponse;
 import com.example.android.blendin.Responses.LoginResponse;
 import com.example.android.blendin.Responses.MySquadResponse;
 import com.example.android.blendin.Responses.ProfileResponse;
 import com.example.android.blendin.Responses.LoveResponse;
 import com.example.android.blendin.Responses.NewsfeedResponse;
+import com.example.android.blendin.Responses.SearchPeople;
 import com.example.android.blendin.Responses.SignUpResponse;
 import com.example.android.blendin.Responses.SquadProfileResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
  * Created by Luffy on 12/15/2017.
@@ -73,4 +75,18 @@ public interface ApiInterface {
     @POST("/squads")
     Call<SquadProfileResponse> squadProfile(@Field("token") String token, @Field("secret") String secret, @Field("squad_id") String squad_id);
 
+    @POST("/news-feed/posts/comments")
+    Call<CommentsResponse> comments(@Field("token") String token, @Field("secret") String secret, @Field("post_id") String post_id);
+
+    @FormUrlEncoded
+    @POST("news-feed/posts/comments/push")
+    Call<CommentResponse> addComment(@Field("token") String token, @Field("secret") String secret, @Field("post_id") String post_id, @Field("message") String message);
+
+    @FormUrlEncoded
+    @POST("/activities")
+    Call<ActivitiesResponse> getActivities(@Field("token") String token, @Field("secret") String secret);
+
+    @FormUrlEncoded
+    @POST("hangouts/search/people")
+    Call<SearchPeople> searchPeople(@Field("token") String token, @Field("secret") String secret, @Field("activity_id") String activity_id, @Field("lat") String lat, @Field("lng") String lng);
 }

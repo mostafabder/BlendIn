@@ -3,10 +3,13 @@ package com.example.android.blendin.Fragments;
 import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +17,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -27,23 +32,43 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.blendin.Adapters.HangoutAdapter;
+import com.example.android.blendin.Adapters.NewsfeedAdapter;
+import com.example.android.blendin.Models.anActivity;
+import com.example.android.blendin.Models.nearbyUsers;
+import com.example.android.blendin.Responses.ActivitiesResponse;
+import com.example.android.blendin.Responses.NewsfeedResponse;
+import com.example.android.blendin.Responses.SearchPeople;
+import com.example.android.blendin.Retrofit.ApiClient;
+import com.example.android.blendin.Retrofit.ApiInterface;
+import com.example.android.blendin.Utility.AuthUser;
 import com.example.android.blendin.Utility.Constants;
 import com.example.android.blendin.Models.HangoutModel;
 import com.example.android.blendin.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -53,15 +78,31 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import mehdi.sakout.fancybuttons.FancyButton;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.example.android.blendin.Utility.Constants.FLAG_SUCCESS;
 
 
 public class HangoutFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener
@@ -71,19 +112,27 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
     private final LatLng HAMBURG = new LatLng(53.558, 9.927);
     private final LatLng KIEL = new LatLng(53.551, 9.993);
     private final int LOCATION_REQUESTED_CODE = 2;
+    ProgressDialog progressDialog;
     LatLng org;
     Boolean isPermissionGranted;
+    LocationRequest mLocationRequest;
     Location mLastLocation;
     Boolean isBottom = false;
     LinearLayout linear;
     LinearLayout linear2;
     View v;
-    Spinner act;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<HangoutModel> HangoutModelList;
     LinearLayoutManager layoutManager;
     Boolean y = true;
+    String orgLat, orgLng;
+    nearbyUsers now = null;
+    List<anActivity> activites = new ArrayList<>();
+    ArrayList<String> actStrings = new ArrayList<String>();
+    List<nearbyUsers> listNearby = new ArrayList<>();
+    @BindView(R.id.act_spinner)
+    Spinner act;
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
     private Map<Marker, String> markerIds = new HashMap<>();
@@ -101,12 +150,12 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_hangout, container, false);
-
+        ButterKnife.bind(this, v);
         FancyButton proceed = (FancyButton) v.findViewById(R.id.btn_Proceed);
         FancyButton fancyButton = (FancyButton) v.findViewById(R.id.btn_LetsGo);
         linear = (LinearLayout) v.findViewById(R.id.linear);
         linear2 = (LinearLayout) v.findViewById(R.id.linear2);
-        act = (Spinner) v.findViewById(R.id.act_spinner);
+
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_hangout);
         HangoutModelList = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -118,25 +167,226 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             public void onClick(View v) {
                 SlideToDown();
                 mMap.getUiSettings().setAllGesturesEnabled(true);
+                getNearbyPeople();
             }
         });
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new HangoutDetailsFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
-                fragmentTransaction.add(R.id.content_main, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if (HangoutModelList.size() > 0) {
+                    Fragment fragment = new HangoutDetailsFragment();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("people", new Gson().toJson(HangoutModelList));
+                    bundle.putString("activity", "playing");
+                    fragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+                    fragmentTransaction.add(R.id.content_main, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+
             }
         });
+
+        //setActivities
+        getActivities();
+        for (int i = 0; i < activites.size(); i++)
+            actStrings.add(activites.get(i).getTitle());
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
+                (getActivity(), android.R.layout.simple_spinner_item,
+                        actStrings);
+        act.setAdapter(spinnerArrayAdapter);
+        ////
+
         initPermissionCheck();
         initMap();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        tryLocation();
         Constants.isBottom = true;
         return v;
+    }
+
+    public void getActivities() {
+        progressDialog = ProgressDialog.show(getActivity(), null, "Loading");
+        progressDialog.setCancelable(false);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Log.e("Token", AuthUser.getAuthData().getToken());
+        Log.e("Token", AuthUser.getAuthData().getSecret());
+        Call<ActivitiesResponse> call = apiService.getActivities(AuthUser.getAuthData().getToken(), AuthUser.getAuthData().getSecret());
+        call.enqueue(new Callback<ActivitiesResponse>() {
+            @Override
+            public void onResponse(Call<ActivitiesResponse> call, Response<ActivitiesResponse> response) {
+                progressDialog.cancel();
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals(FLAG_SUCCESS)) {
+
+                        for (int i = 0; i < response.body().getActivities().size(); i++)
+                            activites.add(response.body().getActivities().get(i));
+                        Log.e("ACT", activites.get(0).getTitle());
+                    } else
+                        Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ActivitiesResponse> call, Throwable t) {
+                progressDialog.cancel();
+                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void settingRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);    // 10 seconds, in milliseconds
+        mLocationRequest.setFastestInterval(1000);   // 1 second, in milliseconds
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest);
+
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient,
+                        builder.build());
+
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+
+            @Override
+            public void onResult(@NonNull LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                final LocationSettingsStates state = result.getLocationSettingsStates();
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can
+                        // initialize location requests here.
+                        try {
+                            getLocation();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied, but this can be fixed
+                        // by showing the user a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(getActivity(), 1000);
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way
+                        // to fix the settings so we won't show the dialog.
+                        break;
+                }
+            }
+
+        });
+    }
+
+    public void tryLocation() {
+        initPermissionCheck();
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        } else
+            Toast.makeText(getActivity(), "Not Connected!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void getLocation() throws IOException {
+        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        } else {
+            /*Getting the location after aquiring location service*/
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+
+            if (mLastLocation != null) {
+
+                orgLat = String.valueOf(mLastLocation.getLatitude());
+                orgLat = String.valueOf(mLastLocation.getLongitude());
+
+                //Toast.makeText(this, lat + " " + lng + " " + getAddress(Double.parseDouble(lat),Double.parseDouble(lng)), Toast.LENGTH_SHORT).show();
+            } else {
+                /*if there is no last known location. Which means the device has no data for the loction currently.
+                * So we will get the current location.
+                * For this we'll implement Location Listener and override onLocationChanged*/
+                Log.i("Current Location", "No data for location found");
+
+                if (!mGoogleApiClient.isConnected())
+                    mGoogleApiClient.connect();
+
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            }
+        }
+    }
+
+    public void getNearbyPeople() {
+        progressDialog = ProgressDialog.show(getActivity(), null, "Loading");
+        progressDialog.setCancelable(false);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Log.e("Token", AuthUser.getAuthData().getToken());
+        Log.e("Secret", AuthUser.getAuthData().getSecret());
+        Call<SearchPeople> call = apiService.searchPeople(AuthUser.getAuthData().getToken(),
+                AuthUser.getAuthData().getSecret(), "1", "31.0621262", "31.4027961");
+        Log.e("orglat", orgLat + "         ");
+        Log.e("orglng", orgLng + "             ");
+        call.enqueue(new Callback<SearchPeople>() {
+            @Override
+            public void onResponse(Call<SearchPeople> call, Response<SearchPeople> response) {
+                progressDialog.cancel();
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals(FLAG_SUCCESS)) {
+                        for (int i = 0; i < response.body().getUsers().size(); i++) {
+                            listNearby.add(response.body().getUsers().get(i));
+                        }
+                        createNearbyPins(response.body());
+                    } else
+                        Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<SearchPeople> call, Throwable t) {
+                progressDialog.cancel();
+                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //    public String getAddress(double latitude, double longitude) throws IOException {
+//        Geocoder geocoder;
+//        List<Address> addresses;
+//        geocoder = new Geocoder(this, Locale.getDefault());
+//        addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+//        return addresses.get(0).getAddressLine(0);
+////    }
+    public void createNearbyPins(SearchPeople searchPeople) {
+
+        for (int i = 0; i < searchPeople.getUsers().size(); i++) {
+            LatLng lt = new LatLng(Double.parseDouble(searchPeople.getUsers().get(i).getLat()), Double.parseDouble(searchPeople.getUsers().get(i).getLng()));
+            Marker m = mMap.addMarker(new MarkerOptions()
+                    .position(lt));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(m.getPosition(), 15));
+            markerIds.put(m, searchPeople.getUsers().get(i).getUuid());
+        }
     }
 
     public void initMap() {
@@ -162,28 +412,51 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 // for ActivityCompat#requestPermissions for more details.
             }
         }
-        Marker hamburg = mMap.addMarker(new MarkerOptions()
-                .position(HAMBURG));
-        Marker kiel = mMap.addMarker(new MarkerOptions()
-                .position(KIEL));
-
-        markerIds.put(hamburg, "1");
-        markerIds.put(kiel, "2");
+//        Marker hamburg = mMap.addMarker(new MarkerOptions()
+//                .position(HAMBURG));
+//        Marker kiel = mMap.addMarker(new MarkerOptions()
+//                .position(KIEL));
+//        markerIds.put(hamburg, "1");
+//        markerIds.put(kiel, "2");
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
         mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.setOnMarkerClickListener(this);
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
             @Override
             public View getInfoWindow(Marker marker) {
                 return null;
             }
+
             @Override
             public View getInfoContents(Marker marker) {
+                String id = markerIds.get(marker);
+                nearbyUsers now = null;
+                for (int i = 0; i < listNearby.size(); i++) {
+                    if (listNearby.get(i).getUuid().equals(id)) {
+                        now = listNearby.get(i);
+                        break;
+                    }
+                }
                 View infowindow;
-                if (isBottom)
+                if (isBottom) {
                     infowindow = getActivity().getLayoutInflater().inflate(R.layout.marker_popup, null);
+                    if (now != null) {
+                        CircleImageView avatar = (CircleImageView) infowindow.findViewById(R.id.iv_avatar_popMarker);
+                        TextView tvname = (TextView) infowindow.findViewById(R.id.tvName_popMarker);
+                        TextView tvGender = (TextView) infowindow.findViewById(R.id.tvGenre_popMarker);
+                        Picasso.with(getActivity())
+                                .load(Constants.BASE_URL_FOR_IMAGE + now.getInfo().getPic())
+                                .error(R.drawable.kappa2)
+                                .into(avatar);
+                        tvname.setText(now.getInfo().getName());
+                        tvGender.setText(now.getInfo().getGender());
+                    }
+                }
                 else
                     infowindow = null;
+
+
                 return infowindow;
             }
         });
@@ -198,7 +471,14 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        String id = markerIds.get(marker);
 
+        for (int i = 0; i < listNearby.size(); i++) {
+            if (listNearby.get(i).getUuid().equals(id)) {
+                now = listNearby.get(i);
+                break;
+            }
+        }
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.marker_dialog);
 
@@ -209,11 +489,12 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             @Override
             public void onClick(View v) {
                 if (Constants.isBottom) {
+
                     linear2.setVisibility(View.VISIBLE);
                     Constants.isBottom = false;
                 }
                 HangoutModel hangoutModel;
-                hangoutModel = new HangoutModel(R.drawable.user, "KAPPA");
+                hangoutModel = new HangoutModel(now.getInfo().getPic(), now.getInfo().getName());
                 HangoutModelList.add(hangoutModel);
                 recyclerView.setAdapter(adapter);
                 dialog.cancel();
@@ -239,14 +520,16 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
+        settingRequest();
         if (isPermissionGranted) {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             mMap.setMyLocationEnabled(true);
             if (mLastLocation != null) {
+                orgLat = String.valueOf(mLastLocation.getLatitude());
+                orgLng = String.valueOf(mLastLocation.getLongitude());
                 mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())));
-
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 15));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
             }
@@ -280,10 +563,12 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 return;
             }
             if (location != null) {
+                orgLat = String.valueOf(location.getLatitude());
+                orgLng = String.valueOf(location.getLongitude());
+                Toast.makeText(getActivity(), orgLat + " " + orgLng, Toast.LENGTH_SHORT).show();
                 mLastLocation = location;
             } else mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
-
         }
     }
 
@@ -349,6 +634,26 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             buildGoogleApiClient();
         } else {
             showWaringDialog();
+        }
+        switch (requestCode) {
+            case 1000:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+
+                        try {
+                            getLocation();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        // The user was asked to change settings, but chose not to
+                        Toast.makeText(getActivity(), "Location Service not Enabled", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+                break;
         }
     }
 

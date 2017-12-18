@@ -27,9 +27,12 @@ import com.example.android.blendin.Fragments.NotificationFragment;
 import com.example.android.blendin.Fragments.ProfileFragment;
 import com.example.android.blendin.Fragments.RequestFragment;
 import com.example.android.blendin.Fragments.SettingsFragment;
+import com.example.android.blendin.Utility.CommonMethods;
 import com.example.android.blendin.Utility.Constants;
 
 import org.apmem.tools.layouts.FlowLayout;
+
+import static com.example.android.blendin.Utility.Constants.PREF_KEY;
 
 /**
  * Created by Luffy on 11/28/2017.
@@ -42,7 +45,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
     FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
     Boolean notificationClicked = false;
-
+    Boolean isMain;
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +68,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         fragmentTransaction.commit();
         getSupportActionBar().setTitle("Newsfeed");
         Constants.inFragment = "Newsfeed";
-
+        isMain = true;
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -76,22 +79,29 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         int id = item.getItemId();
         if (id == R.id.profile_nav_item) {
             transmission(new ProfileFragment(), "Profile");
+            isMain = false;
         } else if (id == R.id.hangouts_nav_item) {
             transmission(new HangoutFragment(), "Hangouts");
+            isMain = false;
         } else if (id == R.id.Newsfeed_nav_item) {
             transmission(new NewsfeedFragment(), "Newsfeed");
+            isMain = false;
         } else if (id == R.id.request_nav_item) {
             transmission(new RequestFragment(), "Requests");
+            isMain = false;
         } else if (id == R.id.Mysquad_nav_item) {
             transmission(new MysquadFragment(), "My Squads", true);
+            isMain = false;
         } else if (id == R.id.settings_nav_item) {
             //TODO :: Settings Fragment
             transmission(new SettingsFragment(), "set");
             getSupportActionBar().setTitle("Settings");
+            isMain = false;
         } else if (id == R.id.signout_nav_item) {
             //TODO :: Sign out
             Intent intent = new Intent(Navigation_activity.this, LandingPageActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            CommonMethods.clearAllSavedSharedData(this);
             startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -105,10 +115,20 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            notificationClicked = false;
+        } else if (!notificationClicked) {
             super.onBackPressed();
             getSupportActionBar().setTitle(Constants.inFragment);
+        } else if (!isMain) {
+            curFragmentKey = "Newsfeed";
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, new NewsfeedFragment(), "news");
+            fragmentTransaction.commit();
+            getSupportActionBar().setTitle("Newsfeed");
+            Constants.inFragment = "Newsfeed";
+            isMain = true;
+        } else {
+            this.finish();
+            moveTaskToBack(true);
         }
     }
 
