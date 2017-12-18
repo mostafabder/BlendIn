@@ -146,7 +146,6 @@ public class SignUpActivity extends AppCompatActivity {
                         gender = "0";
                     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                     Call<SignUpResponse> call = null;
-                    try {
                         Log.e("kappa2", password.getText().toString());
                         call = apiInterface.signupRegular(
                                 email.getText().toString(),
@@ -165,7 +164,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 finish();
                             }
                         }
-
                         @Override
                         public void onFailure(Call<SignUpResponse> call, Throwable t) {
                             Toast.makeText(SignUpActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();

@@ -48,8 +48,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         newsFeedModel = newsfeedItemsList.get(position);
         getPicasso(newsFeedModel.getAvatar(), holder.userProfileImage);
+        holder.titletxt.setText(newsFeedModel.getTitle());
         holder.userNameTxt.setText(newsFeedModel.getName());
-        holder.userLocationTxt.setText(newsFeedModel.getCity());
+        holder.userLocationTxt.setText(newsFeedModel.getLocation());
         holder.postTimeTxt.setText(newsFeedModel.getCreated_at());
         getPicasso(newsFeedModel.getHangout_pic(), holder.postImage);
         holder.postMainTxt.setText(newsFeedModel.getActivity());
@@ -126,6 +127,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         public TextView postCommentsCount;
         public ImageView likeImage;
         public LinearLayout commentLayout;
+        TextView titletxt;
         public ViewHolder(View itemView) {
             super(itemView);
             userProfileImage = (CircleImageView) itemView.findViewById(R.id.profile_image);
@@ -139,6 +141,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             postCommentsCount = (TextView) itemView.findViewById(R.id.tvItemCommentsNumNews);
             likeImage = (ImageView) itemView.findViewById(R.id.iv_newsfeed_like);
             commentLayout = (LinearLayout) itemView.findViewById(R.id.ll_newsfeed_comment);
+            titletxt = (TextView) itemView.findViewById(R.id.tvItemTitleNews);
         }
     }
 }

@@ -10,6 +10,9 @@ public class CommentModel {
     String text;
     String date;
     int userImage;
+    String first_name;
+    String last_name;
+
 
     public CommentModel(String name, String text, String date, int userImage) {
         this.name = name;

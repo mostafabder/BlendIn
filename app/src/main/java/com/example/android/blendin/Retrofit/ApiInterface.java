@@ -9,7 +9,9 @@ import com.example.android.blendin.Responses.SignUpResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by Luffy on 12/15/2017.
@@ -59,4 +61,5 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("/news-feed/posts/love")
     Call<LoveResponse> love(@Field("token") String token, @Field("secret") String secret, @Field("post_id") String post_id);
+    
 }
