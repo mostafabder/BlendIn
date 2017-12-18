@@ -164,6 +164,7 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         public ImageView likeImage;
         public LinearLayout commentLayout;
         TextView titletxt;
+        
 
         public ViewHolder(View itemView) {
             super(itemView);
