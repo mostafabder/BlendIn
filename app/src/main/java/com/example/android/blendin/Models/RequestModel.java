@@ -10,6 +10,7 @@ public class RequestModel {
     private String created_at;
     private String Location;
     private String description;
+    private String title;
 
     public RequestModel(int avatar, String name, String timeAgo, String location, String description) {
         this.avatar = avatar;
@@ -57,6 +58,14 @@ public class RequestModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 

@@ -151,6 +151,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
 
     public void transmission(Fragment nxtfragment, String key, boolean flag) {
         if (!key.equals(curFragmentKey)) {
+            curFragmentKey = key;
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
             Bundle bundle = new Bundle();
