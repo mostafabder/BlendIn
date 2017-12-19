@@ -1,30 +1,27 @@
 package com.example.android.blendin.Responses;
 
+import com.example.android.blendin.Models.Interests;
 import com.example.android.blendin.Models.User;
-import com.example.android.blendin.Models.nearbyUsers;
 
 import java.util.List;
 
-/**
- * Created by Luffy on 12/18/2017.
- */
-
-public class SearchPeople {
+public class ViewProfileResponse {
     String status;
-    List<User> users;
+    User user;
 
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

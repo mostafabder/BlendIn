@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.blendin.Models.CommentModel;
 import com.example.android.blendin.Models.SquadChatMessageModel;
 import com.example.android.blendin.R;
 
@@ -20,11 +21,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HangoutProfileChatAdapter extends RecyclerView.Adapter<HangoutProfileChatAdapter.ViewHolder> {
 
-    List<SquadChatMessageModel> chatMessageModelList;
-    SquadChatMessageModel chatMessageModel;
+    List<CommentModel> chatMessageModelList;
+    CommentModel chatMessageModel;
     private Context context;
 
-    public HangoutProfileChatAdapter(List<SquadChatMessageModel> chatMessageModelList, Context context) {
+    public HangoutProfileChatAdapter(List<CommentModel> chatMessageModelList, Context context) {
         this.chatMessageModelList = chatMessageModelList;
         this.context = context;
     }

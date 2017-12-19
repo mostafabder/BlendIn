@@ -7,11 +7,11 @@ package com.example.android.blendin.Responses;
 public class LoveResponse {
     String status;
 
-    public String getStatues() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatues(String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

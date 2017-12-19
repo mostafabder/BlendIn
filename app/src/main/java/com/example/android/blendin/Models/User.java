@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class User {
+    private String uuid;
     private String email;
     private String gender;
     private String pic;
@@ -18,6 +19,34 @@ public class User {
     private ArrayList<NewsFeedModel> posts;
     private String lat;
     private String lng;
+    private String name;
+    private String gender_name;
+
+    public String getGender_name() {
+        if (getGender().equals("0"))
+            return "male";
+        else return "female";
+    }
+
+    public void setGender_name(String gender_name) {
+        this.gender_name = gender_name;
+    }
+
+    public String getName() {
+        return getFirst_name() + " " + getLast_name();
+    }
+
+    public void setName(String name) {
+        this.name = first_name + " " + last_name;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getEmail() {
         return email;

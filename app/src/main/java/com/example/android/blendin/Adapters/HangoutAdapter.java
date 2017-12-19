@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.blendin.Models.HangoutModel;
 import com.example.android.blendin.R;
@@ -50,7 +49,7 @@ public class HangoutAdapter extends RecyclerView.Adapter<HangoutAdapter.ViewHold
     public void onBindViewHolder(HangoutAdapter.ViewHolder holder, final int position) {
 
         Picasso.with(context)
-                .load(Constants.BASE_URL_FOR_IMAGE + hangoutModels.get(position).getAvatar())
+                .load(Constants.BASE_URL + hangoutModels.get(position).getAvatar())
                 .error(R.drawable.kappa2)
                 .into(holder.avatar);
         holder.userName.setText(hangoutModels.get(position).getName());

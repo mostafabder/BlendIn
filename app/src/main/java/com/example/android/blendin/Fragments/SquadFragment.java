@@ -4,9 +4,6 @@ package com.example.android.blendin.Fragments;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,13 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.blendin.Adapters.MySquadAdapter;
 import com.example.android.blendin.Adapters.SquadChatMessageAdapter;
 import com.example.android.blendin.Models.SquadChatMessageModel;
 import com.example.android.blendin.Models.SquadProfileModel;
 import com.example.android.blendin.R;
-import com.example.android.blendin.RecyclerViewClickListener;
-import com.example.android.blendin.Responses.MySquadResponse;
 import com.example.android.blendin.Responses.SquadProfileResponse;
 import com.example.android.blendin.Retrofit.ApiClient;
 import com.example.android.blendin.Retrofit.ApiInterface;
@@ -31,7 +25,6 @@ import com.example.android.blendin.Utility.AuthUser;
 import com.example.android.blendin.Utility.Constants;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -137,14 +130,14 @@ public class SquadFragment extends Fragment {
 
     void getPicasso(String temp, ImageView img) {
         Picasso.with(getActivity())
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }
 
     void getPicasso(String temp, CircleImageView img) {
         Picasso.with(getActivity())
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }

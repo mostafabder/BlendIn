@@ -63,10 +63,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             @Override
             public void onResponse(Call<LoveResponse> call, Response<LoveResponse> response) {
                 if (response.body() != null) {
-                    if (response.body().getStatues().equals(Constants.FLAG_SUCCESS)) {
+                    if (response.body().getStatus().equals(Constants.FLAG_SUCCESS)) {
 
                     } else
-                        Toast.makeText(context, response.body().getStatues(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                 } else Toast.makeText(context, "null", Toast.LENGTH_SHORT).show();
             }
 
@@ -128,14 +128,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     void getPicasso(String temp, CircleImageView img) {
         Picasso.with(context)
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }
 
     void getPicasso(String temp, ImageView img) {
         Picasso.with(context)
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }

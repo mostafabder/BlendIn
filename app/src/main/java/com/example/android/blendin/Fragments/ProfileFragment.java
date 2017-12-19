@@ -20,6 +20,7 @@ import com.example.android.blendin.Models.User;
 import com.example.android.blendin.R;
 import com.example.android.blendin.Responses.LoginResponse;
 import com.example.android.blendin.Responses.ProfileResponse;
+import com.example.android.blendin.Responses.ViewProfileResponse;
 import com.example.android.blendin.Retrofit.ApiClient;
 import com.example.android.blendin.Retrofit.ApiInterface;
 import com.example.android.blendin.Utility.AuthUser;
@@ -73,16 +74,38 @@ public class ProfileFragment extends Fragment implements AppBarLayout.OnOffsetCh
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, v);
+        Bundle bundle = getArguments();
+        Boolean userType = bundle.getBoolean("type");
+        if (userType)
         initAPI();
-
-       /* profileModelList=new ArrayList<>();
-        for(int i=0; i<5; i++){
-            ProfileModel profileModel=new ProfileModel(
-                    "Hamda Helal is at Loca Loca Cafe", "900", "1000", R.drawable.kappa2, true);
-            profileModelList.add(profileModel);
-        }*/
+        else {
+            String uuid = bundle.getString("uuid");
+            viewProfile(uuid);
+        }
 
         return v;
+    }
+
+    private void viewProfile(String uuid) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ViewProfileResponse> call = apiInterface.viewUserProfile(AuthUser.getAuthData().getToken(), AuthUser.getAuthData().getSecret(), uuid);
+        Log.e("Token", AuthUser.getAuthData().getToken());
+        Log.e("Secret", AuthUser.getAuthData().getSecret());
+        call.enqueue(new Callback<ViewProfileResponse>() {
+            @Override
+            public void onResponse(Call<ViewProfileResponse> call, Response<ViewProfileResponse> response) {
+                if (response != null && response.body().getStatus().equals(FLAG_SUCCESS)) {
+                    user = response.body().getUser();
+                    updateView();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ViewProfileResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
     @Override
@@ -100,7 +123,6 @@ public class ProfileFragment extends Fragment implements AppBarLayout.OnOffsetCh
                     .setDuration(200)
                     .start();
         }
-
         if (percentage <= PERCENTAGE_TO_ANIMATE_AVATAR && !mIsAvatarShown) {
             mIsAvatarShown = true;
 
@@ -118,8 +140,10 @@ public class ProfileFragment extends Fragment implements AppBarLayout.OnOffsetCh
         Log.e("kkk", authUser.getToken());
         Log.e("kkk1", authUser.getSecret());
         call.enqueue(new Callback<ProfileResponse>() {
+
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+
                 if (response != null && response.body().getStatus().equals(FLAG_SUCCESS)) {
                     user = response.body().getUser();
                     updateView();

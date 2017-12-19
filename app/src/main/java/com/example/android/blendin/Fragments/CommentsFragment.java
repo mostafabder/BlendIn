@@ -109,7 +109,7 @@ public class CommentsFragment extends Fragment {
                 progressDialog.cancel();
                 if (response.body() != null) {
                     if (response.body().getStatus().equals(Constants.FLAG_SUCCESS)) {
-                        adapter = new CommentAdapter(response.body().getComments(), getActivity());
+                        adapter = new CommentAdapter(response.body().getMessages(), getActivity());
                         recyclerView.setAdapter(adapter);
                     } else
                         Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();

@@ -8,13 +8,13 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.android.blendin.Utility.Constants.BASE_URL;
+
 /**
  * Created by Luffy on 12/15/2017.
  */
 
 public class ApiClient {
-
-    public static final String BASE_URL = "http://156.217.224.212/";
     private static Retrofit retrofit = null;
     public static Retrofit getClient() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()

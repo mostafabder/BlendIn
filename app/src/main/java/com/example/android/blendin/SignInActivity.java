@@ -52,13 +52,10 @@ import com.google.gson.Gson;
 public class SignInActivity extends AppCompatActivity {
     @BindView(R.id.signin_email_input)
     TextView email;
-
     @BindView(R.id.signin_password_input)
     TextView password;
-
     @BindView(R.id.signin_fb)
     LinearLayout fb;
-
     @BindView(R.id.signin_submit)
     Button submit;
     CallbackManager FBCallbackManager;
@@ -107,9 +104,7 @@ public class SignInActivity extends AppCompatActivity {
                             Toast.makeText(SignInActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
-
             }
         });
         fb.setOnClickListener(new View.OnClickListener() {
@@ -271,7 +266,6 @@ public class SignInActivity extends AppCompatActivity {
                 new Gson().toJson(loginResponse),
                 KEY_USER_DATA);
     }
-
 
     public boolean valid() {
         /*String e = email.getContent().toString();

@@ -38,12 +38,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return new ViewHolder(view);
     }
 
-    void getPicasso(String temp, ImageView img) {
+    void getPicasso(String temp, CircleImageView img) {
         Picasso.with(context)
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         commentModel = commentModelList.get(position);
@@ -51,7 +52,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.userName.setText(commentModel.getName());
         holder.text.setText(commentModel.getContent());
         holder.dateAgo.setText(commentModel.getCreated_at());
-
     }
 
     @Override
