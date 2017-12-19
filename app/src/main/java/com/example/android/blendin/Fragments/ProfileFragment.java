@@ -187,7 +187,7 @@ public class ProfileFragment extends Fragment implements AppBarLayout.OnOffsetCh
 
     void getPicasso(String temp, CircleImageView img) {
         Picasso.with(getActivity())
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }

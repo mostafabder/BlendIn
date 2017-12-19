@@ -1,6 +1,5 @@
 package com.example.android.blendin.Responses;
 
-import com.example.android.blendin.Models.Interests;
 import com.example.android.blendin.Models.User;
 
 import java.util.List;

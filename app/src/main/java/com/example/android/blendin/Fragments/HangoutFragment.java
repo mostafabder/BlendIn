@@ -41,7 +41,6 @@ import android.widget.Toast;
 import com.example.android.blendin.Adapters.HangoutAdapter;
 import com.example.android.blendin.Models.User;
 import com.example.android.blendin.Models.anActivity;
-import com.example.android.blendin.Models.nearbyUsers;
 import com.example.android.blendin.Responses.ActivitiesResponse;
 import com.example.android.blendin.Responses.SearchPeople;
 import com.example.android.blendin.Retrofit.ApiClient;

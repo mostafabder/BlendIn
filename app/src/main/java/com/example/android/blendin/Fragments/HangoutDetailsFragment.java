@@ -199,7 +199,7 @@ public class HangoutDetailsFragment extends Fragment implements DatePickerDialog
         }
         return members;
     }
-    
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

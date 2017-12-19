@@ -1,7 +1,6 @@
 package com.example.android.blendin.Responses;
 
 import com.example.android.blendin.Models.User;
-import com.example.android.blendin.Models.nearbyUsers;
 
 import java.util.List;
 

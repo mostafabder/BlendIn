@@ -164,14 +164,14 @@ public class SquadRequestAdapter extends RecyclerView.Adapter<SquadRequestAdapte
 
     void getPicasso(String temp, ImageView img) {
         Picasso.with(context)
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }
 
     void getPicasso(String temp, CircleImageView img) {
         Picasso.with(context)
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }
