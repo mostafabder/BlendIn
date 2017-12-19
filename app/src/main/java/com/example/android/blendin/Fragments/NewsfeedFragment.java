@@ -57,7 +57,6 @@ public class NewsfeedFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         newsFeedsList = new ArrayList<>();
 
-
         //Test Data
 
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {

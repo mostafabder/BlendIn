@@ -4,6 +4,9 @@ import com.example.android.blendin.Models.MySquadModel;
 import com.example.android.blendin.Responses.ActivitiesResponse;
 import com.example.android.blendin.Responses.CommentResponse;
 import com.example.android.blendin.Responses.CommentsResponse;
+import com.example.android.blendin.Responses.HangoutRequestAcceptResponse;
+import com.example.android.blendin.Responses.HangoutRequestRejectResponse;
+import com.example.android.blendin.Responses.HangoutRequestResponse;
 import com.example.android.blendin.Responses.LoginResponse;
 import com.example.android.blendin.Responses.MySquadResponse;
 import com.example.android.blendin.Responses.ProfileResponse;
@@ -12,6 +15,9 @@ import com.example.android.blendin.Responses.NewsfeedResponse;
 import com.example.android.blendin.Responses.SearchPeople;
 import com.example.android.blendin.Responses.SignUpResponse;
 import com.example.android.blendin.Responses.SquadProfileResponse;
+import com.example.android.blendin.Responses.SquadRequestAcceptResponse;
+import com.example.android.blendin.Responses.SquadRequestRejectResponse;
+import com.example.android.blendin.Responses.SquadRequestResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -89,4 +95,30 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("hangouts/search/people")
     Call<SearchPeople> searchPeople(@Field("token") String token, @Field("secret") String secret, @Field("activity_id") String activity_id, @Field("lat") String lat, @Field("lng") String lng);
+
+    @FormUrlEncoded
+    @POST("secure/auth/profile/requests/hangouts")
+    Call<HangoutRequestResponse> getHangoutRequests(@Field("token") String token, @Field("secret") String secret);
+
+    @FormUrlEncoded
+    @POST("secure/auth/profile/requests/hangouts/accept")
+    Call<HangoutRequestAcceptResponse> acceptHangoutRequest(@Field("token") String token, @Field("secret") String secret, @Field("invite_id") String invite_id);
+
+    @FormUrlEncoded
+    @POST("secure/auth/profile/requests/hangouts/reject")
+    Call<HangoutRequestRejectResponse> rejectHangoutRequest(@Field("token") String token, @Field("secret") String secret, @Field("invite_id") String invite_id);
+
+    @FormUrlEncoded
+    @POST("secure/auth/profile/requests/squads")
+    Call<SquadRequestResponse> getSquadRequests(@Field("token") String token, @Field("secret") String secret);
+
+    @FormUrlEncoded
+    @POST("secure/auth/profile/requests/squads/accept")
+    Call<SquadRequestAcceptResponse> acceptSquadRequest(@Field("token") String token, @Field("secret") String secret, @Field("invite_id") String invite_id);
+
+    @FormUrlEncoded
+    @POST("secure/auth/profile/requests/squads/reject")
+    Call<SquadRequestRejectResponse> rejectSquadRequest(@Field("token") String token, @Field("secret") String secret, @Field("invite_id") String invite_id);
+
+
 }

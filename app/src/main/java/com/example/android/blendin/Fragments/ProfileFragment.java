@@ -23,6 +23,7 @@ import com.example.android.blendin.Responses.ProfileResponse;
 import com.example.android.blendin.Retrofit.ApiClient;
 import com.example.android.blendin.Retrofit.ApiInterface;
 import com.example.android.blendin.Utility.AuthUser;
+import com.example.android.blendin.Utility.Constants;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -138,6 +139,7 @@ public class ProfileFragment extends Fragment implements AppBarLayout.OnOffsetCh
         userName.setText(user.getFirst_name() + " " + user.getLast_name());
         address.setText(user.getAddress());
         email.setText(user.getEmail());
+        getPicasso(user.getPic(), img);
         //Log.e("kappa",user.getInterests()[0]);
         StringBuilder stringBuilder = new StringBuilder();
         for (String x : user.getInterests()) {
@@ -157,5 +159,12 @@ public class ProfileFragment extends Fragment implements AppBarLayout.OnOffsetCh
         adapter = new ProfileAdapter(user.getPosts(), getActivity());
         recyclerView.setAdapter(adapter);
 
+    }
+
+    void getPicasso(String temp, CircleImageView img) {
+        Picasso.with(getActivity())
+                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
     }
 }

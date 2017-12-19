@@ -55,14 +55,11 @@ public class HangoutProfileFragment extends Fragment {
         endTime = bundle.getString("endTime");
         activity = bundle.getString("activity");
         collapsingToolbarLayout.setTitle(title);
-
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.hangoutProfile_viewpager);
         PagerAdapter pagerAdapter = new HangoutTabsAdapter(getChildFragmentManager(), authenticated);
         viewPager.setAdapter(pagerAdapter);
-
         TabLayout tableLayout = (TabLayout) rootView.findViewById(R.id.hangoutProfile_tabs);
         tableLayout.setupWithViewPager(viewPager);
-
         return rootView;
     }
 

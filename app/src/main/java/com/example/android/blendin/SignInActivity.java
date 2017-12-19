@@ -87,7 +87,7 @@ public class SignInActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                             if (response != null && response.body().getStatus().equals(FLAG_SUCCESS)) {
-                                String json = new Gson().toJson(response);
+                                String json = new Gson().toJson(response.body());
                                 storeDataToSharedPref(SignInActivity.this, json, KEY_USER_DATA);
                                 AuthUser authUser = AuthUser.getAuthUser(response.body());
                                 Log.e("kappa", response.body().getToken());

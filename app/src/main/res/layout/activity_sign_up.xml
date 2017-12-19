@@ -74,6 +74,37 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:alpha=".5"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="OR"
+            android:textColor="@android:color/darker_gray" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:alpha=".5"
+            android:background="@android:color/darker_gray" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
@@ -201,37 +232,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="3"
-            android:alpha=".5"
-            android:background="@android:color/darker_gray" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="OR"
-            android:textColor="@android:color/darker_gray" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="3"
-            android:alpha=".5"
-            android:background="@android:color/darker_gray" />
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/signup_submit"
