@@ -12,12 +12,11 @@ import java.util.List;
 
 public class NewsfeedResponse {
 
+
     @SerializedName("status")
     @Expose
     private String flag;
 
-    @SerializedName("post")
-    @Expose
     private List<NewsFeedModel> posts;
 
 

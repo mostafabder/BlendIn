@@ -11,14 +11,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -30,12 +24,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -43,11 +39,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.blendin.Adapters.HangoutAdapter;
-import com.example.android.blendin.Adapters.NewsfeedAdapter;
+import com.example.android.blendin.Models.User;
 import com.example.android.blendin.Models.anActivity;
 import com.example.android.blendin.Models.nearbyUsers;
 import com.example.android.blendin.Responses.ActivitiesResponse;
-import com.example.android.blendin.Responses.NewsfeedResponse;
 import com.example.android.blendin.Responses.SearchPeople;
 import com.example.android.blendin.Retrofit.ApiClient;
 import com.example.android.blendin.Retrofit.ApiInterface;
@@ -83,15 +78,10 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -127,12 +117,13 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
     LinearLayoutManager layoutManager;
     Boolean y = true;
     String orgLat, orgLng;
-    nearbyUsers now = null;
+    User now = null;
     List<anActivity> activites = new ArrayList<>();
     ArrayList<String> actStrings = new ArrayList<String>();
-    List<nearbyUsers> listNearby = new ArrayList<>();
+    List<User> listNearby = new ArrayList<>();
     @BindView(R.id.act_spinner)
     Spinner act;
+    LocationManager mLocationManager;
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
     private Map<Marker, String> markerIds = new HashMap<>();
@@ -173,40 +164,44 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (HangoutModelList.size() > 0) {
-                    Fragment fragment = new HangoutDetailsFragment();
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("people", new Gson().toJson(HangoutModelList));
-                    bundle.putString("activity", "playing");
-                    fragment.setArguments(bundle);
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
-                    fragmentTransaction.add(R.id.content_main, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
-
+                proceed();
             }
         });
 
         //setActivities
         getActivities();
-        for (int i = 0; i < activites.size(); i++)
-            actStrings.add(activites.get(i).getTitle());
+
+
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
                 (getActivity(), android.R.layout.simple_spinner_item,
                         actStrings);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         act.setAdapter(spinnerArrayAdapter);
-        ////
-
         initPermissionCheck();
         initMap();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
+        if (mLastLocation == null)
+            mLastLocation = getLastKnownLocation();
         tryLocation();
         Constants.isBottom = true;
         return v;
+    }
+
+    public void proceed() {
+        if (HangoutModelList.size() > 0) {
+            Fragment fragment = new HangoutDetailsFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            Bundle bundle = new Bundle();
+            bundle.putString("people", new Gson().toJson(HangoutModelList));
+            bundle.putString("activity", "playing");
+            fragment.setArguments(bundle);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
+            fragmentTransaction.add(R.id.content_main, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else
+            Toast.makeText(getActivity(), "U should add a memeber", Toast.LENGTH_SHORT).show();
     }
 
     public void getActivities() {
@@ -225,6 +220,11 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
 
                         for (int i = 0; i < response.body().getActivities().size(); i++)
                             activites.add(response.body().getActivities().get(i));
+                        Log.e("size", String.valueOf(activites.size()));
+                        for (int i = 0; i < activites.size(); i++) {
+                            actStrings.add(activites.get(i).getTitle());
+                            Log.e("title", activites.get(i).getTitle());
+                        }
                         Log.e("ACT", activites.get(0).getTitle());
                     } else
                         Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();
@@ -321,7 +321,7 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             if (mLastLocation != null) {
 
                 orgLat = String.valueOf(mLastLocation.getLatitude());
-                orgLat = String.valueOf(mLastLocation.getLongitude());
+                orgLng = String.valueOf(mLastLocation.getLongitude());
 
                 //Toast.makeText(this, lat + " " + lng + " " + getAddress(Double.parseDouble(lat),Double.parseDouble(lng)), Toast.LENGTH_SHORT).show();
             } else {
@@ -341,11 +341,12 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
     public void getNearbyPeople() {
         progressDialog = ProgressDialog.show(getActivity(), null, "Loading");
         progressDialog.setCancelable(false);
+        Log.e("LAT  LNG", orgLat + " " + orgLng);
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Log.e("Token", AuthUser.getAuthData().getToken());
         Log.e("Secret", AuthUser.getAuthData().getSecret());
         Call<SearchPeople> call = apiService.searchPeople(AuthUser.getAuthData().getToken(),
-                AuthUser.getAuthData().getSecret(), "1", "31.0621262", "31.4027961");
+                AuthUser.getAuthData().getSecret(), "1", orgLat, orgLng);
         Log.e("orglat", orgLat + "         ");
         Log.e("orglng", orgLng + "             ");
         call.enqueue(new Callback<SearchPeople>() {
@@ -371,13 +372,6 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         });
     }
 
-    //    public String getAddress(double latitude, double longitude) throws IOException {
-//        Geocoder geocoder;
-//        List<Address> addresses;
-//        geocoder = new Geocoder(this, Locale.getDefault());
-//        addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-//        return addresses.get(0).getAddressLine(0);
-////    }
     public void createNearbyPins(SearchPeople searchPeople) {
 
         for (int i = 0; i < searchPeople.getUsers().size(); i++) {
@@ -431,7 +425,7 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             @Override
             public View getInfoContents(Marker marker) {
                 String id = markerIds.get(marker);
-                nearbyUsers now = null;
+                User now = null;
                 for (int i = 0; i < listNearby.size(); i++) {
                     if (listNearby.get(i).getUuid().equals(id)) {
                         now = listNearby.get(i);
@@ -442,18 +436,18 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 if (isBottom) {
                     infowindow = getActivity().getLayoutInflater().inflate(R.layout.marker_popup, null);
                     if (now != null) {
+
                         CircleImageView avatar = (CircleImageView) infowindow.findViewById(R.id.iv_avatar_popMarker);
                         TextView tvname = (TextView) infowindow.findViewById(R.id.tvName_popMarker);
                         TextView tvGender = (TextView) infowindow.findViewById(R.id.tvGenre_popMarker);
                         Picasso.with(getActivity())
-                                .load(Constants.BASE_URL_FOR_IMAGE + now.getInfo().getPic())
+                                .load(Constants.BASE_URL + now.getPic())
                                 .error(R.drawable.kappa2)
                                 .into(avatar);
-                        tvname.setText(now.getInfo().getName());
-                        tvGender.setText(now.getInfo().getGender());
+                        tvname.setText(now.getName());
+                        tvGender.setText(now.getGender());
                     }
-                }
-                else
+                } else
                     infowindow = null;
 
 
@@ -484,25 +478,47 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
 
         FancyButton btnHang = (FancyButton) dialog.findViewById(R.id.btn_hang_dialog);
         FancyButton btnPreview = (FancyButton) dialog.findViewById(R.id.btn_preview_dialog);
+        TextView tv_name = (TextView) dialog.findViewById(R.id.tvDialog_Name);
+        TextView tv_gender = (TextView) dialog.findViewById(R.id.tvDialogGender);
+        tv_name.setText(now.getName());
+        tv_gender.setText(now.getGender_name());
 
         btnHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Constants.isBottom) {
-
                     linear2.setVisibility(View.VISIBLE);
                     Constants.isBottom = false;
                 }
                 HangoutModel hangoutModel;
-                hangoutModel = new HangoutModel(now.getInfo().getPic(), now.getInfo().getName());
+                hangoutModel = new HangoutModel(now.getPic(), now.getName(), now.getUuid());
                 HangoutModelList.add(hangoutModel);
                 recyclerView.setAdapter(adapter);
                 dialog.cancel();
             }
         });
+        btnPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("type", false);
+                bundle.putString("uuid", now.getUuid());
+                fragment.setArguments(bundle);
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right);
+                fragmentTransaction.replace(R.id.content_main, fragment, "Profile");
+                fragmentTransaction.commit();
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
+                Constants.inFragment = "Profile";
+                dialog.cancel();
+            }
+        });
+
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
@@ -533,6 +549,8 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 15));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
             }
+            if (mLastLocation == null)
+                mLastLocation = getLastKnownLocation();
         }
     }
 
@@ -570,6 +588,8 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             } else mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
         }
+        if (mLastLocation == null)
+            mLastLocation = getLastKnownLocation();
     }
 
     private synchronized void buildGoogleApiClient() {
@@ -738,5 +758,40 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                         linear2.setVisibility(View.VISIBLE);
                     }
                 });
+    }
+
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                break;
+            }
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l != null)
+                Log.e("provider:, location:", provider + "  " + l.getLatitude() + "  " + l.getLongitude());
+            else
+                Log.e("provider:, location:", provider + "  " + null + "  " + null);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null
+                    || l.getAccuracy() < bestLocation.getAccuracy()) {
+                Log.e(" best last location: %s", l.getLatitude() + "  " + l.getLongitude());
+                bestLocation = l;
+            }
+        }
+        if (bestLocation == null) {
+            return null;
+        }
+        return bestLocation;
     }
 }

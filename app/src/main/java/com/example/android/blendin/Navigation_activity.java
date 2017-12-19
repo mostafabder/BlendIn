@@ -59,7 +59,6 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open_navigation, R.string.close_navigation);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         // Opens Default Fragment -> Newsfeed
         // transmission(new NewsfeedFragment(),"news");
         curFragmentKey = "Newsfeed";
@@ -78,7 +77,11 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
         // Handling navigation view item clicks.
         int id = item.getItemId();
         if (id == R.id.profile_nav_item) {
-            transmission(new ProfileFragment(), "Profile");
+            Fragment fragment = new ProfileFragment();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("type", true);
+            fragment.setArguments(bundle);
+            transmission(fragment, "Profile");
             isMain = false;
         } else if (id == R.id.hangouts_nav_item) {
             transmission(new HangoutFragment(), "Hangouts");
@@ -94,7 +97,7 @@ public class Navigation_activity extends AppCompatActivity implements Navigation
             isMain = false;
         } else if (id == R.id.settings_nav_item) {
             //TODO :: Settings Fragment
-            transmission(new SettingsFragment(), "set");
+            transmission(new SettingsFragment(), "Setting");
             getSupportActionBar().setTitle("Settings");
             isMain = false;
         } else if (id == R.id.signout_nav_item) {

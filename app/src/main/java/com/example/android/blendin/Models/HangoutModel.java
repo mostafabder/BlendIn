@@ -7,10 +7,20 @@ package com.example.android.blendin.Models;
 public class HangoutModel {
     String avatar;
     String name;
+    String uuid;
 
-    public HangoutModel(String avatar, String name) {
+    public HangoutModel(String avatar, String name, String uuid) {
         this.avatar = avatar;
         this.name = name;
+        this.uuid = uuid;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getAvatar() {

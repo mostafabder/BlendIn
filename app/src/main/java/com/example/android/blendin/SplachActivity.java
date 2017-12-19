@@ -22,7 +22,6 @@ public class SplachActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Class nxt;
         String json = CommonMethods.retrieveDataFromSharedPref(SplachActivity.this, KEY_USER_DATA);
         LoginResponse loginResponse = new Gson().fromJson(json, LoginResponse.class);
@@ -36,13 +35,7 @@ public class SplachActivity extends AppCompatActivity {
                 .withSplashTimeOut(4000)
                 .withBackgroundResource(R.color.dark_blue)
                 .withLogo(R.drawable.logo);
-
-        //customize all TextViews
-
-
-        //create the view
         View easySplashScreenView = config.create();
-
         setContentView(easySplashScreenView);
     }
 }

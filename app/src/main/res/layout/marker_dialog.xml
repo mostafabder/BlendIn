@@ -39,15 +39,14 @@
                     android:text="Mostafa Waleed"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold" />
-
                 <TextView
-                    android:id="@+id/tvGenre"
+                    android:id="@+id/tvDialogGender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvDialog_Name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
-                    android:text="Playing"
+                    android:text="Male"
                     android:textColor="@color/blue"
                     android:textSize="12sp"
                     android:textStyle="bold" />

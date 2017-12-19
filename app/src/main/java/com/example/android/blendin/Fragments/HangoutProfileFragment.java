@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 public class HangoutProfileFragment extends Fragment {
 
 
-    String title, disc, location, startDate, endDate, startTime, endTime, activity, ppl;
+    String title, disc, location, startDate, endDate, startTime, endTime, activity, ppl, hangout_id;
     @BindView(R.id.hangoutProfile_collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
     @Override
@@ -54,10 +54,11 @@ public class HangoutProfileFragment extends Fragment {
         startTime = bundle.getString("startTime");
         endTime = bundle.getString("endTime");
         activity = bundle.getString("activity");
+        hangout_id = bundle.getString("hangout_id");
         collapsingToolbarLayout.setTitle(title);
 
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.hangoutProfile_viewpager);
-        PagerAdapter pagerAdapter = new HangoutTabsAdapter(getChildFragmentManager(), authenticated);
+        PagerAdapter pagerAdapter = new HangoutTabsAdapter(getChildFragmentManager(), true);
         viewPager.setAdapter(pagerAdapter);
 
         TabLayout tableLayout = (TabLayout) rootView.findViewById(R.id.hangoutProfile_tabs);
@@ -84,9 +85,9 @@ public class HangoutProfileFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             if (auth) {
+                Bundle bundle = new Bundle();
                 switch (position) {
                     case 0:
-                        Bundle bundle = new Bundle();
                         bundle.putString("people", ppl);
                         bundle.putString("activity", activity);
                         bundle.putString("disc", disc);
@@ -100,9 +101,15 @@ public class HangoutProfileFragment extends Fragment {
                         fragment.setArguments(bundle);
                         return fragment;
                     case 1:
-                        return new HangoutProfileChatFragment();
+                        Fragment fragment2 = new HangoutProfileChatFragment();
+                        bundle.putString("hangout_id", hangout_id);
+                        fragment2.setArguments(bundle);
+                        return fragment2;
                     case 2:
-                        return new HangoutProfilePostsFragment();
+                        Fragment fragment3 = new HangoutProfilePostsFragment();
+                        bundle.putString("hangout_id", hangout_id);
+                        fragment3.setArguments(bundle);
+                        return fragment3;
                     default:
                         return null;
                 }
@@ -115,10 +122,8 @@ public class HangoutProfileFragment extends Fragment {
                     default:
                         return null;
                 }
-
             }
         }
-
         @Override
         public CharSequence getPageTitle(int position) {
             if (auth) {

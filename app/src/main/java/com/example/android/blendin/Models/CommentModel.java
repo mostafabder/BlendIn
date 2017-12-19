@@ -6,13 +6,30 @@ package com.example.android.blendin.Models;
 
 public class CommentModel {
     // TODO :: it should have a userName object as a member to get his pic and link to his profile
+
     String name;
-    String content;
+    String message;
     String created_at;
     String pic;
     String first_name;
     String last_name;
+    String uuid;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getFirst_name() {
         return first_name;
@@ -39,11 +56,11 @@ public class CommentModel {
     }
 
     public String getContent() {
-        return content;
+        return message;
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.message = content;
     }
 
     public String getCreated_at() {

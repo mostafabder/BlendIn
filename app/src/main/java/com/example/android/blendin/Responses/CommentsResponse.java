@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CommentsResponse {
     String status;
-    List<CommentModel> comments;
+    List<CommentModel> messages;
 
     public String getStatus() {
         return status;
@@ -20,11 +20,11 @@ public class CommentsResponse {
         this.status = status;
     }
 
-    public List<CommentModel> getComments() {
-        return comments;
+    public List<CommentModel> getMessages() {
+        return messages;
     }
 
-    public void setComments(List<CommentModel> comments) {
-        this.comments = comments;
+    public void setMessages(List<CommentModel> messages) {
+        this.messages = messages;
     }
 }

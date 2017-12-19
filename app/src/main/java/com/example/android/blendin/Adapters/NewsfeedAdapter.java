@@ -1,6 +1,5 @@
 package com.example.android.blendin.Adapters;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -64,14 +63,14 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
 
     void getPicasso(String temp, ImageView img) {
         Picasso.with(context)
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }
 
-    void getPicasso(String temp, CircleImageView img) {
+    void getPicassoCirlce(String temp, CircleImageView img) {
         Picasso.with(context)
-                .load(Constants.BASE_URL_FOR_IMAGE + temp)
+                .load(Constants.BASE_URL + temp)
                 .error(R.drawable.kappa2)
                 .into(img);
     }
@@ -85,10 +84,10 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
             @Override
             public void onResponse(Call<LoveResponse> call, Response<LoveResponse> response) {
                 if (response.body() != null) {
-                    if (response.body().getStatues().equals(Constants.FLAG_SUCCESS)) {
+                    if (response.body().getStatus().equals(Constants.FLAG_SUCCESS)) {
 
                     } else
-                        Toast.makeText(context, response.body().getStatues(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                 } else Toast.makeText(context, "null", Toast.LENGTH_SHORT).show();
             }
 
@@ -103,7 +102,7 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         newsFeedModel = newsfeedItemsList.get(position);
 
-        getPicasso(newsfeedItemsList.get(position).getAvatar(), holder.userProfileImage);
+        getPicassoCirlce(newsfeedItemsList.get(position).getAvatar(), holder.userProfileImage);
 
         getPicasso(newsfeedItemsList.get(position).getHangout_pic(), holder.postImage);
         holder.userNameTxt.setText(newsFeedModel.getName());

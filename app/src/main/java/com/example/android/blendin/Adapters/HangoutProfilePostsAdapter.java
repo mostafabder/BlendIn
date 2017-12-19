@@ -60,7 +60,7 @@ public class HangoutProfilePostsAdapter extends RecyclerView.Adapter<HangoutProf
 //        holder.postMainTxt.setContent(newsFeedModel.getActivity());
 //        holder.postDescTxt.setContent(newsFeedModel.getDisc());
 //        holder.postLikesCount.setContent(newsFeedModel.getLikes());
-//        holder.postCommentsCount.setContent(newsFeedModel.getComments());
+//        holder.postCommentsCount.setContent(newsFeedModel.getMessages());
 //        holder.likeImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

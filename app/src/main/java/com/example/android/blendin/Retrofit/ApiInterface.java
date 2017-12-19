@@ -9,18 +9,18 @@ import com.example.android.blendin.Responses.MySquadResponse;
 import com.example.android.blendin.Responses.ProfileResponse;
 import com.example.android.blendin.Responses.LoveResponse;
 import com.example.android.blendin.Responses.NewsfeedResponse;
+import com.example.android.blendin.Responses.PushHangoutResponse;
 import com.example.android.blendin.Responses.SearchPeople;
 import com.example.android.blendin.Responses.SignUpResponse;
 import com.example.android.blendin.Responses.SquadProfileResponse;
+import com.example.android.blendin.Responses.ViewProfileResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
-/**
- * Created by Luffy on 12/15/2017.
- */
+
 
 public interface ApiInterface {
 
@@ -35,8 +35,6 @@ public interface ApiInterface {
                                 @Field("last_name") String last_name,
                                 @Field("email") String email,
                                 @Field("gender") String gender);
-
-
     @FormUrlEncoded
     @POST("secure/auth/login")
     Call<LoginResponse> loginTw(@Field("tid") String tid, @Field("type") String type);
@@ -89,4 +87,26 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("hangouts/search/people")
     Call<SearchPeople> searchPeople(@Field("token") String token, @Field("secret") String secret, @Field("activity_id") String activity_id, @Field("lat") String lat, @Field("lng") String lng);
+
+    @FormUrlEncoded
+    @POST("/secure/auth/profile")
+    Call<ViewProfileResponse> viewUserProfile(@Field("token") String token, @Field("secret") String secret, @Field("uuid") String uuid);
+
+    @FormUrlEncoded
+    @POST("hangouts/push")
+    Call<PushHangoutResponse> pushHangout(@Field("token") String token, @Field("secret") String secret,
+                                          @Field("title") String title, @Field("description") String desciption,
+                                          @Field("location") String location, @Field("lat") String lat, @Field("lng") String lng,
+                                          @Field("start_date") String start_date, @Field("end_date") String end_date,
+                                          @Field("start_time") String start_time, @Field("end_time") String end_time,
+                                          @Field("members") String members, @Field("pic") String pic, @Field("sid") String sid);
+
+    @FormUrlEncoded
+    @POST("hangouts/chat")
+    Call<CommentsResponse> getCommentsHangout(@Field("token") String token, @Field("secret") String secret, @Field("hangout_id") String hangout_id);
+
+    @FormUrlEncoded
+    @POST("hangouts/posts")
+    Call<NewsfeedResponse> getPostsHangout(@Field("token") String token, @Field("secret") String secret, @Field("hangout_id") String hangout_id);
+
 }

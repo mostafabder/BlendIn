@@ -52,13 +52,10 @@ import com.google.gson.Gson;
 public class SignInActivity extends AppCompatActivity {
     @BindView(R.id.signin_email_input)
     TextView email;
-
     @BindView(R.id.signin_password_input)
     TextView password;
-
     @BindView(R.id.signin_fb)
     LinearLayout fb;
-
     @BindView(R.id.signin_submit)
     Button submit;
     CallbackManager FBCallbackManager;
@@ -87,7 +84,7 @@ public class SignInActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                             if (response != null && response.body().getStatus().equals(FLAG_SUCCESS)) {
-                                String json = new Gson().toJson(response);
+                                String json = new Gson().toJson(response.body());
                                 storeDataToSharedPref(SignInActivity.this, json, KEY_USER_DATA);
                                 AuthUser authUser = AuthUser.getAuthUser(response.body());
                                 Log.e("kappa", response.body().getToken());
@@ -107,9 +104,7 @@ public class SignInActivity extends AppCompatActivity {
                             Toast.makeText(SignInActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
-
             }
         });
         fb.setOnClickListener(new View.OnClickListener() {
@@ -271,7 +266,6 @@ public class SignInActivity extends AppCompatActivity {
                 new Gson().toJson(loginResponse),
                 KEY_USER_DATA);
     }
-
 
     public boolean valid() {
         /*String e = email.getContent().toString();

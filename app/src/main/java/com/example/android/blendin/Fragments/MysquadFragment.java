@@ -56,10 +56,7 @@ public class MysquadFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_mysquad, container, false);
         initAPI();
-
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab_squad);
-
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
