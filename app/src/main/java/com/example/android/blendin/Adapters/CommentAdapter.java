@@ -50,7 +50,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         commentModel = commentModelList.get(position);
         getPicasso(commentModel.getPic(), holder.userImage);
         holder.userName.setText(commentModel.getName());
-        holder.text.setText(commentModel.getContent());
+        holder.text.setText(commentModel.getMessage());
         holder.dateAgo.setText(commentModel.getCreated_at());
     }
 

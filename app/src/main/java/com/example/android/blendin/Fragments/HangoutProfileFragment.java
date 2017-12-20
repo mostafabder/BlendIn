@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 public class HangoutProfileFragment extends Fragment {
 
 
+    public int authi;
     String title, disc, location, startDate, endDate, startTime, endTime, activity, ppl, hangout_id;
     @BindView(R.id.hangoutProfile_collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -42,22 +43,30 @@ public class HangoutProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_hangout_profile, container, false);
         ButterKnife.bind(this, rootView);
-        boolean authenticated;
+
         Bundle bundle = getArguments();
-        authenticated = bundle.getBoolean("auth");
-        ppl = bundle.getString("people");
-        title = bundle.getString("title");
-        disc = bundle.getString("disc");
-        location = bundle.getString("location");
-        startDate = bundle.getString("startDate");
-        endDate = bundle.getString("endDate");
-        startTime = bundle.getString("startTime");
-        endTime = bundle.getString("endTime");
-        activity = bundle.getString("activity");
-        hangout_id = bundle.getString("hangout_id");
-        collapsingToolbarLayout.setTitle(title);
+        authi = bundle.getInt("auth");
+        if (authi == 1) {
+            ppl = bundle.getString("people");
+            title = bundle.getString("title");
+            disc = bundle.getString("disc");
+            location = bundle.getString("location");
+            startDate = bundle.getString("startDate");
+            endDate = bundle.getString("endDate");
+            startTime = bundle.getString("startTime");
+            endTime = bundle.getString("endTime");
+            activity = bundle.getString("activity");
+            hangout_id = bundle.getString("hangout_id");
+            collapsingToolbarLayout.setTitle(title);
+        } else if (authi == 2) {
+            hangout_id = bundle.getString("hangout_id");
+        }
+
+
+
+
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.hangoutProfile_viewpager);
-        PagerAdapter pagerAdapter = new HangoutTabsAdapter(getChildFragmentManager(), true);
+        PagerAdapter pagerAdapter = new HangoutTabsAdapter(getChildFragmentManager(), authi);
         viewPager.setAdapter(pagerAdapter);
         TabLayout tableLayout = (TabLayout) rootView.findViewById(R.id.hangoutProfile_tabs);
         tableLayout.setupWithViewPager(viewPager);
@@ -65,15 +74,15 @@ public class HangoutProfileFragment extends Fragment {
     }
 
     class HangoutTabsAdapter extends FragmentPagerAdapter {
-        boolean auth;
 
-        public HangoutTabsAdapter(FragmentManager fm, boolean auth) {
+
+        public HangoutTabsAdapter(FragmentManager fm, int auth) {
             super(fm);
-            this.auth = auth;
+            authi = auth;
         }
         @Override
         public int getCount() {
-            if (auth)
+            if (authi == 1)
                 return 3;
             else
                 return 2;
@@ -81,19 +90,24 @@ public class HangoutProfileFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            if (auth) {
+            if (authi == 1 || authi == 2) {
                 Bundle bundle = new Bundle();
                 switch (position) {
                     case 0:
-                        bundle.putString("people", ppl);
-                        bundle.putString("activity", activity);
-                        bundle.putString("disc", disc);
-                        bundle.putString("title", title);
-                        bundle.putString("location", location);
-                        bundle.putString("startDate", startDate);
-                        bundle.putString("endDate", endDate);
-                        bundle.putString("startTime", startTime);
-                        bundle.putString("endTime", endTime);
+                        bundle.putInt("auth", authi);
+                        if (authi == 1) {
+                            bundle.putString("people", ppl);
+                            bundle.putString("activity", activity);
+                            bundle.putString("disc", disc);
+                            bundle.putString("title", title);
+                            bundle.putString("location", location);
+                            bundle.putString("startDate", startDate);
+                            bundle.putString("endDate", endDate);
+                            bundle.putString("startTime", startTime);
+                            bundle.putString("endTime", endTime);
+                        }
+                        if (authi == 2)
+                            bundle.putString("hangout_id", hangout_id);
                         Fragment fragment = new HangoutProfileDetailsFragment();
                         fragment.setArguments(bundle);
                         return fragment;
@@ -111,11 +125,16 @@ public class HangoutProfileFragment extends Fragment {
                         return null;
                 }
             } else {
+                Bundle bundle = new Bundle();
                 switch (position) {
+
                     case 0:
                         return new HangoutProfileDetailsFragment();
                     case 1:
-                        return new HangoutProfilePostsFragment();
+                        Fragment fragment2 = new HangoutProfileChatFragment();
+                        bundle.putString("hangout_id", hangout_id);
+                        fragment2.setArguments(bundle);
+                        return fragment2;
                     default:
                         return null;
                 }
@@ -123,7 +142,7 @@ public class HangoutProfileFragment extends Fragment {
         }
         @Override
         public CharSequence getPageTitle(int position) {
-            if (auth) {
+            if (authi == 1 || authi == 2) {
                 switch (position) {
                     case 0:
                         return "Details";

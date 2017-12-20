@@ -124,6 +124,7 @@
                     android:orientation="vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_addMember_squad"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
@@ -134,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="textAdd Member" />
+                        android:text="Add Member" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -212,6 +213,7 @@
             android:src="@drawable/user" />
 
         <EditText
+            android:id="@+id/et_squad_sendMessage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -221,11 +223,12 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="clip_vertical"
+            android:id="@+id/iv_squad_sendMessage"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:background="@color/dark_blue" />
+            android:src="@drawable/send_button" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

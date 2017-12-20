@@ -1,18 +1,24 @@
 package com.example.android.blendin.Retrofit;
 
-import com.example.android.blendin.Models.MySquadModel;
 import com.example.android.blendin.Responses.ActivitiesResponse;
 import com.example.android.blendin.Responses.CommentResponse;
 import com.example.android.blendin.Responses.CommentsResponse;
+import com.example.android.blendin.Responses.CreateSquadResponse;
+import com.example.android.blendin.Responses.HangoutProfileResponse;
 import com.example.android.blendin.Responses.HangoutRequestAcceptResponse;
 import com.example.android.blendin.Responses.HangoutRequestRejectResponse;
 import com.example.android.blendin.Responses.HangoutRequestResponse;
 import com.example.android.blendin.Responses.LoginResponse;
+import com.example.android.blendin.Responses.MemberResponse;
+import com.example.android.blendin.Responses.MyHangoutsResponse;
 import com.example.android.blendin.Responses.MySquadResponse;
+import com.example.android.blendin.Responses.NotificationResponse;
+import com.example.android.blendin.Responses.NotifyResponse;
 import com.example.android.blendin.Responses.ProfileResponse;
 import com.example.android.blendin.Responses.LoveResponse;
 import com.example.android.blendin.Responses.NewsfeedResponse;
 import com.example.android.blendin.Responses.PushHangoutResponse;
+import com.example.android.blendin.Responses.RecentlyHangwithResponse;
 import com.example.android.blendin.Responses.SearchPeople;
 import com.example.android.blendin.Responses.SignUpResponse;
 import com.example.android.blendin.Responses.SquadProfileResponse;
@@ -82,6 +88,7 @@ public interface ApiInterface {
     @POST("/squads")
     Call<SquadProfileResponse> squadProfile(@Field("token") String token, @Field("secret") String secret, @Field("squad_id") String squad_id);
 
+    @FormUrlEncoded
     @POST("/news-feed/posts/comments")
     Call<CommentsResponse> comments(@Field("token") String token, @Field("secret") String secret, @Field("post_id") String post_id);
 
@@ -121,6 +128,7 @@ public interface ApiInterface {
     @POST("secure/auth/profile/requests/squads/reject")
     Call<SquadRequestRejectResponse> rejectSquadRequest(@Field("token") String token, @Field("secret") String secret, @Field("invite_id") String invite_id);
 
+    @FormUrlEncoded
     @POST("/secure/auth/profile")
     Call<ViewProfileResponse> viewUserProfile(@Field("token") String token, @Field("secret") String secret, @Field("uuid") String uuid);
 
@@ -140,6 +148,51 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("hangouts/posts")
     Call<NewsfeedResponse> getPostsHangout(@Field("token") String token, @Field("secret") String secret, @Field("hangout_id") String hangout_id);
+
+    @FormUrlEncoded
+    @POST("hangouts")
+    Call<HangoutProfileResponse> viewHangout(@Field("token") String token, @Field("secret") String secret, @Field("hangout_id") String hangout_id);
+
+    @FormUrlEncoded
+    @POST("/hangouts/chat/push")
+    Call<CommentResponse> addChatHangout(@Field("token") String token, @Field("secret") String secret, @Field("hangout_id") String hangout_id, @Field("message") String message);
+
+    @FormUrlEncoded
+    @POST("hangouts/members")
+    Call<MemberResponse> getHangoutMembers(@Field("token") String token, @Field("secret") String secret, @Field("hangout_id") String hangout_id);
+
+    @FormUrlEncoded
+    @POST("squads/push")
+    Call<CreateSquadResponse> createSquad(@Field("token") String token, @Field("secret") String secret, @Field("title") String title,
+                                          @Field("description") String desciption, @Field("pic") String pic, @Field("members") String members);
+
+    @FormUrlEncoded
+    @POST("squads/chat")
+    Call<CommentsResponse> getSquadChat(@Field("token") String token, @Field("secret") String secret, @Field("squad_id") String hangout_id);
+
+    @FormUrlEncoded
+    @POST("/squads/chat/push")
+    Call<CommentResponse> addCommentSquad(@Field("token") String token, @Field("secret") String secret, @Field("squad_id") String hangout_id, @Field("message") String message);
+
+    @FormUrlEncoded
+    @POST("hangouts/mine")
+    Call<MyHangoutsResponse> getMyHangouts(@Field("token") String token, @Field("secret") String secret);
+
+    @FormUrlEncoded
+    @POST("/hangouts/posts/push")
+    Call<CommentResponse> addPost(@Field("token") String token, @Field("secret") String secret, @Field("hangout_id") String hangout_id, @Field("message") String message, @Field("title") String title);
+
+    @FormUrlEncoded
+    @POST("/secure/auth/profile/suggested-members")
+    Call<RecentlyHangwithResponse> getRecentMembers(@Field("token") String token, @Field("secret") String secret);
+
+    @FormUrlEncoded
+    @POST("/secure/auth/profile/notify")
+    Call<NotifyResponse> sendNotify(@Field("token") String token, @Field("secret") String secret);
+
+    @FormUrlEncoded
+    @POST("/secure/auth/profile/notifications")
+    Call<NotificationResponse> getNotifation(@Field("token") String token, @Field("secret") String secret);
 
 }
 

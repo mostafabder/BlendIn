@@ -13,8 +13,6 @@ import java.util.List;
 public class ProfileResponse {
 
     private String status;
-    //private String token;
-    //private String secret;
     private User user;
 
 

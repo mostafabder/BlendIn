@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.blendin.Models.CommentModel;
 import com.example.android.blendin.Models.SquadChatMessageModel;
 import com.example.android.blendin.R;
 import com.example.android.blendin.Utility.Constants;
@@ -22,11 +23,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class SquadChatMessageAdapter extends RecyclerView.Adapter<SquadChatMessageAdapter.ViewHolder> {
-    List<SquadChatMessageModel> squadChatMessageModelList;
-    SquadChatMessageModel squadChatMessageModel;
+    List<CommentModel> squadChatMessageModelList;
+    CommentModel squadChatMessageModel;
     private Context context;
 
-    public SquadChatMessageAdapter(List<SquadChatMessageModel> squadChatMessageModelList, Context context) {
+    public SquadChatMessageAdapter(List<CommentModel> squadChatMessageModelList, Context context) {
         this.squadChatMessageModelList = squadChatMessageModelList;
         this.context = context;
     }

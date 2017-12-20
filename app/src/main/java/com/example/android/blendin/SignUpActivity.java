@@ -346,7 +346,7 @@ public class SignUpActivity extends AppCompatActivity {
 //        List<Address> addresses;
 //        geocoder = new Geocoder(this, Locale.getDefault());
 //        addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-//        return addresses.get(0).getAddressLine(0);
+//        return addresses.get(0).getLocality();
 //    }
 //fb
     @Override
@@ -459,7 +459,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void extractFaceBookUserData(Bundle bFacebookData) {
         Log.e("LOGIN", "First GetFacebook");
-        fname = bFacebookData.getString("last_name");
+        fname = bFacebookData.getString("first_name");
         lname = bFacebookData.getString("last_name");
         fbEmail = bFacebookData.getString("email");
         gender = bFacebookData.getString("gender");
@@ -472,14 +472,13 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         Log.e("loginWith", fbID + " " + fbEmail);
-
+        Log.e("Login", fname + "  " + lname);
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<LoginResponse> call = apiService.loginFb(fbID, "1", fname, lname, fbEmail, gender);
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
                 progressDialog.dismiss();
                 Log.e("loginWithFacebookAPI", new Gson().toJson(response.body()));
                 loginResponse = response.body();

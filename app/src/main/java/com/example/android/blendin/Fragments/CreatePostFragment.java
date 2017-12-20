@@ -1,5 +1,7 @@
 package com.example.android.blendin.Fragments;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,23 +14,36 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.blendin.Adapters.PreviousHangoutAdapter;
+import com.example.android.blendin.Models.MyHangoutsModel;
 import com.example.android.blendin.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
+import com.example.android.blendin.Responses.CommentResponse;
+import com.example.android.blendin.Responses.MyHangoutsResponse;
+import com.example.android.blendin.Retrofit.ApiClient;
+import com.example.android.blendin.Retrofit.ApiInterface;
 import com.example.android.blendin.Utility.*;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static android.graphics.Bitmap.createBitmap;
@@ -40,15 +55,17 @@ public class CreatePostFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_HANGOUT_NAME = 2;
     static String mCurrentPhotoPath;
+    ProgressDialog progressDialog;
     ImageView cancelImageView;
     ImageView camera;
     ImageView gallary;
     ImageView hangouts;
     ImageView showImage;
     LinearLayout linearLayout;
+    EditText et_desc;
     TextView hangoutTV;
     Button postButton;
-
+    String hangout_id;
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
@@ -121,6 +138,7 @@ public class CreatePostFragment extends Fragment {
         });
         hangoutTV = (TextView) rootView.findViewById(R.id.createPost_hangout);
         hangouts = (ImageView) rootView.findViewById(R.id.createPost_AddPreviousHangout);
+        et_desc = (EditText) rootView.findViewById(R.id.createPost_PostText);
         hangouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +149,12 @@ public class CreatePostFragment extends Fragment {
                 fragment.show(fragmentManager, "Dialog");
             }
         });
-
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPost();
+            }
+        });
 
 
         // Inflate the layout for this fragment
@@ -173,10 +196,8 @@ public class CreatePostFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-
             linearLayout.setVisibility(View.VISIBLE);
             setPic();
-
         } else if (requestCode == REQUEST_IMAGE_SELECT && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Bitmap bitmap = null;
             Uri uri = data.getData();
@@ -197,6 +218,7 @@ public class CreatePostFragment extends Fragment {
             //}
         } else if (requestCode == REQUEST_HANGOUT_NAME && resultCode == RESULT_OK && data != null) {
             hangoutTV.setText(data.getStringExtra("hangout"));
+            hangout_id = data.getStringExtra("hangout_id");
             postButton.setEnabled(true);
         }
     }
@@ -241,5 +263,31 @@ public class CreatePostFragment extends Fragment {
         showImage.setImageBitmap(orientationFix(bitmap));
     }
 
+    void createPost() {
+        progressDialog = ProgressDialog.show(getActivity(), null, "Loading");
+        progressDialog.setCancelable(false);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Log.e("Token", AuthUser.getAuthData().getToken());
+        Log.e("Secret", AuthUser.getAuthData().getSecret());
+        Call<CommentResponse> call = apiService.addPost(AuthUser.getAuthData().getToken(), AuthUser.getAuthData().getSecret(), hangout_id, et_desc.getText().toString(), hangoutTV.getText().toString());
+        call.enqueue(new Callback<CommentResponse>() {
+            @Override
+            public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+                progressDialog.cancel();
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals(Constants.FLAG_SUCCESS)) {
+                        Toast.makeText(getActivity(), "Created", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<CommentResponse> call, Throwable t) {
+                progressDialog.cancel();
+                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

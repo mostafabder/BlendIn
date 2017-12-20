@@ -6,11 +6,9 @@ package com.example.android.blendin.Responses;
 
 public class CommentResponse {
     String status;
-
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }

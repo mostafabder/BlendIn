@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.blendin.Models.NotificationModel;
+import com.example.android.blendin.Models.NotificationModell;
 import com.example.android.blendin.R;
 
 import org.w3c.dom.Text;
@@ -23,9 +24,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
     Context context;
-    List<NotificationModel> notificationModelList;
+    List<NotificationModell> notificationModelList;
 
-    public NotificationAdapter(Context context, List<NotificationModel> notificationModelList) {
+    public NotificationAdapter(Context context, List<NotificationModell> notificationModelList) {
         this.context = context;
         this.notificationModelList = notificationModelList;
     }
@@ -44,21 +45,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.avatar.setImageResource(notificationModelList.get(position).getAvatar());
-        holder.disc.setText(notificationModelList.get(position).getDisc());
-        holder.time.setText(notificationModelList.get(position).getTime());
+        holder.disc.setText(notificationModelList.get(position).getMessage());
+        holder.time.setText(notificationModelList.get(position).getCreated_at());
     }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        CircleImageView avatar;
         TextView disc;
         TextView time;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            avatar = (CircleImageView) itemView.findViewById(R.id.iv_avatar_notification);
+
             disc = (TextView) itemView.findViewById(R.id.tv_details_notification);
             time = (TextView) itemView.findViewById(R.id.tv_time_notification);
         }

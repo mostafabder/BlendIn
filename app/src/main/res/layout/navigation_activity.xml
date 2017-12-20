@@ -39,4 +39,23 @@
             app:itemTextColor="@color/color_change"
             app:menu="@menu/nav_menus" />
     </android.support.v4.widget.DrawerLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_notification"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#b9b3b3"
+        android:padding="20dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/tv_noticationMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="NEW COMMENT"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 </RelativeLayout>

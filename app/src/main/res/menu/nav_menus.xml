@@ -22,6 +22,10 @@
             android:icon="@mipmap/ic_squad"
             android:title="My Squads" />
         <item
+            android:id="@+id/MyHangouts_nav_item"
+            android:icon="@mipmap/ic_squad"
+            android:title="My Hangouts" />
+        <item
             android:id="@+id/settings_nav_item"
             android:icon="@drawable/ic_settings_black_48dp"
             android:title="Settings " />

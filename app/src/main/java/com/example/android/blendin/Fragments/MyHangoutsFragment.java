@@ -1,8 +1,9 @@
 package com.example.android.blendin.Fragments;
 
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,13 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.android.blendin.Adapters.MyHangoutsAdapter;
 import com.example.android.blendin.Adapters.PreviousHangoutAdapter;
 import com.example.android.blendin.Models.MyHangoutsModel;
-import com.example.android.blendin.Models.PreviousHangoutModel;
+import com.example.android.blendin.Models.NewsFeedModel;
 import com.example.android.blendin.R;
-import com.example.android.blendin.RecyclerViewClickListener;
-import com.example.android.blendin.Responses.CommentResponse;
 import com.example.android.blendin.Responses.MyHangoutsResponse;
+import com.example.android.blendin.Responses.NewsfeedResponse;
 import com.example.android.blendin.Retrofit.ApiClient;
 import com.example.android.blendin.Retrofit.ApiInterface;
 import com.example.android.blendin.Utility.AuthUser;
@@ -30,29 +31,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by LeGenÐ on 12/15/2017.
- */
+public class MyHangoutsFragment extends Fragment {
 
-
-public class SelectHangoutFragment extends DialogFragment {
-    ProgressDialog progressDialog;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    List<MyHangoutsModel> modelList;
-    LinearLayoutManager layoutManager;
+    List<MyHangoutsModel> myHangoutsModels;
+    RecyclerView.LayoutManager layoutManager;
+    ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.previous_hangouts_dialog, container);
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.previous_hangout_recycler);
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_blank, container, false);
+        recyclerView = (RecyclerView) v.findViewById(R.id.myhangouts_recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+        myHangoutsModels = new ArrayList<>();
         getHangouts();
-        return rootView;
+        return v;
     }
 
     void getHangouts() {
@@ -68,8 +66,9 @@ public class SelectHangoutFragment extends DialogFragment {
                 progressDialog.cancel();
                 if (response.body() != null) {
                     if (response.body().getStatus().equals(Constants.FLAG_SUCCESS)) {
-                        modelList = new ArrayList<MyHangoutsModel>(response.body().getHangouts());
-                        adapter = new PreviousHangoutAdapter(modelList, SelectHangoutFragment.this);
+                        myHangoutsModels = new ArrayList<MyHangoutsModel>(response.body().getHangouts());
+                        Log.e("size", String.valueOf(myHangoutsModels.size()) + "     ");
+                        adapter = new MyHangoutsAdapter(myHangoutsModels, getActivity());
                         recyclerView.setAdapter(adapter);
                     } else
                         Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();

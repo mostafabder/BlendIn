@@ -82,6 +82,7 @@ public class MysquadFragment extends Fragment {
         call.enqueue(new Callback<MySquadResponse>() {
             @Override
             public void onResponse(Call<MySquadResponse> call, final Response<MySquadResponse> response) {
+
                 if (response != null && response.body().getStatus().equals(FLAG_SUCCESS)) {
                     GridLayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 2);
                     recyclerView = (RecyclerView) view.findViewById(R.id.mysquad_recyclerView);
@@ -96,7 +97,7 @@ public class MysquadFragment extends Fragment {
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             Bundle bundle = new Bundle();
                             Log.e("kappa5", response.body().getSquads().get(position).getId());
-                            bundle.putString("squadID", response.body().getSquads().get(position).getId());
+                            bundle.putString("squad_id", response.body().getSquads().get(position).getId());
                             fragment.setArguments(bundle);
                             fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
                             fragmentTransaction.add(R.id.content_main, fragment);

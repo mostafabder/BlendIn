@@ -11,4 +11,8 @@ public class Constants {
     public static String FLAG_SUCCESS = "200";
     public static String KEY_USER_DATA = "user";
     public static String BASE_URL = "http://156.217.224.212/";
+    public static Boolean inHangout = false;
+    public static String hangoutID = "";
+    public static String selectedHangout = "";
+    public static Boolean IS_MAIN = false;
 }

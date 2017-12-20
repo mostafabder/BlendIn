@@ -1,6 +1,8 @@
 package com.example.android.blendin.Fragments;
 
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +25,7 @@ import com.example.android.blendin.Retrofit.ApiClient;
 import com.example.android.blendin.Retrofit.ApiInterface;
 import com.example.android.blendin.SignUpActivity;
 import com.example.android.blendin.Utility.AuthUser;
+import com.example.android.blendin.Utility.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +73,7 @@ public class NewsfeedFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Fragment fragment = new CreatePostFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -77,6 +81,8 @@ public class NewsfeedFragment extends Fragment {
                 fragmentTransaction.add(R.id.content_main, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                Constants.IS_MAIN = false;
+
             }
         });
 
@@ -89,7 +95,7 @@ public class NewsfeedFragment extends Fragment {
         progressDialog.setCancelable(false);
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Log.e("Token", AuthUser.getAuthData().getToken());
-        Log.e("Token", AuthUser.getAuthData().getSecret());
+        Log.e("Secret", AuthUser.getAuthData().getSecret());
         Call<NewsfeedResponse> call = apiService.newsfeed(AuthUser.getAuthData().getToken(), AuthUser.getAuthData().getSecret());
         call.enqueue(new Callback<NewsfeedResponse>() {
             @Override

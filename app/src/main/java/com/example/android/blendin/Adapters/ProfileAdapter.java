@@ -83,6 +83,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.titletxt.setText(newsFeedModel.getTitle());
         holder.userNameTxt.setText(newsFeedModel.getName());
         holder.userLocationTxt.setText(newsFeedModel.getLocation());
+        if (newsFeedModel.isLovedByThisUser())
+            holder.likeImage.setImageResource(R.drawable.like);
+        else
+            holder.likeImage.setImageResource(R.drawable.dislike);
         holder.postTimeTxt.setText(newsFeedModel.getCreated_at());
         getPicasso(newsFeedModel.getHangout_pic(), holder.postImage);
         holder.postMainTxt.setText(newsFeedModel.getActivity());
@@ -92,16 +96,19 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.likeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int likes = Integer.parseInt(holder.postLikesCount.getText().toString());
                 if (newsfeedItemsList.get(position).isLovedByThisUser()) {
                     holder.likeImage.setImageResource(R.drawable.dislike);
                     newsfeedItemsList.get(position).setLovedByThisUser(false);
                     setLike(newsfeedItemsList.get(position).getId());
+                    likes--;
                 } else {
                     holder.likeImage.setImageResource(R.drawable.like);
                     newsfeedItemsList.get(position).setLovedByThisUser(true);
                     setLike(newsfeedItemsList.get(position).getId());
+                    likes++;
                 }
-
+                holder.postLikesCount.setText(String.valueOf(likes));
             }
         });
         holder.commentLayout.setOnClickListener(new View.OnClickListener() {

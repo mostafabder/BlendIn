@@ -17,13 +17,13 @@ public class SquadProfileModel {
     private String hangouts_count;
     private String admin_first_name;
     private String admin_last_name;
-    private List<SquadChatMessageModel> chat;
+    private List<CommentModel> chat;
 
-    public List<SquadChatMessageModel> getChat() {
+    public List<CommentModel> getChat() {
         return chat;
     }
 
-    public void setChat(List<SquadChatMessageModel> chat) {
+    public void setChat(List<CommentModel> chat) {
         this.chat = chat;
     }
 

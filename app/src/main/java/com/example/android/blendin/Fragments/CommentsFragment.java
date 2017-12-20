@@ -70,32 +70,35 @@ public class CommentsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (commentText.getText() != null && !commentText.getText().toString().equals("")) {
-                    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                    Log.e("Token", AuthUser.getAuthData().getToken());
-                    Log.e("Token", AuthUser.getAuthData().getSecret());
-                    Call<CommentResponse> call = apiService.addComment(AuthUser.getAuthData().getToken(), AuthUser.getAuthData().getSecret(), id, commentText.getText().toString());
-                    call.enqueue(new Callback<CommentResponse>() {
-                        @Override
-                        public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
-                            if (response.body() != null) {
-                                if (response.body().getStatus().equals(Constants.FLAG_SUCCESS)) {
-                                    getComments();
-                                } else
-                                    Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();
-                            } else Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onFailure(Call<CommentResponse> call, Throwable t) {
-                            Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    pushComment();
                 }
             }
         });
         return rootView;
     }
 
+    public void pushComment() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Log.e("Token", AuthUser.getAuthData().getToken());
+        Log.e("Token", AuthUser.getAuthData().getSecret());
+        Call<CommentResponse> call = apiService.addComment(AuthUser.getAuthData().getToken(), AuthUser.getAuthData().getSecret(), id, commentText.getText().toString());
+        call.enqueue(new Callback<CommentResponse>() {
+            @Override
+            public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals(Constants.FLAG_SUCCESS)) {
+                        getComments();
+                    } else
+                        Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<CommentResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     public void getComments() {
         final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, "Loading");
         progressDialog.setCancelable(false);

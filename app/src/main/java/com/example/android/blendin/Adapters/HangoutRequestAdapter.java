@@ -90,7 +90,12 @@ public class HangoutRequestAdapter extends RecyclerView.Adapter<HangoutRequestAd
         holder.requestDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transmission(new HangoutProfileFragment(), "Fifa 18 Tournement");
+                Fragment fragment = new HangoutProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("auth", 3);
+                bundle.putString("hangout_id", hangout.getHangout_id());
+                fragment.setArguments(bundle);
+                transmission(new HangoutProfileFragment(), "Hangout Profile");
             }
         });
 
@@ -105,8 +110,12 @@ public class HangoutRequestAdapter extends RecyclerView.Adapter<HangoutRequestAd
                     public void onResponse(Call<HangoutRequestAcceptResponse> call, Response<HangoutRequestAcceptResponse> response) {
                         if (response.body() != null) {
                             if (response.body().getStatus().equals(Constants.FLAG_SUCCESS)) {
-                                hangoutList.remove(position);
-                                notifyDataSetChanged();
+                                Fragment fragment = new HangoutProfileFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("auth", 2);
+                                bundle.putString("hangout_id", hangout.getHangout_id());
+                                fragment.setArguments(bundle);
+                                transmission(fragment, "Hangout");
                             } else
                                 Toast.makeText(context, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                         } else Toast.makeText(context, "null", Toast.LENGTH_SHORT).show();
@@ -155,9 +164,6 @@ public class HangoutRequestAdapter extends RecyclerView.Adapter<HangoutRequestAd
         FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_out_from_bottom, R.anim.slide_in_to_bottom);
         fragmentTransaction.add(R.id.content_main, nxtfragment, key);
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("auth", false);
-        nxtfragment.setArguments(bundle);
         fragmentTransaction.commit();
         fragmentTransaction.addToBackStack("wtf");
         ((Navigation_activity) context).getSupportActionBar().setTitle(key);

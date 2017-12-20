@@ -44,7 +44,7 @@ public class MySquadAdapter extends RecyclerView.Adapter<MySquadAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         mySquadModel = mySquadItemsList.get(position);
-        // holder.squadImage.setImageResource(mySquadModel.getAvatar());
+        // holder.squadImage.setImageResource(mySquadModel.getPic());
         getPicasso(mySquadModel.getPic(), holder.squadImage);
         holder.squadName.setText(mySquadModel.getTitle());
         holder.squadMembersCount.setText(mySquadModel.getMembers());

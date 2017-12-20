@@ -5,11 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.blendin.Models.CommentModel;
 import com.example.android.blendin.Models.SquadChatMessageModel;
 import com.example.android.blendin.R;
+import com.example.android.blendin.Utility.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,13 +40,19 @@ public class HangoutProfileChatAdapter extends RecyclerView.Adapter<HangoutProfi
         return new ViewHolder(view);
     }
 
+    void getPicasso(String temp, CircleImageView img) {
+        Picasso.with(context)
+                .load(Constants.BASE_URL + temp)
+                .error(R.drawable.kappa2)
+                .into(img);
+    }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        chatMessageModel = chatMessageModelList.get(position);
-//        holder.userImage.setImageResource(chatMessageModel.getPic());
-//        holder.userName.setText(chatMessageModel.getUserName());
-//        holder.text.setText(chatMessageModel.getText());
-//        holder.dateAgo.setText(chatMessageModel.getDate());
+        chatMessageModel = chatMessageModelList.get(position);
+        getPicasso(chatMessageModel.getPic(), holder.userImage);
+        holder.userName.setText(chatMessageModel.getName());
+        holder.text.setText(chatMessageModel.getMessage());
+        holder.dateAgo.setText(chatMessageModel.getCreated_at());
     }
 
     @Override

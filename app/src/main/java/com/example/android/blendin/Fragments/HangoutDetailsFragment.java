@@ -96,7 +96,7 @@ public class HangoutDetailsFragment extends Fragment implements DatePickerDialog
     public void submit() {
         Fragment fragment = new HangoutProfileFragment();
 
-        bundle.putBoolean("auth", true);
+        bundle.putInt("auth", 1);
         bundle.putString("people", ppl);
         bundle.putString("activity", activity);
         bundle.putString("disc", et_disc.getText().toString());

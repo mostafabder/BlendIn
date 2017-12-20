@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.android.blendin.Models.HangoutModel;
+import com.example.android.blendin.Models.RecentlyHangwithModel;
 import com.example.android.blendin.R;
 import com.example.android.blendin.Utility.Constants;
 import com.squareup.picasso.Picasso;
@@ -20,63 +21,53 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by Luffy on 12/13/2017.
+ * Created by Luffy on 12/20/2017.
  */
 
-public class HangoutAdapter extends RecyclerView.Adapter<HangoutAdapter.ViewHolder> {
-
+public class RecentlyMembersAdapter extends RecyclerView.Adapter<RecentlyMembersAdapter.ViewHolder> {
     Context context;
-    List<HangoutModel> hangoutModels;
-    Boolean flag;
-    LinearLayout linearLayout;
+    List<RecentlyHangwithModel> hangoutModels;
+    List<String> members;
 
 
-    public HangoutAdapter(Context context, List<HangoutModel> hangoutModels, Boolean flag, LinearLayout linearLayout) {
+    public RecentlyMembersAdapter(Context context, List<RecentlyHangwithModel> hangoutModels, List<String> members) {
         this.context = context;
         this.hangoutModels = hangoutModels;
-        this.flag = flag;
-        this.linearLayout = linearLayout;
+        this.members = members;
     }
 
 
     @Override
-    public HangoutAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecentlyMembersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_map, parent, false);
-        return new HangoutAdapter.ViewHolder(view);
+        return new RecentlyMembersAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(HangoutAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecentlyMembersAdapter.ViewHolder holder, final int position) {
 
         Picasso.with(context)
                 .load(Constants.BASE_URL + hangoutModels.get(position).getPic())
                 .error(R.drawable.kappa2)
                 .into(holder.avatar);
         holder.userName.setText(hangoutModels.get(position).getName());
-        Log.e("NAME", hangoutModels.get(position).getFirst_name() + "   ");
-        if (flag == null) {
-            holder.close.setVisibility(View.INVISIBLE);
-        } else if (flag) {
-            holder.close.setImageResource(R.drawable.add);
-        }
+        Log.e("NAME", hangoutModels.get(position).getFirst_name());
+
+        holder.close.setImageResource(R.drawable.add);
+
         holder.close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                members.add(hangoutModels.get(position).getUuid());
                 hangoutModels.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, hangoutModels.size());
-                //check if in hangout fragment
-                if (linearLayout != null) {
-                    if (hangoutModels.size() == 0) {
-                        linearLayout.setVisibility(View.GONE);
-                        Constants.isBottom = true;
-                    }
-                }
 
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return hangoutModels.size();

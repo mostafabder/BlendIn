@@ -23,6 +23,7 @@
             android:id="@+id/iv_hangout_avatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/user" />
 
         <TextView

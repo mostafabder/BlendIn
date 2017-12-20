@@ -150,8 +150,7 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
         HangoutModelList = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new HangoutAdapter(getActivity(), HangoutModelList, false, linear2);
-        recyclerView.setAdapter(adapter);
+
         fancyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,6 +190,8 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             Fragment fragment = new HangoutDetailsFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             Bundle bundle = new Bundle();
+            for (int i = 0; i < HangoutModelList.size(); i++)
+                Log.e("TEST", HangoutModelList.get(i).getUuid());
             bundle.putString("people", new Gson().toJson(HangoutModelList));
             bundle.putString("activity", "playing");
             fragment.setArguments(bundle);
@@ -224,7 +225,6 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                             actStrings.add(activites.get(i).getTitle());
                             Log.e("title", activites.get(i).getTitle());
                         }
-                        Log.e("ACT", activites.get(0).getTitle());
                     } else
                         Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();
                 } else Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
@@ -354,9 +354,9 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                 progressDialog.cancel();
                 if (response.body() != null) {
                     if (response.body().getStatus().equals(FLAG_SUCCESS)) {
-                        for (int i = 0; i < response.body().getUsers().size(); i++) {
-                            listNearby.add(response.body().getUsers().get(i));
-                        }
+                        listNearby = new ArrayList<User>(response.body().getUsers());
+                        for (int i = 0; i < listNearby.size(); i++)
+
                         createNearbyPins(response.body());
                     } else
                         Toast.makeText(getActivity(), response.body().getStatus(), Toast.LENGTH_SHORT).show();
@@ -378,6 +378,7 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
             Marker m = mMap.addMarker(new MarkerOptions()
                     .position(lt));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(m.getPosition(), 15));
+            Log.e("UUID", searchPeople.getUsers().get(i).getUuid() + "   ");
             markerIds.put(m, searchPeople.getUsers().get(i).getUuid());
         }
     }
@@ -465,13 +466,15 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
     @Override
     public void onInfoWindowClick(Marker marker) {
         String id = markerIds.get(marker);
-
+        Log.e("UUID", id + "   ");
         for (int i = 0; i < listNearby.size(); i++) {
             if (listNearby.get(i).getUuid().equals(id)) {
+                Log.e("FOUND", "FOUND");
                 now = listNearby.get(i);
                 break;
             }
         }
+        Log.e("NOW", now.getFirst_name() + " " + now.getLast_name());
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.marker_dialog);
 
@@ -490,8 +493,14 @@ public class HangoutFragment extends Fragment implements OnMapReadyCallback, Goo
                     Constants.isBottom = false;
                 }
                 HangoutModel hangoutModel;
-                hangoutModel = new HangoutModel(now.getPic(), now.getName(), now.getUuid());
+                Log.e("NOW", now.getFirst_name() + " " + now.getLast_name());
+
+                hangoutModel = new HangoutModel(now.getPic(), now.getFirst_name() + " " + now.getLast_name(), now.getUuid());
                 HangoutModelList.add(hangoutModel);
+                Log.e("BLA", hangoutModel.getName() + "     ");
+                Log.e("BLA", hangoutModel.getPic() + "     ");
+                Log.e("BLA", hangoutModel.getUuid() + "     ");
+                adapter = new HangoutAdapter(getActivity(), HangoutModelList, false, linear2);
                 recyclerView.setAdapter(adapter);
                 dialog.cancel();
             }

@@ -55,13 +55,6 @@ public class CommentModel {
         this.name = name;
     }
 
-    public String getContent() {
-        return message;
-    }
-
-    public void setContent(String content) {
-        this.message = content;
-    }
 
     public String getCreated_at() {
         return created_at;

@@ -110,7 +110,10 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
 
         holder.postTimeTxt.setText(newsFeedModel.getCreated_at());
         holder.titletxt.setText(newsFeedModel.getTitle());
-
+        if (newsFeedModel.isLovedByThisUser())
+            holder.likeImage.setImageResource(R.drawable.like);
+        else
+            holder.likeImage.setImageResource(R.drawable.dislike);
         holder.postMainTxt.setText(newsFeedModel.getActivity());
         holder.postDescTxt.setText(newsFeedModel.getContent());
         holder.postLikesCount.setText(newsFeedModel.getLoves());
@@ -119,18 +122,22 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
         holder.likeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int likes = Integer.parseInt(holder.postLikesCount.getText().toString());
                 if (newsfeedItemsList.get(position).isLovedByThisUser()) {
                     holder.likeImage.setImageResource(R.drawable.dislike);
                     newsfeedItemsList.get(position).setLovedByThisUser(false);
                     setLike(newsfeedItemsList.get(position).getId());
+                    likes--;
                 } else {
                     holder.likeImage.setImageResource(R.drawable.like);
                     newsfeedItemsList.get(position).setLovedByThisUser(true);
                     setLike(newsfeedItemsList.get(position).getId());
+                    likes++;
                 }
-
+                holder.postLikesCount.setText(String.valueOf(likes));
             }
         });
+
         holder.commentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +153,7 @@ public class NewsfeedAdapter extends RecyclerView.Adapter<NewsfeedAdapter.ViewHo
                 fragmentTransaction.commit();
             }
         });
+
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
 

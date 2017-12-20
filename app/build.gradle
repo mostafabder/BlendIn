@@ -28,6 +28,7 @@ dependencies {
     //map
 
 
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:support-core-utils:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -53,9 +54,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.7.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

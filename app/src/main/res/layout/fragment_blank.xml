@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/offWhite"
+    android:padding="5dp"
+    tools:context="com.example.android.blendin.Fragments.MyHangoutsFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/myhangouts_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:content="@string/hello_blank_fragment" />
+    <!-- TODO: Update blank fragment layout -->
+
+</FrameLayout>
